@@ -11,6 +11,8 @@ function Joint(position) {
     self.position = position;
     //sum of the length of the branches from root to here
     self.depth = undefined;
+    //longest path passing through this joint
+    self.maxDepth = 0;
 
     self.externalForce = new Vec2(0,0);
     self.momentum = 0.0;

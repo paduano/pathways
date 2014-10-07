@@ -1,5 +1,5 @@
 .tree-joint {
-    fill: black;
+    fill: #6064ae;
     opacity: 0.5;
 }
 
@@ -12,7 +12,8 @@
 
 .tree-path {
     stroke: #374185;
-    fill: #374185;
-    stroke-width: 0.1;
+    fill: #FFFFFF;
+    stroke-width: 0;
+    stroke: black;
 
 }
