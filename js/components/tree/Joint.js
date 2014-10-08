@@ -33,7 +33,7 @@ function Joint(position) {
 
     this.isLeaf = function() {
         return this.branches.length == 0;
-    }
+    };
 
     this.previousJoint = function() {
         return this.previousBranch.parentJoint;
@@ -59,6 +59,8 @@ function Joint(position) {
 
     this._reset = function() {
         self.momentum = 0;
+        //force along the branch
+        self.parallelForceIntensity = 0
     };
 
     this._propagateForce = function(force) {
@@ -72,7 +74,8 @@ function Joint(position) {
 
         self.momentum += direction.cross(force) * self.previousBranch.length;
 
-        var parallelForce = direction.mulS(force.dot(direction));
+        self.parallelForceIntensity = force.dot(direction);
+        var parallelForce = direction.mulS(self.parallelForceIntensity);
 
         self.previousBranch.parentJoint._propagateForce(parallelForce);
 
@@ -80,15 +83,22 @@ function Joint(position) {
 
     this._update = function(deltaTime) {
 
-        //Root node
-        if(self.previousBranch == null)
+        //is Root node
+        if(self.isRoot())
             return;
+
+        //Rotation
 
         self.rotA = self.momentum * 0.1;
 
         self.rotV += self.rotA * deltaTime;
 
         var rotAngle = self.rotV * deltaTime;
+
+        //Extension
+
+        self.previousBranch.extendLength(self.parallelForceIntensity);
+
         //update position
 
         self.previousBranch.rot += rotAngle;

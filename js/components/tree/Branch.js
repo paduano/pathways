@@ -10,6 +10,10 @@ function Branch(parentJoint, destinationJoint) {
         return self.destinationJoint.position.subV(self.parentJoint.position);
     };
 
+    self.extendLength = function(parallelForce) {
+        self.length = self.length + parallelForce*0.1;
+    };
+
     var init = function() {
         self.parentJoint.addBranch(self);
         destinationJoint.previousBranch = self;

@@ -167,7 +167,7 @@ function JointsSystem() {
             function(joint){
                 if(!joint.isRoot()){
                     joint.depth = joint.previousJoint().depth + joint.previousBranch.length;
-                    console.log(joint.depth);
+                    //console.log(joint.depth);
                     //when a leaf is found, update the max depths
                     if(joint.isLeaf()){
                         self.backwardWalk(
