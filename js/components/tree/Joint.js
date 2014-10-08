@@ -19,6 +19,14 @@ function Joint(position) {
     self.rotV = 0.0;
     self.rotA = 0.0;
 
+    /**
+     * Returns the ration between the deoth
+     * and the maxDepth of the branch
+     */
+    this.getDepthRation = function() {
+        return self.depth / self.maxDepth;
+    };
+
     this.isRoot = function() {
         return this.previousBranch == null;
     };

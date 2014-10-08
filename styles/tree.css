@@ -9,10 +9,18 @@
     opacity: 0.5;
     pointer-events: none;
 }
-
+/*DARK THEME
 .tree-path {
     stroke: #374185;
     fill: #FFFFFF;
+    stroke-width: 0;
+    stroke: black;
+
+}*/
+
+.tree-path {
+
+    fill: #374185;
     stroke-width: 0;
     stroke: black;
 

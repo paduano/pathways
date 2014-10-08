@@ -96,7 +96,7 @@ function Vec2(x_,y_)
         var sum = this.addV(v);
         var ret = null;
         if(sum.x == 0 && sum.y == 0){
-            ret =  this.perpendicular();
+            ret =  this.perpendicular().invert();
         } else {
             ret = sum.normalize();
         }

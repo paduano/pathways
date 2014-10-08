@@ -12,6 +12,41 @@ function JointsSystem() {
     };
 
 
+    //Interactions
+    var _jointDragged = null,
+        _jointHtmlContainer = null,
+        _mouseX = 0, _mouseY = 0;
+
+
+    self.startDragging = function(joint, container) {
+        _jointDragged = joint;
+        _jointHtmlContainer = container
+    };
+
+
+    self.stopDragging = function() {
+        _jointDragged.resetExternalForce();
+        _jointDragged = _jointHtmlContainer = null;
+    };
+
+
+    self.updateMousePosition = function(x, y){
+        _mouseX = x;
+        _mouseY = y;
+    };
+
+
+    var _updateInteractions = function() {
+        if(_jointDragged) {
+
+            _jointDragged.addExternalForce((new Vec2(_mouseX - _jointDragged.position.x,
+                    _mouseY - _jointDragged.position.y)).mulS(1.0));
+        }
+    };
+
+
+
+
    self.update = function(deltaTime) {
 
        //Reset
@@ -38,6 +73,10 @@ function JointsSystem() {
                 joint._update(deltaTime);
             },
             function(){});
+
+
+       //Update interaction
+       _updateInteractions();
    };
 
    self.recursiveWalk = function(jointCallback, branchCallback, currentJoint) {
@@ -61,6 +100,7 @@ function JointsSystem() {
 
 
     var init = function(){
+        //LITTLE
         /*    _root  = new Joint(new Vec2( 0,0));
         var jointA = new Joint(new Vec2( 0,15));
         var jointB = new Joint(new Vec2( -10,25));
@@ -79,7 +119,7 @@ function JointsSystem() {
             branchG = new Branch(jointE, jointG);*/
 
 
-        _root  = new Joint(new Vec2( 0,0));
+       _root  = new Joint(new Vec2( 0,0));
         var jointB = new Joint(new Vec2( 0,15));
         var jointC = new Joint(new Vec2( -5,25));
         var jointD = new Joint(new Vec2(-10,35));
@@ -119,9 +159,6 @@ function JointsSystem() {
         new Branch(jointN, jointS);
         new Branch(jointS, jointT);
         new Branch(jointS, jointU);
-
-
-
 
 
         //Update depths
