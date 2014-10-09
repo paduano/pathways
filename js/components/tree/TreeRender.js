@@ -8,7 +8,7 @@ function TreeRender(svg, jointsSystem) {
 
     //Tree parameters
     var _endBranchesThickness = 0.15,
-        _baseWidth = 3,
+        _baseWidth = 3
         _handleDistance = 5,
         _leafHandleDistanceFactor = 0.5,
 
