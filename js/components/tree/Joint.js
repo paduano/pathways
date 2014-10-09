@@ -72,7 +72,8 @@ function Joint(position) {
         var direction = self.previousBranch.getVector();
         direction.normalize();
 
-        self.momentum += direction.cross(force) * self.previousBranch.length;
+        //self.momentum += direction.cross(force) * self.previousBranch.length;
+        self.momentum += direction.cross(force) * 5;
 
         self.parallelForceIntensity = force.dot(direction);
         var parallelForce = direction.mulS(self.parallelForceIntensity);

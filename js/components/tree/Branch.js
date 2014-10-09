@@ -6,12 +6,14 @@ function Branch(parentJoint, destinationJoint) {
     self.length = undefined;
     self.rot = undefined;
 
+    var _stretchFactor = 0.005;
+
     self.getVector = function() {
         return self.destinationJoint.position.subV(self.parentJoint.position);
     };
 
     self.extendLength = function(parallelForce) {
-        self.length = self.length + parallelForce*0.1;
+        self.length = self.length + parallelForce*_stretchFactor;
     };
 
     var init = function() {

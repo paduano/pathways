@@ -10,9 +10,16 @@ function TreeRender(svg, jointsSystem) {
     var _endBranchesThickness = 0.15,
         _baseWidth = 3,
         _handleDistance = 5,
-        _leafHandleDistance = 0.8,
-        _intraBranchesHandleAngle = 0.5;
+        _leafHandleDistanceFactor = 0.5,
 
+        _intraBranchesHandleAngle = 0.2,
+
+        //how far are the handle wrt to the intra branches joint and the next branch length
+        _intraBranchesHandleDistanceFactor = 0.1;
+
+
+
+    var _debugHandleGroup = null;
 
     /**
      * Draw the skeleton
@@ -153,18 +160,35 @@ function TreeRender(svg, jointsSystem) {
     /**
      * Change the depth ration
      */
-    var depthRationModifier = function(value) {
+    var depthRatioModifier = function(value) {
         return Math.pow(value, 0.5);
     };
 
+
+    var getWidthFromJoint = function(joint) {
+        if(joint.isLeaf())
+            return _endBranchesThickness;
+        else
+            return _baseWidth - _baseWidth * depthRatioModifier(joint.getDepthRation());
+    };
 
     /**
      * Returns the d="" attributes for the path object
      * resembling the tree
      */
     var getTreePath = function() {
+
+        //DEBUG DRAWING
+        if(_debugHandleGroup){
+            _debugHandleGroup.remove();
+            _debugHandleGroup = null;
+        }
+
+
         var d = "M 0 0 ";
         var previousPivotPoint = null;
+        var startHandleForNextPivot = null;
+        var previousHandlePoint = null; //used for debugging purposes
         var previousWasPerimetralJoint = false;
         var previousWasLeaf = false;
 
@@ -175,6 +199,7 @@ function TreeRender(svg, jointsSystem) {
 
 
                 var previousBranchDirection = null;
+                var prePreviousBranchDirection = null; //Used for leaves
                 var currentBranchDirection = null;
                 var bisectionPreviousCurrentBranch = null;
                 var nbranches = joint.branches.length;
@@ -182,8 +207,17 @@ function TreeRender(svg, jointsSystem) {
                 var isPerimeterJoint = (index == 0 || index == nbranches);
                 var lineMode = "line";
 
-                /** PIVOT **/
+                //start handle
+                var useStartHandle = false,
+                    startHandle = null;
+                if(startHandleForNextPivot != null) {
+                    startHandle = startHandleForNextPivot;
+                    useStartHandle = true;
+                    startHandleForNextPivot = null;
+                }
 
+
+                /** INITIAL VALUES COMPUTATION */
 
                 //set up previous and current branches directions
                 if(!joint.isLeaf()) {
@@ -212,21 +246,26 @@ function TreeRender(svg, jointsSystem) {
                         }
                     }
                 } else {
-                    //Leaf
+                    //LEAF
                     previousBranchDirection = joint.previousBranch.getVector().normalize();
+                    prePreviousBranchDirection = joint.previousBranch.parentJoint.previousBranch.getVector().normalize();
                 }
 
-                var width = _baseWidth - _baseWidth * depthRationModifier(joint.getDepthRation());
+                var width = getWidthFromJoint(joint);
+
+
+                /** PIVOT **/
+
                 //translation from the vertex point
                 var transVector = null;
 
                 if(joint.isLeaf()){
 
-                    var perpendicular = previousBranchDirection.perpendicular();
+                    var perpendicular = prePreviousBranchDirection.perpendicular();
                     if(index == 0) {
-                        transVector = perpendicular.invert().mulS(_endBranchesThickness);
+                        transVector = perpendicular.invert().mulS(width);
                     } else if (index == 1){
-                        transVector = perpendicular.mulS(_endBranchesThickness);
+                        transVector = perpendicular.mulS(width);
                     }
 
                 } else if (joint.isRoot()){
@@ -250,6 +289,7 @@ function TreeRender(svg, jointsSystem) {
                 var pivotPos = joint.position.addV(transVector);
 
 
+
                 /**  HANDLE **/
 
 
@@ -258,18 +298,32 @@ function TreeRender(svg, jointsSystem) {
                 var firstHandlePosition = null;
 
                 if(joint.isLeaf()){
+                    //HANDLE LEAF
+                    var handleLeafLength = previousBranchDirection.dot(prePreviousBranchDirection)
+                        * joint.previousBranch.length
+                        * _leafHandleDistanceFactor;
+                    prePreviousBranchDirection = prePreviousBranchDirection
+                                                .mulS(handleLeafLength/*joint.previousBranch.length*_leafHandleDistanceFactor*/);
+                    if(index == 0){
+                        handlePosition = pivotPos.subV(prePreviousBranchDirection);
+                        lineMode = "smooth";
+                    } else {
+                        startHandleForNextPivot = pivotPos.subV(prePreviousBranchDirection);
+                        lineMode = "line";
+                    }
 
-                    /*handlePosition = pivotPos.subV(joint.previousBranch.getVector().mulS(_leafHandleDistance));
-                     lineMode = "smooth";*/
 
                 } else if (joint.isRoot()){
+                    //HANDLE ROOT
 
                     handlePosition = pivotPos;
                     lineMode = "smooth";
 
-                } else {
 
-                    var handleLength = _handleDistance - _handleDistance * depthRationModifier(joint.getDepthRation());
+                } else {
+                    //HANDLE GENERAL
+
+                    var handleLength = _handleDistance - _handleDistance * depthRatioModifier(joint.getDepthRation());
 
                     if(isPerimeterJoint){
                         handlePosition = pivotPos.addV(
@@ -280,23 +334,29 @@ function TreeRender(svg, jointsSystem) {
 
                         if(!previousWasPerimetralJoint){
                             //intra branches, leaving the joint
-                            firstHandlePosition = previousPivotPoint.addV(
+                            /*firstHandlePosition = previousPivotPoint.addV(
                                 previousBranchDirection.clone()
                                     .invert()
                                     .rot(-_intraBranchesHandleAngle)
                                     .mulS(handleLength)
                             );
-                            lineMode = "curve";
+                            lineMode = "curve";*/
                         } else {
                             lineMode = "smooth";
                         }
 
                     } else {
-                        //Intra branches
+
+                        //HANDLE INTRA-BRANCHES
+                        var translation = getWidthFromJoint(joint.branches[index-1].destinationJoint);
+                        handleLength = _intraBranchesHandleDistanceFactor * joint.branches[index-1].length;
                         handlePosition = pivotPos.addV(
-                            previousBranchDirection.clone()
-                                .rot(_intraBranchesHandleAngle)
-                                .mulS(handleLength)
+                            previousBranchDirection.mulS(handleLength).addV(previousBranchDirection.perpendicular().mulS(translation))
+                        );
+
+                        var nextHandleLength = _intraBranchesHandleDistanceFactor * joint.branches[index].length;
+                        startHandleForNextPivot = pivotPos.addV(
+                            currentBranchDirection.mulS(nextHandleLength).addV(currentBranchDirection.perpendicular().mulS(translation))
                         );
 
                         lineMode = "smooth";
@@ -304,20 +364,103 @@ function TreeRender(svg, jointsSystem) {
 
                 }
 
+
+                //previous point might have requested a smooth to became curve
+                if(useStartHandle){
+                    lineMode = "curve";
+                    firstHandlePosition = startHandle;
+                }
+
                 //Write results
                 d += writeAttribute(pivotPos, lineMode, handlePosition, firstHandlePosition);
 
+
+                //drawDebugHandles(lineMode, pivotPos, handlePosition, previousPivotPoint, firstHandlePosition, previousHandlePoint);
+
                 //Variables available next joint
                 previousPivotPoint = pivotPos;
+                previousHandlePoint = handlePosition;
                 previousWasPerimetralJoint = isPerimeterJoint;
                 previousWasLeaf = joint.isLeaf();
 
 
             }
+
         );
 
         d += " z";
         return d;
+    };
+
+
+    var drawDebugHandles = function(lineMode, pivotPos, handlePosition, previousPivotPoint, firstHandlePosition, previousHandlePoint) {
+        //DEBUG DRAWING
+        if(!_debugHandleGroup){
+            _debugHandleGroup = _g.append("g");
+        }
+
+        if(lineMode == "curve") {
+
+            _debugHandleGroup.append("line")
+                .classed("tree-handle-line",true)
+                .attr("x1",pivotPos.x )
+                .attr("y1",pivotPos.y )
+                .attr("x2",handlePosition.x )
+                .attr("y2",handlePosition.y );
+
+            _debugHandleGroup.append("circle")
+                .classed("tree-handle-line",true)
+                .attr("r",0.1)
+                .attr("cx",handlePosition.x )
+                .attr("cy",handlePosition.y );
+
+            _debugHandleGroup.append("line")
+                .classed("tree-handle-line",true)
+                .attr("x1",previousPivotPoint.x )
+                .attr("y1",previousPivotPoint.y )
+                .attr("x2",firstHandlePosition.x )
+                .attr("y2",firstHandlePosition.y );
+
+            _debugHandleGroup.append("circle")
+                .classed("tree-handle-line",true)
+                .attr("r",0.1)
+                .attr("cx",firstHandlePosition.x )
+                .attr("cy",firstHandlePosition.y );
+
+        } else  if(lineMode == "smooth") {
+            _debugHandleGroup.append("line")
+                .classed("tree-handle-line",true)
+                .attr("x1",pivotPos.x )
+                .attr("y1",pivotPos.y )
+                .attr("x2",handlePosition.x )
+                .attr("y2",handlePosition.y );
+
+            _debugHandleGroup.append("circle")
+                .classed("tree-handle-line",true)
+                .attr("r",0.1)
+                .attr("cx",handlePosition.x )
+                .attr("cy",handlePosition.y );
+
+            //Symmetrical
+            if(previousHandlePoint) {
+                var simHandle = previousHandlePoint.subV(previousPivotPoint).invert().addV(previousPivotPoint);
+
+                _debugHandleGroup.append("line")
+                    .classed("tree-handle-line",true)
+                    .attr("x1",previousPivotPoint.x )
+                    .attr("y1",previousPivotPoint.y )
+                    .attr("x2",simHandle.x )
+                    .attr("y2",simHandle.y );
+
+                _debugHandleGroup.append("circle")
+                    .classed("tree-handle-line",true)
+                    .attr("r",0.1)
+                    .attr("cx",simHandle.x )
+                    .attr("cy",simHandle.y );
+            }
+
+        }
+
     };
 
     /**
@@ -332,8 +475,6 @@ function TreeRender(svg, jointsSystem) {
 
         setUpPath(_g);
         setUpSkeleton(_g);
-
-
 
     }();
 }

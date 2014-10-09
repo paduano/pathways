@@ -25,3 +25,9 @@
     stroke: black;
 
 }
+
+.tree-handle-line {
+    stroke-width: 0.1;
+    opacity: 0.8;
+    stroke: black;
+}

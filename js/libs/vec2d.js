@@ -4,6 +4,11 @@
  Version: 0.51
 
  */
+
+function vec2(x_,y_){
+    return new Vec2(x_,y_);
+}
+
 function Vec2(x_,y_)
 {
     this.x = x_;
@@ -112,4 +117,7 @@ function Vec2(x_,y_)
         return this.clone().rot(angle/2);
 */
     }
+
+
+
 }
