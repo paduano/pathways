@@ -1,7 +1,7 @@
 function TreeRender(svg, jointsSystem) {
     var self = this;
     var _jointsSystem = jointsSystem;
-    var _drawWholeSkeleton = false;
+    var _drawWholeSkeleton = true;
     var _svg = svg,
         _g = null,
         treePath = null;

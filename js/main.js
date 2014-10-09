@@ -54,8 +54,8 @@ $(document).ready(function() {
 
     var ray = vec2(0, 50);
     var angle = 1.4;
-    var clustersNumber = 2;
-    var elementsPerCluster = 17;
+    var clustersNumber = 3;
+    var elementsPerCluster = 4;
 
     ray.rot(angle);
 
@@ -66,10 +66,11 @@ $(document).ready(function() {
     for(var i = 0; i< clustersNumber;i++){
         var cluster = [];
         for(var j=0;j< elementsPerCluster;j++){
-            cluster.push(ray.clone().addV(vec2(Math.random()*3, Math.random()*3)));
+            //cluster.push(ray.clone().addV(vec2(Math.random()*3, Math.random()*3)));
+            nodes.push(ray.clone().addV(vec2(Math.random()*3, Math.random()*3)));
             ray.rot(-step);
         }
-        nodes.push(cluster);
+        //nodes.push(cluster);
        ray.rot(-step*2);
     }
 
