@@ -15,8 +15,9 @@ function buildNodes(startAngle,angle,clustersNumber,elementsPerCluster) {
         for(var j=0;j< elementsPerCluster;j++){
             //cluster.push(ray.clone().addV(vec2(Math.random()*3, Math.random()*3)));
             var pos = ray.clone().addV(vec2(Math.random()*randomness, Math.random()*randomness));
-            var node = new Node(5,"test");
+            var node = new Node(5,"node"+nodes.length);
             node.setPosition(pos);
+            node._originalPosition = pos;
             nodes.push(node);
             ray.rot(-step);
         }
@@ -24,6 +25,21 @@ function buildNodes(startAngle,angle,clustersNumber,elementsPerCluster) {
         ray.rot(-step*2);
     }
     return nodes;
+}
+
+function animateNodes(nodes, distance) {
+
+    var direction = vec2(0,distance).rot(Math.random()*Math.PI*2);
+    //Animations
+    for(var i in nodes){
+        var node = nodes[i];
+        var duration = 1000 + 2000*Math.random();
+        var delay = 2000*Math.random();
+        var startPos = node._originalPosition;
+        var randomDir = direction.rot(0.2);
+
+        node.moveTo(startPos.addV(randomDir),duration,delay);
+    }
 }
 
 
@@ -70,13 +86,17 @@ $(document).ready(function() {
 
 
     //Nodes
-    var node = new Node(10,"HP");
+    var node = new Node(10,"Node");
 
     svg.append(node.getBottomElement());
     nodes.forEach(function(node){svg.append(node.getBottomElement())});
 
     svg.append(node.getTopElement());
     nodes.forEach(function(node){svg.append(node.getTopElement())});
+
+
+    animateNodes(nodes,3);
+    window.setInterval(function(){animateNodes(nodes,3);}, 3000);
 
 
     //LOOP
@@ -97,6 +117,7 @@ $(document).ready(function() {
         rend3.drawSekeleton();
         rend3.draw();
 
-        nodes[0].setPosition(nodes[0].getPosition().addV(vec2(0.1,0)));
+
+
     }
 });

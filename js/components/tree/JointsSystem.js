@@ -50,7 +50,6 @@ function JointsSystem(root) {
    self.update = function(deltaTime) {
 
        //Reset
-       //Force propagation
        self.recursiveWalk(
            function(joint){
                 joint._reset();
@@ -60,10 +59,16 @@ function JointsSystem(root) {
         //Force propagation
         self.recursiveWalk(
            function(joint){
+               //force for make it follow the anchor
+               if(joint.anchor != null) {
+                   var force = (joint.anchor.getPosition().subV(joint.position).mulS(1));
+                   joint.addExternalForce(force);
+               }
+
                if(joint.hasExternalForce()){
                    //propagate backwards
                    joint._propagateForce(joint.externalForce);
-              }
+               }
            },
            function(){});
 
