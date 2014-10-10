@@ -1,88 +1,82 @@
-$(document).ready(function() {
 
-    var svg = d3.select("body")
-                .append("svg")
-                .attr("viewBox","-50 -80 100 100")
-                .attr("width", "800px")
-                .attr("height", "700px");
-/*
-    var root  = new Joint(new Vec2( 0,0));
-    var jointB = new Joint(new Vec2( 0,15));
-    var jointC = new Joint(new Vec2( -5,25));
-    var jointD = new Joint(new Vec2(-10,35));
-    var jointE = new Joint(new Vec2( -15,40));
-    var jointF = new Joint(new Vec2( -12,42));
-    var jointG = new Joint(new Vec2( -7,40));
-    var jointH = new Joint(new Vec2( -5,35));
-    var jointI = new Joint(new Vec2( -5,40));
-    var jointL = new Joint(new Vec2( -2,35));
-    var jointM = new Joint(new Vec2( -2,40));
-
-    var jointN = new Joint(new Vec2( 20,35));
-    var jointO = new Joint(new Vec2( 20,42));
-    var jointP = new Joint(new Vec2( 25,40));
-    var jointQ = new Joint(new Vec2( 22,50));
-    var jointR = new Joint(new Vec2( 30,48));
-    var jointS = new Joint(new Vec2( 40,37));
-    var jointT = new Joint(new Vec2( 44,40));
-    var jointU = new Joint(new Vec2( 46,38));
-
-    new Branch(root, jointB);
-    new Branch(jointB, jointC);
-    new Branch(jointC, jointD);
-    new Branch(jointD, jointE);
-    new Branch(jointD, jointF);
-    new Branch(jointD, jointG);
-    new Branch(jointC, jointH);
-    new Branch(jointH, jointI);
-    new Branch(jointC, jointL);
-    new Branch(jointL, jointM);
-
-    new Branch(jointB, jointN);
-    new Branch(jointN, jointO);
-    new Branch(jointN, jointP);
-    new Branch(jointP, jointQ);
-    new Branch(jointP, jointR);
-    new Branch(jointN, jointS);
-    new Branch(jointS, jointT);
-    new Branch(jointS, jointU);
-*/
-
-    //GENERATE NODES IN A CIRCLE
-
+function buildNodes(startAngle,angle,clustersNumber,elementsPerCluster) {
     var nodes = [] ;
 
-    var ray = vec2(0, 50);
-    var angle = 1.4;
-    var clustersNumber = 3;
-    var elementsPerCluster = 4;
+    var randomness = 5;
+    var ray = vec2(0, 80);
 
     ray.rot(angle);
 
     var step = (angle*2)/(clustersNumber*elementsPerCluster + clustersNumber*2);
 
-    ray.rot(0.2);
-
+    ray.rot(startAngle);
     for(var i = 0; i< clustersNumber;i++){
         var cluster = [];
         for(var j=0;j< elementsPerCluster;j++){
             //cluster.push(ray.clone().addV(vec2(Math.random()*3, Math.random()*3)));
-            nodes.push(ray.clone().addV(vec2(Math.random()*3, Math.random()*3)));
+            var pos = ray.clone().addV(vec2(Math.random()*randomness, Math.random()*randomness));
+            var node = new Node(5,"test");
+            node.setPosition(pos);
+            nodes.push(node);
             ray.rot(-step);
         }
         //nodes.push(cluster);
-       ray.rot(-step*2);
+        ray.rot(-step*2);
     }
+    return nodes;
+}
+
+
+
+$(document).ready(function() {
+
+    var svg = d3.select("body")
+                .append("svg")
+                .attr("viewBox","-100 -100 200 200")
+                .attr("preserveAspectRatio", "xMidYMin meet" )
+                .attr("width", "100%")
+                .attr("height", "100%");
+
+    //GENERATE NODES IN A CIRCLE
+
+
 
     //BUILD
 
-    var root = vec2(0,0);
+    var nodes = []
 
-    //var jsys = new JointsSystem(root);
-    var treeBuilder = new TreeBuilder();
-    var jsys = treeBuilder.buildTree(root, nodes);
+    var root1 = vec2(0,0);
+    var treeBuilder1 = new TreeBuilder();
+    nodes = buildNodes(0.1, 1.5, 4, 4);
+    var jsys1 = treeBuilder1.buildTree(root1,nodes );
+    var rend1 = new TreeRender(svg ,jsys1);
 
-    var rend = new TreeRender(svg ,jsys);
+    var root2 = vec2(0,0);
+    var treeBuilder2 = new TreeBuilder();
+    var nodes2 = buildNodes(2.5, 0.7, 3, 4);
+    var jsys2 = treeBuilder2.buildTree(root2, nodes2);
+    nodes = nodes.concat(nodes2);
+    var rend2 = new TreeRender(svg ,jsys2);
+
+    var root3 = vec2(0,0);
+    var treeBuilder3 = new TreeBuilder();
+    var nodes3 = buildNodes(4.1, 0.7, 2,4);
+    var jsys3 = treeBuilder3.buildTree(root3, nodes3);
+    nodes = nodes.concat(nodes3);
+    var rend3 = new TreeRender(svg ,jsys3);
+
+
+
+
+
+    //Nodes
+    var node = new Node(10,"HP");
+
+    svg.append(node.getBottomElement());
+    nodes.forEach(function(node){svg.append(node.getBottomElement())});
+
+    svg.append(node.getTopElement());
+    nodes.forEach(function(node){svg.append(node.getTopElement())});
 
 
     //LOOP
@@ -91,8 +85,18 @@ $(document).ready(function() {
 
     function loop( )
     {
-        jsys.update(0.030);
-        rend.drawSekeleton();
-        rend.draw();
+        jsys1.update(0.030);
+        rend1.drawSekeleton();
+        rend1.draw();
+
+        jsys2.update(0.030);
+        rend2.drawSekeleton();
+        rend2.draw();
+
+        jsys3.update(0.030);
+        rend3.drawSekeleton();
+        rend3.draw();
+
+        nodes[0].setPosition(nodes[0].getPosition().addV(vec2(0.1,0)));
     }
 });

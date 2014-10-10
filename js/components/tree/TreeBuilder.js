@@ -15,58 +15,12 @@ function TreeBuilder() {
      */
     this.buildTree = function(rootPos, allNodes) {
 
-        var root  = new Joint(rootPos);
-
-
-
-
-        var buildBranches = function(hierarchy) {
-            if(hierarchy.children.length == 0)
-                return;
-
-            var startJoint = hierarchy.joint;
-            for(var j in hierarchy.children) {
-                var endJoint =  hierarchy.children[j].joint;
-                new Branch(startJoint, endJoint);
-                buildBranches(hierarchy.children[j]);
-            }
-        };
 
         var jointsHierarchy = buildJoints(allNodes, rootPos, 0/*level*/);
         buildBranches(jointsHierarchy);
         console.log(jointsHierarchy);
 
-        //Build branches
 
-        //
-/*
-        var clusters = [];
-        for(var g in nodesGroups){
-            var group = nodesGroups[g];
-            clusters.push(computeCentroid(group));
-        }
-
-        var secondLevelCentroid = computeCentroid(clusters);
-        var secondLevelPosition = secondLevelCentroid.lerp(rootPos, 0.5);
-
-        var secondLevelJoint = new Joint(secondLevelPosition);
-        new Branch(root, secondLevelJoint);
-
-
-        for(var c in clusters){
-            var thirdLevelCentroid = clusters[c];
-            var group = nodesGroups[c];
-            var thirdLevelJoint = new Joint(thirdLevelCentroid.lerp(secondLevelPosition, 0.3));
-            new Branch(secondLevelJoint, thirdLevelJoint );
-
-            for(var n in group) {
-                var node = group[n];
-                var leaf = new Joint(node);
-                new Branch(thirdLevelJoint, leaf );
-            }
-        }
-
-*/
 
         _jointSystem = new JointsSystem(jointsHierarchy.joint);
         return _jointSystem;
@@ -79,7 +33,7 @@ function TreeBuilder() {
     var computeCentroid = function(group) {
         var centroid = vec2(0,0);
         for(var i in group){
-            var vec = group[i];
+            var vec = group[i].getPosition();
             centroid = centroid.addV(vec.divS(group.length));
         }
         return centroid;
@@ -113,12 +67,14 @@ function TreeBuilder() {
                 var nextJointPosition = root.addV(
                     computeCentroid(group)
                         .subV(root)
-                        .mulS(0.3)
+                        .mulS(0.4)
                 );
                 hierarchy.children.push(buildJoints(group, nextJointPosition, level+1));
             } else {
                 //LEAVES
-                hierarchy.children.push({joint: new Joint(group[0]), children: []});
+                var leafJoint = new Joint(group[0].getPosition());
+                leafJoint.anchor = group[0];
+                hierarchy.children.push({joint: leafJoint, children: []});
             }
 
         }
@@ -128,6 +84,17 @@ function TreeBuilder() {
 
     };
 
+    var buildBranches = function(hierarchy) {
+        if(hierarchy.children.length == 0)
+            return;
+
+        var startJoint = hierarchy.joint;
+        for(var j in hierarchy.children) {
+            var endJoint =  hierarchy.children[j].joint;
+            new Branch(startJoint, endJoint);
+            buildBranches(hierarchy.children[j]);
+        }
+    };
 
 
     var init = function() {

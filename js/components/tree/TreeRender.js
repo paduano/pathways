@@ -1,14 +1,14 @@
 function TreeRender(svg, jointsSystem) {
     var self = this;
     var _jointsSystem = jointsSystem;
-    var _drawWholeSkeleton = true;
+    var _drawWholeSkeleton = false;
     var _svg = svg,
         _g = null,
         treePath = null;
 
     //Tree parameters
     var _endBranchesThickness = 0.15,
-        _baseWidth = 3
+        _baseWidth = 3,
         _handleDistance = 5,
         _leafHandleDistanceFactor = 0.5,
 
@@ -271,9 +271,16 @@ function TreeRender(svg, jointsSystem) {
                 } else if (joint.isRoot()){
 
                     if(index == 0){
-                        transVector = (new Vec2(-1,0)).mulS(width);
+                        transVector = (joint.branches[0].getVector()
+                                                        .normalize()
+                                                        .invert()
+                                                        .perpendicular())
+                                                        .mulS(width);
                     } else if (index == nbranches) {
-                        transVector = (new Vec2(1,0)).mulS(width);
+                        transVector = (joint.branches[0].getVector()
+                                                        .normalize()
+                                                        .perpendicular())
+                                                        .mulS(width);
                     } else {
                         //XXX TODO MULTIPLE BRANCHES RIGHT ON THE ROOT
                     }
@@ -467,8 +474,8 @@ function TreeRender(svg, jointsSystem) {
      * Init function
      */
     var init = function () {
-        _g = svg.append("g")
-            .attr("transform", "translate(0,0) scale(1,1) rotate(180)");
+        _g = svg.append("g");
+           // .attr("transform", "translate(0,0) scale(1,1) rotate(180)");
 
 
         //Interactions

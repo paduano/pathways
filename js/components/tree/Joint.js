@@ -9,6 +9,10 @@ function Joint(position) {
     self.branches = [];
     self.previousBranch = null;
     self.position = position;
+
+    //object with a method "getPosition" to follow
+    self.anchor = null;
+
     //sum of the length of the branches from root to here
     self.depth = undefined;
     //longest path passing through this joint
