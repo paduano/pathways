@@ -1,0 +1,59 @@
+.demos-controller-details-container {
+    position: absolute;
+    width: 40vh;
+    height: 100vh;
+    min-height: 100vh;
+    background-color: #374185;
+    opacity: 0.9;
+    font-family: "Lato-Thin";
+    padding:10px;
+    color: white;
+}
+
+.demos-controller-title-container {
+
+    color: white;
+
+
+}
+
+.demos-controller-description-container {
+    text-align: justify;
+    text-justify: inter-word;
+    padding-right: 20px;
+}
+
+
+.demos-controller-dropdown-title {
+    cursor: pointer;
+    font-size: 1.6em;
+    font-family: "Lato-Light";
+}
+
+.demos-controller-dropdown-title-img {
+    height:1.1em;
+    margin-top:0.3em;
+    margin-right: 0.2em;
+    float:left;
+    content:url("/pathways/resources/img/demos-controller-dropdown-selected.png");
+}
+
+.demos-controller-dropdown-list {
+    cursor: pointer;
+    padding-top: 5px;
+    padding-left: 1.2em;
+    font-family: "Lato-Thin";
+
+}
+
+.demos-controller-dropdown-list-element {
+    font-size: 1.2em;
+    margin-top: 5px;
+}
+
+.demos-controller-description-container {
+    margin-top: 20px;
+}
+
+
+

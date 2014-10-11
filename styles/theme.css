@@ -5,3 +5,20 @@ body {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+/** FONTS **/
+
+@font-face {
+    font-family: 'Lato-Thin';
+    src: url('/pathways/resources/fonts/Lato-Thin.ttf');
+}
+
+@font-face {
+    font-family: 'Lato-Regular';
+    src: url('/pathways/resources/fonts/Lato-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Lato-Light';
+    src: url('/pathways/resources/fonts/Lato-Light.ttf');
+}

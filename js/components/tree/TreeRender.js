@@ -1,4 +1,7 @@
-function TreeRender(svg, jointsSystem) {
+function TreeRender(svg, jointsSystem, params) {
+    params = params || {};
+    params.flatBase = params.flatBase || false;
+
     var self = this;
     var _jointsSystem = jointsSystem;
     var _drawWholeSkeleton = false;
@@ -269,21 +272,31 @@ function TreeRender(svg, jointsSystem) {
                     }
 
                 } else if (joint.isRoot()){
-
-                    if(index == 0){
-                        transVector = (joint.branches[0].getVector()
-                                                        .normalize()
-                                                        .invert()
-                                                        .perpendicular())
-                                                        .mulS(width);
-                    } else if (index == nbranches) {
-                        transVector = (joint.branches[0].getVector()
-                                                        .normalize()
-                                                        .perpendicular())
-                                                        .mulS(width);
+                    if(!params.flatBase){
+                        if(index == 0){
+                            transVector = (joint.branches[0].getVector()
+                                .normalize()
+                                .invert()
+                                .perpendicular())
+                                .mulS(width);
+                        } else if (index == nbranches) {
+                            transVector = (joint.branches[0].getVector()
+                                .normalize()
+                                .perpendicular())
+                                .mulS(width);
+                        } else {
+                            //XXX TODO MULTIPLE BRANCHES RIGHT ON THE ROOT
+                        }
                     } else {
-                        //XXX TODO MULTIPLE BRANCHES RIGHT ON THE ROOT
+                        if(index == 0){
+                            transVector = vec2(1,0)
+                                .mulS(width);
+                        } else if (index == nbranches) {
+                            transVector = vec2(-1,0)
+                                .mulS(width);
+                        }
                     }
+
 
                 } else {
 

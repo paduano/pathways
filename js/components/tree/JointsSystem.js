@@ -60,7 +60,7 @@ function JointsSystem(root) {
         self.recursiveWalk(
            function(joint){
                //force for make it follow the anchor
-               if(joint.anchor != null) {
+               if(joint.anchor != null && !_jointDragged) {
                    var force = (joint.anchor.getPosition().subV(joint.position).mulS(1));
                    joint.addExternalForce(force);
                }
