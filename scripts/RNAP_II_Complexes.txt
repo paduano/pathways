@@ -1,0 +1,1003 @@
+Complex getDisplayName() = GDP bound eRF3	getRDFId = http://www.reactome.org/biopax/48887Complex82
+	eRF3
+	GDP
+Complex getDisplayName() = 60S ribosomal complex	getRDFId = http://www.reactome.org/biopax/48887Complex90
+	CEP52
+	P02404
+	G1.16
+	P12751
+	P49207
+	EAP
+	60S ribosomal protein L29
+	P02433
+	P05387
+	P42766
+	P46779
+	L1
+	P29316
+	http://www.reactome.org/biopax/48887Rna4
+	http://www.reactome.org/biopax/48887Rna2
+	http://www.reactome.org/biopax/48887Rna3
+	P25120
+	P04645
+	P14118
+	P05386
+	60S ribosomal protein L13
+	CSA-19
+	P39030
+	L10E
+	L36a
+	Q02543
+	QM protein
+	TAXREB107
+	60S ribosomal protein L13a
+	HG12
+	L23
+	P12947
+	P08526
+	P46778
+	P46776
+	P32969
+	P18077
+	L17
+	P39026
+	Q02877
+	P18124
+	Q92901
+	P23411
+	CAG-ISL 7
+	Q9Y3U8
+	P46777
+	P30050
+	TARBP-B
+	Q9UNX3
+	PLA-X polypeptide
+	Q07020
+	L30
+Complex getDisplayName() = 40S ribosomal complex	getRDFId = http://www.reactome.org/biopax/48887Complex89
+	P39019
+	KE3
+	P09058
+	P46782
+	SCR10
+	http://www.reactome.org/biopax/48887Rna1
+	Q05472
+	P25112
+	S8
+	P46781
+	40S ribosomal protein S27a
+	P02383
+	P06366
+	S19
+	P49241
+	P11174
+	P39028
+	P35265
+	S4
+	MPS-1
+	P46783
+	P25398
+	P08708
+	P40
+	P39027
+	Q02546
+	P25111
+	P23396
+	P10660
+	P17008
+	P04643
+	P22090
+	P17075
+	P30054
+Complex getDisplayName() = 80S ribosome	getRDFId = http://www.reactome.org/biopax/48887Complex88
+	http://www.reactome.org/biopax/48887Complex90
+	http://www.reactome.org/biopax/48887Complex89
+Complex getDisplayName() = Stalled Pol II complex with damaged DNA hybrid	getRDFId = http://www.reactome.org/biopax/48887Complex2724
+	http://www.reactome.org/biopax/48887PhysicalEntity53
+	http://www.reactome.org/biopax/48887Complex228
+Complex getDisplayName() = Transcription-coupled (TC) repair complex	getRDFId = http://www.reactome.org/biopax/48887Complex2725
+	http://www.reactome.org/biopax/48887Complex177
+	PP3898
+	TFIIS protein
+	CSA protein
+	XPG protein
+	CSB protein
+	http://www.reactome.org/biopax/48887Complex2720
+Complex getDisplayName() = Stalled Pol II in TC-NER	getRDFId = http://www.reactome.org/biopax/48887Complex2726
+	http://www.reactome.org/biopax/48887Complex228
+Complex getDisplayName() = Active Pol II complex with repaired DNA template:mRNA hybrid	getRDFId = http://www.reactome.org/biopax/48887Complex2727
+	http://www.reactome.org/biopax/48887PhysicalEntity473
+	http://www.reactome.org/biopax/48887Complex228
+Complex getDisplayName() = ERCC1:XPF complex	getRDFId = http://www.reactome.org/biopax/48887Complex2720
+	ERCC1, DNA excision repair protein
+	XPF protein
+Complex getDisplayName() = Active Pol II transcription complex with damaged DNA hybrid	getRDFId = http://www.reactome.org/biopax/48887Complex2723
+	http://www.reactome.org/biopax/48887PhysicalEntity53
+	http://www.reactome.org/biopax/48887Complex228
+Complex getDisplayName() = eIF2:GTP	getRDFId = http://www.reactome.org/biopax/48887Complex407
+	http://www.reactome.org/biopax/48887Complex406
+	GTP
+Complex getDisplayName() = ternary complex	getRDFId = http://www.reactome.org/biopax/48887Complex408
+	http://www.reactome.org/biopax/48887Complex407
+	http://www.reactome.org/biopax/48887PhysicalEntity126
+Complex getDisplayName() = 40S:eIF3:eIF1A	getRDFId = http://www.reactome.org/biopax/48887Complex405
+	eIF1A
+	http://www.reactome.org/biopax/48887Complex404
+	http://www.reactome.org/biopax/48887Complex89
+Complex getDisplayName() = MP	getRDFId = http://www.reactome.org/biopax/48887Complex406
+	eIF2-gamma
+	EIF-2A
+	eIF2-beta
+Complex getDisplayName() = eIF3 subunits complex	getRDFId = http://www.reactome.org/biopax/48887Complex404
+	eIF3d
+	eIF3k
+	eIF3b
+	eIF3e
+	eIF3j
+	eIF3f
+	eIF3a
+	eIF3c
+	eIF3h
+	eIF3i
+	eIF3g
+Complex getDisplayName() = 43S complex	getRDFId = http://www.reactome.org/biopax/48887Complex409
+	http://www.reactome.org/biopax/48887Complex408
+	eIF1A
+	http://www.reactome.org/biopax/48887Complex404
+	http://www.reactome.org/biopax/48887Complex89
+Complex getDisplayName() = eIF4A subunits complex	getRDFId = http://www.reactome.org/biopax/48887Complex411
+	eIF4AII
+	eIF4AI
+Complex getDisplayName() = 43S:mRNA:eIF4F:eIF4B:eIF4H	getRDFId = http://www.reactome.org/biopax/48887Complex416
+	eIF4B
+	eIF4H
+	http://www.reactome.org/biopax/48887Complex412
+	mRNA
+	http://www.reactome.org/biopax/48887Complex409
+Complex getDisplayName() = Ceruloplasmin mRNA:eIF4F:eIF4B:eIF4H	getRDFId = http://www.reactome.org/biopax/48887Complex417
+	eIF4B
+	eIF4H
+	http://www.reactome.org/biopax/48887Complex412
+	http://www.reactome.org/biopax/48887Rna17
+Complex getDisplayName() = 43S: Ceruloplasmin mRNA:eIF4F:eIF4B:eIF4H:PABP	getRDFId = http://www.reactome.org/biopax/48887Complex418
+	eIF4B
+	eIF4H
+	PABP
+	http://www.reactome.org/biopax/48887Complex412
+	http://www.reactome.org/biopax/48887Rna17
+	http://www.reactome.org/biopax/48887Complex409
+Complex getDisplayName() = 48S complex	getRDFId = http://www.reactome.org/biopax/48887Complex419
+	eIF4B
+	eIF4H
+	http://www.reactome.org/biopax/48887Complex412
+	mRNA
+	http://www.reactome.org/biopax/48887Complex409
+Complex getDisplayName() = eIF4F	getRDFId = http://www.reactome.org/biopax/48887Complex412
+	P220
+	http://www.reactome.org/biopax/48887Complex411
+	eIF4E
+Complex getDisplayName() = mRNP	getRDFId = http://www.reactome.org/biopax/48887Complex413
+	http://www.reactome.org/biopax/48887PhysicalEntity127
+	mRNA
+Complex getDisplayName() = eIF4F:mRNP	getRDFId = http://www.reactome.org/biopax/48887Complex414
+	http://www.reactome.org/biopax/48887Complex412
+	http://www.reactome.org/biopax/48887Complex413
+Complex getDisplayName() = mRNA:eIF4F:eIF4B:eIF4H	getRDFId = http://www.reactome.org/biopax/48887Complex415
+	eIF4B
+	eIF4H
+	http://www.reactome.org/biopax/48887Complex412
+	mRNA
+Complex getDisplayName() = 40S:Met-tRNAi:mRNA	getRDFId = http://www.reactome.org/biopax/48887Complex421
+	mRNA
+	http://www.reactome.org/biopax/48887PhysicalEntity126
+	http://www.reactome.org/biopax/48887Complex89
+Complex getDisplayName() = 80S:Met-tRNAi:mRNA:eIF5B:GTP	getRDFId = http://www.reactome.org/biopax/48887Complex422
+	mRNA
+	http://www.reactome.org/biopax/48887PhysicalEntity126
+	http://www.reactome.org/biopax/48887Complex423
+	http://www.reactome.org/biopax/48887Complex88
+Complex getDisplayName() = eIF2:GDP	getRDFId = http://www.reactome.org/biopax/48887Complex420
+	http://www.reactome.org/biopax/48887Complex406
+	GDP
+Complex getDisplayName() = eIF2B subunits complex	getRDFId = http://www.reactome.org/biopax/48887Complex426
+	S20I15
+	eIF2B-delta
+	eIF2B-gamma
+	eIF2B-epsilon
+	eIF2B-alpha
+Complex getDisplayName() = eIF5B:GDP	getRDFId = http://www.reactome.org/biopax/48887Complex425
+	GDP
+	eIF5B
+Complex getDisplayName() = 80S:Met-tRNAi:mRNA	getRDFId = http://www.reactome.org/biopax/48887Complex424
+	mRNA
+	http://www.reactome.org/biopax/48887PhysicalEntity126
+	http://www.reactome.org/biopax/48887Complex88
+Complex getDisplayName() = eIF5B:GTP	getRDFId = http://www.reactome.org/biopax/48887Complex423
+	GTP
+	eIF5B
+Complex getDisplayName() = phospho-L13a associated wth the 3' UTR GAIT element of ceruloplasmin mRNA within the translation initiation complex	getRDFId = http://www.reactome.org/biopax/48887Complex429
+	http://www.reactome.org/biopax/48887Complex418
+	L13a 60S ribosomal protein
+Complex getDisplayName() = 60s ribosomal complex lacking L13a subunit	getRDFId = http://www.reactome.org/biopax/48887Complex428
+	CEP52
+	P02404
+	G1.16
+	P12751
+	P49207
+	EAP
+	60S ribosomal protein L29
+	P02433
+	P05387
+	P42766
+	P46779
+	L1
+	P29316
+	http://www.reactome.org/biopax/48887Rna4
+	http://www.reactome.org/biopax/48887Rna2
+	http://www.reactome.org/biopax/48887Rna3
+	P25120
+	P04645
+	P14118
+	P05386
+	60S ribosomal protein L13
+	CSA-19
+	P39030
+	L10E
+	L36a
+	Q02543
+	QM protein
+	TAXREB107
+	HG12
+	L23
+	P12947
+	P08526
+	P46778
+	P46776
+	P32969
+	P18077
+	L17
+	P39026
+	Q02877
+	P18124
+	Q92901
+	P23411
+	CAG-ISL 7
+	Q9Y3U8
+	P46777
+	P30050
+	TARBP-B
+	Q9UNX3
+	PLA-X polypeptide
+	Q07020
+	L30
+Complex getDisplayName() = eIF2:GDP: eIF2B	getRDFId = http://www.reactome.org/biopax/48887Complex427
+	http://www.reactome.org/biopax/48887Complex406
+	GDP
+	http://www.reactome.org/biopax/48887Complex426
+Complex getDisplayName() = pol II transcription complex	getRDFId = http://www.reactome.org/biopax/48887Complex212
+	http://www.reactome.org/biopax/48887Complex177
+	http://www.reactome.org/biopax/48887Complex217
+	http://www.reactome.org/biopax/48887Complex216
+	TFIIB
+	http://www.reactome.org/biopax/48887Complex218
+	http://www.reactome.org/biopax/48887PhysicalEntity48
+	http://www.reactome.org/biopax/48887Complex213
+Complex getDisplayName() = RNA Polymerase II (unphosphorylated):TFIIF complex	getRDFId = http://www.reactome.org/biopax/48887Complex213
+	http://www.reactome.org/biopax/48887Complex215
+	http://www.reactome.org/biopax/48887Complex214
+Complex getDisplayName() = TFIIF	getRDFId = http://www.reactome.org/biopax/48887Complex215
+	TFIIF-beta
+	TFIIF-alpha
+Complex getDisplayName() = RNA Polymerase II holoenzyme complex (unphosphorylated)	getRDFId = http://www.reactome.org/biopax/48887Complex214
+	RPB7.0
+	RPB10
+	XAP4
+	RPB6
+	RPB3
+	RPB8
+	RPB2
+	RPB7
+	RPB4
+	RPB9
+	RPB1
+	RPB11
+Complex getDisplayName() = TFIIE	getRDFId = http://www.reactome.org/biopax/48887Complex217
+	TFIIE-beta
+	TFIIE-alpha
+Complex getDisplayName() = TFIID	getRDFId = http://www.reactome.org/biopax/48887Complex216
+	TAFII20/TAFII15
+	TBP
+	TAFII18
+	TAFII28
+	TAFII135
+	TAF10
+	P250
+	TAF9
+	TAFII100
+	TAFII80
+	TAFII-105
+Complex getDisplayName() = pol II transcription complex containing 4-9 nucleotide long transcript	getRDFId = http://www.reactome.org/biopax/48887Complex219
+	http://www.reactome.org/biopax/48887Complex177
+	http://www.reactome.org/biopax/48887Complex217
+	http://www.reactome.org/biopax/48887PhysicalEntity49
+	http://www.reactome.org/biopax/48887Complex213
+Complex getDisplayName() = TFIIA	getRDFId = http://www.reactome.org/biopax/48887Complex218
+	Transcription Factor IIA beta chain - p19
+	Transcription Factor IIA alpha chain - p35
+	TFIIAS
+Complex getDisplayName() = eEF1A:GTP	getRDFId = http://www.reactome.org/biopax/48887Complex443
+	GTP
+	eEF1A
+Complex getDisplayName() = eEF1A:GTP:aminoacyl-tRNA complex	getRDFId = http://www.reactome.org/biopax/48887Complex444
+	http://www.reactome.org/biopax/48887Complex443
+	http://www.reactome.org/biopax/48887SmallMolecule180
+Complex getDisplayName() = eEF2:GTP	getRDFId = http://www.reactome.org/biopax/48887Complex449
+	eEF2
+	GTP
+Complex getDisplayName() = Elongation complex with growing peptide chain	getRDFId = http://www.reactome.org/biopax/48887Complex448
+	http://www.reactome.org/biopax/48887PhysicalEntity134
+	mRNA
+	http://www.reactome.org/biopax/48887Complex88
+Complex getDisplayName() = eEF1A:GDP	getRDFId = http://www.reactome.org/biopax/48887Complex447
+	eEF1A
+	GDP
+Complex getDisplayName() = 80S:Met-tRNAi:mRNA:aminoacyl-tRNA	getRDFId = http://www.reactome.org/biopax/48887Complex446
+	http://www.reactome.org/biopax/48887SmallMolecule180
+	http://www.reactome.org/biopax/48887Complex424
+Complex getDisplayName() = 80S:aminoacyl tRNA:mRNA:eEF1A:GTP	getRDFId = http://www.reactome.org/biopax/48887Complex445
+	http://www.reactome.org/biopax/48887Complex444
+	http://www.reactome.org/biopax/48887Complex424
+Complex getDisplayName() = eEF1B complex	getRDFId = http://www.reactome.org/biopax/48887Complex452
+	EF-1-gamma
+	EF-1-delta
+	EF-1-beta
+Complex getDisplayName() = eEF1B:GDP exchange complex	getRDFId = http://www.reactome.org/biopax/48887Complex453
+	http://www.reactome.org/biopax/48887Complex452
+	GDP
+Complex getDisplayName() = GTP bound eRF3	getRDFId = http://www.reactome.org/biopax/48887Complex454
+	GTP
+	eRF3
+Complex getDisplayName() = eRF3-GTP:eRF1:80S Ribosome:mRNA:peptidyl-tRNA Complex	getRDFId = http://www.reactome.org/biopax/48887Complex455
+	http://www.reactome.org/biopax/48887Complex454
+	http://www.reactome.org/biopax/48887Complex450
+	eRF1
+Complex getDisplayName() = elongating polypeptide chain	getRDFId = http://www.reactome.org/biopax/48887Complex450
+	http://www.reactome.org/biopax/48887PhysicalEntity134
+	mRNA
+	http://www.reactome.org/biopax/48887Complex88
+Complex getDisplayName() = eEF2:GDP	getRDFId = http://www.reactome.org/biopax/48887Complex451
+	eEF2
+	GDP
+Complex getDisplayName() = eRF3-GDP:eRF1:80S Ribosome:mRNA:tRNA Complex	getRDFId = http://www.reactome.org/biopax/48887Complex457
+	tRNA
+	mRNA
+	eRF1
+	http://www.reactome.org/biopax/48887Complex82
+	http://www.reactome.org/biopax/48887Complex88
+Complex getDisplayName() = eRF3-GDP:eRF1:80S Ribosome:mRNA:peptidyl-tRNA Complex	getRDFId = http://www.reactome.org/biopax/48887Complex456
+	http://www.reactome.org/biopax/48887Complex450
+	eRF1
+	http://www.reactome.org/biopax/48887Complex82
+Complex getDisplayName() = pol II promoter:TFIID:TFIIA:TFIIB complex	getRDFId = http://www.reactome.org/biopax/48887Complex240
+	TFIIB
+	http://www.reactome.org/biopax/48887Complex218
+	http://www.reactome.org/biopax/48887Complex241
+Complex getDisplayName() = pol II promoter:TFIID complex	getRDFId = http://www.reactome.org/biopax/48887Complex241
+	http://www.reactome.org/biopax/48887Complex216
+	http://www.reactome.org/biopax/48887PhysicalEntity55
+Complex getDisplayName() = RPA heterotrimer	getRDFId = http://www.reactome.org/biopax/48887Complex466
+	RP-A
+	RP-A
+	RP-A
+Complex getDisplayName() = pol II closed pre-initiation complex	getRDFId = http://www.reactome.org/biopax/48887Complex238
+	http://www.reactome.org/biopax/48887Complex177
+	http://www.reactome.org/biopax/48887Complex217
+	http://www.reactome.org/biopax/48887Complex239
+Complex getDisplayName() = pol II promoter:TFIID:TFIIA:TFIIB:Pol II:TFIIF complex	getRDFId = http://www.reactome.org/biopax/48887Complex239
+	http://www.reactome.org/biopax/48887Complex240
+	http://www.reactome.org/biopax/48887Complex213
+Complex getDisplayName() = Aborted elongation complex after arrest	getRDFId = http://www.reactome.org/biopax/48887Complex236
+	http://www.reactome.org/biopax/48887PhysicalEntity51
+	http://www.reactome.org/biopax/48887Complex215
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887Complex228
+Complex getDisplayName() = pol II open pre-initiation complex	getRDFId = http://www.reactome.org/biopax/48887Complex237
+	http://www.reactome.org/biopax/48887Complex177
+	http://www.reactome.org/biopax/48887Complex217
+	http://www.reactome.org/biopax/48887Complex216
+	TFIIB
+	http://www.reactome.org/biopax/48887PhysicalEntity54
+	http://www.reactome.org/biopax/48887Complex218
+	http://www.reactome.org/biopax/48887Complex213
+Complex getDisplayName() = DSIF:NELF:early elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex231
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex232
+Complex getDisplayName() = Arrested processive elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex230
+	http://www.reactome.org/biopax/48887PhysicalEntity51
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+Complex getDisplayName() = Aborted early elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex235
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex232
+Complex getDisplayName() = RNA Polymerase II holoenzyme complex (hypophosphorylated):TFIIF complex	getRDFId = http://www.reactome.org/biopax/48887Complex234
+	RPB3
+	RPB8
+	RPB2
+	RPB7
+	RPB4
+	RPB9
+	RPB11
+	http://www.reactome.org/biopax/48887Complex215
+	RPB7.0
+	RPB10
+	XAP4
+	RPB6
+	RPB1
+Complex getDisplayName() = RNA Pol II (hypophosphorylated):capped pre-mRNA complex	getRDFId = http://www.reactome.org/biopax/48887Complex233
+	http://www.reactome.org/biopax/48887PhysicalEntity52
+	http://www.reactome.org/biopax/48887Complex234
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex101
+Complex getDisplayName() = RNA Pol II (hypophosphorylated) complex bound to DSIF protein	getRDFId = http://www.reactome.org/biopax/48887Complex232
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex233
+Complex getDisplayName() = Elongin Complex	getRDFId = http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex222
+	EloA
+Complex getDisplayName() = Paused processive elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex226
+	http://www.reactome.org/biopax/48887PhysicalEntity51
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	RNA polymerase II elongation factor ELL
+Complex getDisplayName() = RNA Polymerase II holoenzyme complex (hyperphosphorylated):TFIIF complex	getRDFId = http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887Complex215
+	http://www.reactome.org/biopax/48887Complex228
+Complex getDisplayName() = RNA Polymerase II holoenzyme complex (hyperphosphorylated)	getRDFId = http://www.reactome.org/biopax/48887Complex228
+	RPB7.0
+	RPB10
+	XAP4
+	RPB6
+	RPB3
+	RPB8
+	RPB1
+	RPB2
+	RPB7
+	RPB4
+	RPB9
+	RPB11
+Complex getDisplayName() = Processive elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex229
+	http://www.reactome.org/biopax/48887PhysicalEntity51
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+Complex getDisplayName() = Pol II Promoter Escape Complex	getRDFId = http://www.reactome.org/biopax/48887Complex220
+	http://www.reactome.org/biopax/48887PhysicalEntity50
+	http://www.reactome.org/biopax/48887Complex177
+	http://www.reactome.org/biopax/48887Complex217
+	http://www.reactome.org/biopax/48887Complex216
+	TFIIB
+	http://www.reactome.org/biopax/48887Complex218
+	http://www.reactome.org/biopax/48887Complex213
+Complex getDisplayName() = Elongin B:C complex	getRDFId = http://www.reactome.org/biopax/48887Complex222
+	EloB
+	EloC
+Complex getDisplayName() = DSIF complex	getRDFId = http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Protein1016
+	SPT4H1 protein
+Complex getDisplayName() = NELF complex	getRDFId = http://www.reactome.org/biopax/48887Complex224
+	NELF-A
+	NELF-E
+	HSPC130
+	NELF-B
+Complex getDisplayName() = FACT complex	getRDFId = http://www.reactome.org/biopax/48887Complex223
+	FACT 140 kDa subunit
+	T160
+Complex getDisplayName() = Mature Intronless transcript derived Histone mRNA:SLBP:CBP80:CBP20	getRDFId = http://www.reactome.org/biopax/48887Complex280
+	Histone stem-loop binding protein
+	CBP80
+	http://www.reactome.org/biopax/48887PhysicalEntity78
+	NIP1
+Complex getDisplayName() = Capped Intronless Histone pre-mRNA:CBC:ZFP100 Complex	getRDFId = http://www.reactome.org/biopax/48887Complex281
+	http://www.reactome.org/biopax/48887Complex279
+	http://www.reactome.org/biopax/48887Complex276
+Complex getDisplayName() = Mature intronless transcript derived Histone pre-mRNA:CBC complex	getRDFId = http://www.reactome.org/biopax/48887Complex282
+	http://www.reactome.org/biopax/48887PhysicalEntity78
+	http://www.reactome.org/biopax/48887Complex101
+Complex getDisplayName() = upstream mRNA fragment:CPSF:PAP:PABPN1 complex	getRDFId = http://www.reactome.org/biopax/48887Complex287
+	PAP
+	http://www.reactome.org/biopax/48887Complex269
+	PABPN1
+	http://www.reactome.org/biopax/48887PhysicalEntity81
+	CBP80
+	NIP1
+Complex getDisplayName() = intronless pre-mRNA cleavage complex	getRDFId = http://www.reactome.org/biopax/48887Complex283
+	PAP
+	PABPN1
+	http://www.reactome.org/biopax/48887Complex266
+	http://www.reactome.org/biopax/48887Complex284
+	http://www.reactome.org/biopax/48887Complex267
+Complex getDisplayName() = CstF:CPSF:capped intronless pre-mRNA:CBC complex	getRDFId = http://www.reactome.org/biopax/48887Complex284
+	http://www.reactome.org/biopax/48887Complex285
+	http://www.reactome.org/biopax/48887Complex268
+Complex getDisplayName() = CPSF:capped intronless pre-mRNA:CBC complex	getRDFId = http://www.reactome.org/biopax/48887Complex285
+	http://www.reactome.org/biopax/48887Complex269
+	http://www.reactome.org/biopax/48887Complex286
+Complex getDisplayName() = capped intronless pre-mRNA:CBC complex	getRDFId = http://www.reactome.org/biopax/48887Complex286
+	CBP80
+	http://www.reactome.org/biopax/48887PhysicalEntity79
+	NIP1
+Complex getDisplayName() = EJC complex	getRDFId = http://www.reactome.org/biopax/48887Complex270
+	http://www.reactome.org/biopax/48887Complex271
+	http://www.reactome.org/biopax/48887Complex272
+Complex getDisplayName() = pre-EJC complex	getRDFId = http://www.reactome.org/biopax/48887Complex271
+	THOC4(Aly/Ref)
+	RNPS1
+	SRRM1
+	UPf3B
+	NFX.1
+Complex getDisplayName() = Capped Intronless Histone pre-mRNA:CBP80:CBP20:SLBP:ZFP100 Complex	getRDFId = http://www.reactome.org/biopax/48887Complex275
+	http://www.reactome.org/biopax/48887Complex278
+	http://www.reactome.org/biopax/48887Complex276
+Complex getDisplayName() = Magoh-Y14 complex	getRDFId = http://www.reactome.org/biopax/48887Complex272
+	magoh
+	RBM8A/Y14
+Complex getDisplayName() = 3' end cleaved, ligated exon containing complex	getRDFId = http://www.reactome.org/biopax/48887Complex273
+	http://www.reactome.org/biopax/48887Complex269
+	http://www.reactome.org/biopax/48887PhysicalEntity66
+	http://www.reactome.org/biopax/48887Complex101
+	http://www.reactome.org/biopax/48887PhysicalEntity72
+	http://www.reactome.org/biopax/48887PhysicalEntity75
+	SR9 / SRp30
+	p54
+	PAP
+	SRp20
+	Ehb3
+	U2AG_HUMAN
+	PABPN1
+	SR7/ 9G8 protein
+	http://www.reactome.org/biopax/48887Complex270
+	hU2AF(65)
+	SRp55
+	SRp40
+	SC-35
+	SF2/ASF/SFRS1
+	hPrp16
+	SRP001LB
+	http://www.reactome.org/biopax/48887PhysicalEntity70
+	http://www.reactome.org/biopax/48887PhysicalEntity71
+Complex getDisplayName() = Capped Intronless Histone pre-mRNA:CBP80:CBP20:SLBP	getRDFId = http://www.reactome.org/biopax/48887Complex278
+	Histone stem-loop binding protein
+	http://www.reactome.org/biopax/48887Complex279
+Complex getDisplayName() = Capped Intronless Histone pre-mRNA:CBC complex	getRDFId = http://www.reactome.org/biopax/48887Complex279
+	http://www.reactome.org/biopax/48887PhysicalEntity77
+	http://www.reactome.org/biopax/48887Complex101
+Complex getDisplayName() = U7 snRNP:ZFP100 Complex	getRDFId = http://www.reactome.org/biopax/48887Complex276
+	ZFP100
+	http://www.reactome.org/biopax/48887Complex277
+Complex getDisplayName() = U7 snRNP-specific Sm core complex	getRDFId = http://www.reactome.org/biopax/48887Complex277
+	SmF
+	SmE
+	Sm-D3
+	snRNP-B
+	http://www.reactome.org/biopax/48887PhysicalEntity76
+	U7 snRNA-associated Sm-like protein LSm11
+	U7 snRNA-associated Sm-like protein LSm10
+	SmG
+Complex getDisplayName() = CPSF	getRDFId = http://www.reactome.org/biopax/48887Complex269
+	CPSF1
+	CPSF2
+	CPSF3
+	http://www.reactome.org/biopax/48887PhysicalEntity69
+Complex getDisplayName() = Early elongation complex with hyperphosphorylated Pol II CTD	getRDFId = http://www.reactome.org/biopax/48887Complex260
+	http://www.reactome.org/biopax/48887PhysicalEntity63
+	http://www.reactome.org/biopax/48887Complex143
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex227
+Complex getDisplayName() = Elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex261
+	http://www.reactome.org/biopax/48887Complex177
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex223
+	http://www.reactome.org/biopax/48887Complex260
+	http://www.reactome.org/biopax/48887Complex225
+	RNA polymerase II elongation factor ELL
+Complex getDisplayName() = Elongation complex prior to separation	getRDFId = http://www.reactome.org/biopax/48887Complex262
+	http://www.reactome.org/biopax/48887PhysicalEntity64
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+Complex getDisplayName() = Elongation complex with separated and uncleaved transcript	getRDFId = http://www.reactome.org/biopax/48887Complex263
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	http://www.reactome.org/biopax/48887PhysicalEntity65
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+Complex getDisplayName() = Ligated exon containing complex	getRDFId = http://www.reactome.org/biopax/48887Complex264
+	http://www.reactome.org/biopax/48887PhysicalEntity66
+	http://www.reactome.org/biopax/48887Complex101
+	http://www.reactome.org/biopax/48887PhysicalEntity72
+	http://www.reactome.org/biopax/48887PhysicalEntity73
+	http://www.reactome.org/biopax/48887PhysicalEntity74
+	SR9 / SRp30
+	p54
+	SRp20
+	Ehb3
+	U2AG_HUMAN
+	SR7/ 9G8 protein
+	http://www.reactome.org/biopax/48887Complex270
+	SRp55
+	hU2AF(65)
+	SRp40
+	SC-35
+	SF2/ASF/SFRS1
+	hPrp16
+	SRP001LB
+	http://www.reactome.org/biopax/48887PhysicalEntity70
+	http://www.reactome.org/biopax/48887Complex265
+	http://www.reactome.org/biopax/48887PhysicalEntity71
+Complex getDisplayName() = Cleavage and Polyadenylation Complex	getRDFId = http://www.reactome.org/biopax/48887Complex265
+	PAP
+	http://www.reactome.org/biopax/48887Complex269
+	PABPN1
+	http://www.reactome.org/biopax/48887Complex266
+	http://www.reactome.org/biopax/48887Complex267
+	http://www.reactome.org/biopax/48887Complex268
+Complex getDisplayName() = CF II	getRDFId = http://www.reactome.org/biopax/48887Complex266
+	Clp1
+	PCF11
+Complex getDisplayName() = CF I	getRDFId = http://www.reactome.org/biopax/48887Complex267
+	http://www.reactome.org/biopax/48887PhysicalEntity68
+	http://www.reactome.org/biopax/48887PhysicalEntity67
+	CF I - 25 kDa subunit
+	CF I - 59 kDa subunit
+Complex getDisplayName() = CstF	getRDFId = http://www.reactome.org/biopax/48887Complex268
+	CSTF 77 kD subunit
+	CST1_HUMAN
+	CST2_HUMAN
+Complex getDisplayName() = Mature intronless transcript derived Histone mRNA:SLBP:TAP:Aly/Ref complex	getRDFId = http://www.reactome.org/biopax/48887Complex333
+	TAP
+	THOC4(Aly/Ref)
+	Histone stem-loop binding protein
+	http://www.reactome.org/biopax/48887PhysicalEntity78
+Complex getDisplayName() = Mature intronless transcript derived Histone mRNA:SLBP:TAP:Aly/Ref complex	getRDFId = http://www.reactome.org/biopax/48887Complex334
+	http://www.reactome.org/biopax/48887PhysicalEntity108
+	Histone stem-loop binding protein
+	THOC4(Aly/Ref)
+	TAP
+Complex getDisplayName() = Mature Intronless Transcript Derived Histone mRNA:TAP:Aly/Ref complex	getRDFId = http://www.reactome.org/biopax/48887Complex336
+	TAP
+	THOC4(Aly/Ref)
+	http://www.reactome.org/biopax/48887PhysicalEntity78
+Complex getDisplayName() = Mature intronless transcript derived Histone mRNA:SLBP:eIF4E Complex	getRDFId = http://www.reactome.org/biopax/48887Complex335
+	http://www.reactome.org/biopax/48887PhysicalEntity108
+	Histone stem-loop binding protein
+	eIF4E
+Complex getDisplayName() = Mature SLBP independent Histone mRNA:eIF4E complex	getRDFId = http://www.reactome.org/biopax/48887Complex338
+	http://www.reactome.org/biopax/48887PhysicalEntity108
+	eIF4E
+Complex getDisplayName() = Mature Intronless Transcript Derived Histone mRNA:TAP:Aly/Ref Complex	getRDFId = http://www.reactome.org/biopax/48887Complex337
+	http://www.reactome.org/biopax/48887PhysicalEntity108
+	THOC4(Aly/Ref)
+	TAP
+Complex getDisplayName() = Mature intronless derived mRNA complex	getRDFId = http://www.reactome.org/biopax/48887Complex339
+	http://www.reactome.org/biopax/48887Complex269
+	http://www.reactome.org/biopax/48887PhysicalEntity109
+	http://www.reactome.org/biopax/48887Complex101
+Complex getDisplayName() = Mature intronless derived mRNA:TAP:Aly/Ref complex	getRDFId = http://www.reactome.org/biopax/48887Complex341
+	http://www.reactome.org/biopax/48887PhysicalEntity110
+	THOC4(Aly/Ref)
+	TAP
+Complex getDisplayName() = Nucleoplasmic mature intronless derived mRNA:TAP:Aly/Ref complex	getRDFId = http://www.reactome.org/biopax/48887Complex340
+	TAP
+	http://www.reactome.org/biopax/48887PhysicalEntity109
+	THOC4(Aly/Ref)
+Complex getDisplayName() = Mature Intronless Transcript Derived mRNA:eIF4E Complex	getRDFId = http://www.reactome.org/biopax/48887Complex342
+	http://www.reactome.org/biopax/48887PhysicalEntity110
+	eIF4E
+Complex getDisplayName() = P-TEFb complex	getRDFId = http://www.reactome.org/biopax/48887Complex143
+	C-2K
+	CycT1
+	Cyclin T2
+Complex getDisplayName() = TFIIH	getRDFId = http://www.reactome.org/biopax/48887Complex177
+	http://www.reactome.org/biopax/48887Complex178
+	BTF2-p34
+	ERCC-3
+	BTF2-p44
+	BTF2-p62
+	BTF2-p52
+	CXPD
+Complex getDisplayName() = CAK	getRDFId = http://www.reactome.org/biopax/48887Complex178
+	CAK
+	p36
+	p37
+Complex getDisplayName() = Cap Binding Complex (CBC)	getRDFId = http://www.reactome.org/biopax/48887Complex101
+	CBP80
+	NIP1
+Complex getDisplayName() = Nuclear Pore Complex (NPC)	getRDFId = http://www.reactome.org/biopax/48887Complex103
+	Nup93
+	ALADIN
+	NLP1/CG1
+	Nup205
+	Nup88
+	Tpr
+	POM121
+	Gp210
+	Nup98
+	Nup214
+	Nup155
+	Nup188
+	Seh1
+	Nup35
+	Nup75
+	Nup153
+	Nup50
+	Nup358
+	Rae1/Gle2
+	http://www.reactome.org/biopax/48887Complex104
+	http://www.reactome.org/biopax/48887Complex105
+	Nup43
+Complex getDisplayName() = Nup107 Complex	getRDFId = http://www.reactome.org/biopax/48887Complex104
+	Nup133
+	Nup107
+	Nup37
+	Nup160
+	Nup96
+Complex getDisplayName() = Nup62 Complex	getRDFId = http://www.reactome.org/biopax/48887Complex105
+	Nup45
+	Nup58
+	Nup62
+	Nup54
+Complex getDisplayName() = DNA polymerase epsilon	getRDFId = http://www.reactome.org/biopax/48887Complex850
+	DNA polymerase II subunit A
+	DNA polymerase II subunit B
+Complex getDisplayName() = PCNA homotrimer	getRDFId = http://www.reactome.org/biopax/48887Complex865
+	PCNA
+Complex getDisplayName() = RFC Heteropentamer	getRDFId = http://www.reactome.org/biopax/48887Complex863
+	RFC3
+	RFC1
+	RFC2
+	RFC5
+	RFC4
+Complex getDisplayName() = DNA Polymerase delta tetramer	getRDFId = http://www.reactome.org/biopax/48887Complex868
+	DNA pol delta subunit 4
+	DNA pol delta subunit 2
+	DNA pol delta subunit 3
+	DNA pol delta catalytic subunit
+Complex getDisplayName() = Tat:P-TEFb(Cyclin T1:Cdk9) complex	getRDFId = http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Protein6018
+	http://www.reactome.org/biopax/48887Complex1748
+Complex getDisplayName() = RNA Pol II (hypophosphorylated):capped pre-mRNA complex	getRDFId = http://www.reactome.org/biopax/48887Complex1744
+	http://www.reactome.org/biopax/48887Complex234
+	FCP1P protein
+	http://www.reactome.org/biopax/48887PhysicalEntity309
+	http://www.reactome.org/biopax/48887Complex101
+Complex getDisplayName() = DSIF:NELF:early elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex1746
+	http://www.reactome.org/biopax/48887Complex1745
+	http://www.reactome.org/biopax/48887Complex224
+Complex getDisplayName() = RNA Pol II (hypophosphorylated) complex bound to DSIF protein	getRDFId = http://www.reactome.org/biopax/48887Complex1745
+	http://www.reactome.org/biopax/48887Complex1744
+	http://www.reactome.org/biopax/48887Complex221
+Complex getDisplayName() = P-TEFb(Cyclin T1:Cdk9) complex	getRDFId = http://www.reactome.org/biopax/48887Complex1748
+	C-2K
+	CycT1
+Complex getDisplayName() = Aborted HIV-1 early elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex1747
+	http://www.reactome.org/biopax/48887Complex1745
+	http://www.reactome.org/biopax/48887Complex224
+Complex getDisplayName() = Early elongation complex with separated aborted transcript	getRDFId = http://www.reactome.org/biopax/48887Complex1760
+	http://www.reactome.org/biopax/48887Complex1745
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887SmallMolecule40
+Complex getDisplayName() = HIV-1 processive elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex1761
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887PhysicalEntity311
+Complex getDisplayName() = HIV-1 arrested processive elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex1762
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887PhysicalEntity311
+Complex getDisplayName() = HIV-1 Tat-containing arrested processive elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex1767
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887PhysicalEntity311
+Complex getDisplayName() = HIV-1 Tat-containing aborted elongation complex after arrest	getRDFId = http://www.reactome.org/biopax/48887Complex1768
+	http://www.reactome.org/biopax/48887Complex215
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Complex225
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887Complex228
+	http://www.reactome.org/biopax/48887PhysicalEntity311
+Complex getDisplayName() = HIV-1 Tat-containing paused processive elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex1769
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887PhysicalEntity311
+Complex getDisplayName() = HIV-1 aborted elongation complex after arrest	getRDFId = http://www.reactome.org/biopax/48887Complex1763
+	http://www.reactome.org/biopax/48887Complex215
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887Complex228
+	http://www.reactome.org/biopax/48887PhysicalEntity311
+Complex getDisplayName() = HIV-1 early elongation complex with hyperphosphorylated Pol II CTD	getRDFId = http://www.reactome.org/biopax/48887Complex1764
+	http://www.reactome.org/biopax/48887Complex143
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887PhysicalEntity310
+Complex getDisplayName() = HIV-1 elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex1765
+	http://www.reactome.org/biopax/48887Complex177
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex223
+	http://www.reactome.org/biopax/48887Complex225
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887Complex1764
+Complex getDisplayName() = HIV-1 paused processive elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex1766
+	http://www.reactome.org/biopax/48887Complex143
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887PhysicalEntity311
+Complex getDisplayName() = Tat-containing early elongation complex with hyperphosphorylated Pol II CTD	getRDFId = http://www.reactome.org/biopax/48887Complex1750
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887PhysicalEntity310
+Complex getDisplayName() = Tat-containing early elongation complex with hyperphosphorylated Pol II CTD and phospho-NELF	getRDFId = http://www.reactome.org/biopax/48887Complex1751
+	http://www.reactome.org/biopax/48887Complex221
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887PhysicalEntity310
+	http://www.reactome.org/biopax/48887Complex1752
+Complex getDisplayName() = P-TEFb(Cyclin T1:Cdk9)-containing elongation complex with separated and uncleaved transcript	getRDFId = http://www.reactome.org/biopax/48887Complex1758
+	http://www.reactome.org/biopax/48887PhysicalEntity313
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+Complex getDisplayName() = DSIF:NELF:early elongation complex after limited nucleotide addition	getRDFId = http://www.reactome.org/biopax/48887Complex1759
+	http://www.reactome.org/biopax/48887Complex1745
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887SmallMolecule40
+Complex getDisplayName() = HIV-1 Tat-containing processive elongation complex	getRDFId = http://www.reactome.org/biopax/48887Complex1756
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887PhysicalEntity311
+Complex getDisplayName() = Tat-containing elongation complex prior to separation	getRDFId = http://www.reactome.org/biopax/48887Complex1757
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex221
+	http://www.reactome.org/biopax/48887Complex224
+	http://www.reactome.org/biopax/48887Complex223
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Complex225
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887SmallMolecule40
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887PhysicalEntity312
+Complex getDisplayName() = phospho-DSIF complex	getRDFId = http://www.reactome.org/biopax/48887Complex1754
+	http://www.reactome.org/biopax/48887Protein1016
+	SPT4H1 protein
+Complex getDisplayName() = HIV-1 elongation complex containing Tat	getRDFId = http://www.reactome.org/biopax/48887Complex1755
+	http://www.reactome.org/biopax/48887Complex177
+	TFIIS protein
+	http://www.reactome.org/biopax/48887Complex223
+	http://www.reactome.org/biopax/48887Complex225
+	RNA polymerase II elongation factor ELL
+	http://www.reactome.org/biopax/48887Complex1753
+Complex getDisplayName() = phospho-NELF complex	getRDFId = http://www.reactome.org/biopax/48887Complex1752
+	NELF-A
+	HSPC130
+	RD
+	NELF-B
+Complex getDisplayName() = Tat-containing early elongation complex with hyperphosphorylated Pol II CTD ( phospho-NELF phospho DSIF)	getRDFId = http://www.reactome.org/biopax/48887Complex1753
+	FCP1P protein
+	http://www.reactome.org/biopax/48887Complex1749
+	http://www.reactome.org/biopax/48887Complex227
+	http://www.reactome.org/biopax/48887PhysicalEntity310
+	http://www.reactome.org/biopax/48887Complex1754
+	http://www.reactome.org/biopax/48887Complex1752

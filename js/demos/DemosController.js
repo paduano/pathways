@@ -1,3 +1,6 @@
+//For debug purposes, the current demo is exposed globally
+var demo = null;
+
 function DemosController (demos) {
 
     var self = this;
@@ -23,6 +26,9 @@ function DemosController (demos) {
         var demoClass = _demosNameMap[demoName];
 
         _currentDemo = new demoClass(_svgContainer);
+
+        demo = _currentDemo;
+
         _titleDiv.text(demoClass.demoTitle);
         _descriptionContainer.text(demoClass.demoDescription);
         _currentDemo.start()
@@ -33,8 +39,6 @@ function DemosController (demos) {
         titleBox.append("img").classed("demos-controller-dropdown-title-img",true);
         _titleDiv = titleBox.append('div')
             .classed("demos-controller-dropdown-title",true).text("title");
-
-
 
 
         var dropDownList = _titleContainer.append('div')
@@ -80,9 +84,9 @@ function DemosController (demos) {
 
         _svgContainer = d3.select("body")
             .append("svg")
+            .classed("demos-controller",true)
             .attr("preserveAspectRatio", "xMidYMin meet" )
-            .attr("width", "100%")
-            .attr("height", "100%");
+            ;
 
         setUpDropDownMenu();
 

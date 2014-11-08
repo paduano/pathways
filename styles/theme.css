@@ -10,15 +10,15 @@ body {
 
 @font-face {
     font-family: 'Lato-Thin';
-    src: url('/pathways/resources/fonts/Lato-Thin.ttf');
+    src: url('../resources/fonts/Lato-Thin.ttf');
 }
 
 @font-face {
     font-family: 'Lato-Regular';
-    src: url('/pathways/resources/fonts/Lato-Regular.ttf');
+    src: url('../resources/fonts/Lato-Regular.ttf');
 }
 
 @font-face {
     font-family: 'Lato-Light';
-    src: url('/pathways/resources/fonts/Lato-Light.ttf');
+    src: url('../resources/fonts/Lato-Light.ttf');
 }

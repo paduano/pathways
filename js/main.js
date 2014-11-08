@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 
     //DEMOS CONTROLLER
-    demosController = new DemosController([DemoPlainTree,DemoCircularTrees]);
-    demosController.setUpDemo(DemoPlainTree.demoTitle);
+    demosController = new DemosController([DemoPlainTree,DemoCircularTrees, DemoComplex]);
+    demosController.setUpDemo(DemoComplex.demoTitle);
 
 });
