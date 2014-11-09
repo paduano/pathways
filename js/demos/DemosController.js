@@ -25,6 +25,11 @@ function DemosController (demos) {
 
         var demoClass = _demosNameMap[demoName];
 
+        //set the theme class properties
+        d3.select("body").attr("class","");
+        if(demoClass.theme)
+            d3.select("body").classed(demoClass.theme, true);
+
         _currentDemo = new demoClass(_svgContainer);
 
         demo = _currentDemo;

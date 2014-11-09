@@ -4,7 +4,8 @@
 function DemoComplex (containerSvg) {
     var self = this;
 
-    self.complexes = []
+    self.layout = null;
+    self.complexes = [];
 
     var jsys1;
 
@@ -27,12 +28,6 @@ function DemoComplex (containerSvg) {
 
 
     //### helpers
-    var closenessBetweenComplexes = function(c1, c2) {
-        var intersection = c1.elements.filter(function(n) {
-            return c2.elements.indexOf(n) != -1
-        });
-        return intersection.length;
-    };
 
 
     //### Set up functions
@@ -41,24 +36,7 @@ function DemoComplex (containerSvg) {
 
         svg.attr("viewBox","-70 -100 120 120");
 
-        var closeness = [];
-
-        for(var c1 in self.complexes){
-            for(var c2 in self.complexes){
-                if(c1 < c2){
-                    var complex1 = self.complexes[c1];
-                    var complex2 = self.complexes[c2];
-
-                    var c = closenessBetweenComplexes(complex1, complex2);
-                    if(c > 0){
-                        closeness.push({complex1:complex1, complex2:complex2, closeness:c});
-                    }
-
-                }
-            }
-        }
-
-        self.closeness = _.sortBy(closeness, function(o){return o.closeness}).reverse();
+        self.layout = ComplexesPlanarLayout(self.complexes, 100, 100);
 
     };
 
@@ -82,6 +60,9 @@ function DemoComplex (containerSvg) {
     };
 
     var init = function() {
+
+
+
         queue()
             //LOAD assets
             .defer(loadAssets)
@@ -96,3 +77,4 @@ function DemoComplex (containerSvg) {
 //PARAMS
 DemoComplex.demoTitle = "Complexes Demo";
 DemoComplex.demoDescription = "This demo shows.. bla bla something about proteins " ;
+DemoComplex.theme = "light-theme";
