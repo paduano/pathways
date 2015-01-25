@@ -54,6 +54,7 @@ function DemoLineSet (containerSvg) {
            nodes = _.union(nodes, pw.allComponents);
         });
 
+
         _pathwaysPath = PathwaysPath(_parser.pathways);
 
         _forceLayout = d3.layout.force()
@@ -136,6 +137,7 @@ function DemoLineSet (containerSvg) {
             .text(function(d){return d.name;});
 
         var sideMenu = SideMenu(_parser.pathways);
+        onPathSelectionChanged();
         svg.append(sideMenu);
         sideMenu.view.x = 500;
         sideMenu.view.y = 50;
