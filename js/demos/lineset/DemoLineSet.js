@@ -16,7 +16,7 @@ function DemoLineSet (containerSvg) {
 
     var svg = UISvgView(containerSvg);
     var _forceLayout;
-    var _componentNode;
+    var _componentNode, _componentColoredCircles;
     var _componentsPath, _componentPathLineFunction;
 
 
@@ -36,6 +36,12 @@ function DemoLineSet (containerSvg) {
 
     //### helpers
 
+    var getSelectedPathways = function(p){return p.pathways.filter(function(pw){return pw._selected})};
+    var isComponentSelected = function(p){return getSelectedPathways(p).length > 0};
+    var complexRadius = function(c){return isComponentSelected(c)? 10 + c.allProteins.length*2 : 5};
+    var proteinRadius = function(p){
+        return isComponentSelected(p)? 7 : 4;
+    };
 
 
 
@@ -71,7 +77,6 @@ function DemoLineSet (containerSvg) {
             .on("tick", tick)
             .start();
 
-        var complexRadius = function(c){return 10 + c.allProteins.length*2};
 
         var mainG = svg.append("g").attr("transform","translate(0,0)");
         var components = mainG.selectAll(".components").data(nodes);
@@ -100,22 +105,41 @@ function DemoLineSet (containerSvg) {
             .on("mouseover", null)
             .on("mouseout", null);
 
+
+        //colored circles
+        _componentColoredCircles =_componentNode.selectAll(".colored-circle").data(function(d){return d.pathways})
+
+        _componentColoredCircles
+            .enter()
+            .append("circle")
+            .classed("colored-circle",true)
+            .attr({
+                r:0,
+                "fill" : function(d,i){
+                    return Colors.pathways[_parser.pathways.indexOf(d)]
+                },
+                "stroke-width" : 0,
+                "stroke" : "black"
+            });
+
+        //normal circle
         _componentNode
             .append("circle")
+            .classed("component-circle",true)
             .attr({
                 r: function(d,i){
-                    return d.type == "complex" ? complexRadius(d) : 10;
+                    return d.type == "complex" ? complexRadius(d) : proteinRadius(d);
                 },
                 "fill" : function(d){return d.type == "complex" ? "#fec44f" : "#43a2ca" },
                 "stroke-width" : 1,
                 "stroke" : "black"
             });
 
-            //second circle for double stroke
+        //second circle for double stroke
         _componentNode
             .append("circle")
+            .classed("component-inner-circle",true)
             .attr({
-
                 r: function(d,i){
                     return d.type == "complex" ? complexRadius(d) - 2 : 0;
                 },
@@ -146,9 +170,45 @@ function DemoLineSet (containerSvg) {
     };
 
     var update = function(){
+
         _componentsPath
             .attr("d", function(d){return _componentPathLineFunction(_pathwaysPath.computePositions(d))})
-            .attr("opacity", function(d){return d._selected? 0.8 : 0});
+            .attr("opacity", function(d){return d._selected? 1 : 0});
+
+        //hide show text of selected paths
+        _componentNode.select(".component-name").attr("opacity", function(d){return isComponentSelected(d)? 1 : 0});
+
+        //update element radius
+        _componentNode.select(".component-circle").transition().duration(100).attr({
+            r: function(d,i){
+                return d.type == "complex" ? complexRadius(d) : proteinRadius(d);
+            }
+        });
+
+        _componentNode.select(".component-inner-circle").transition().duration(100).attr({
+            r: function(d,i){
+                return d.type == "complex" ? complexRadius(d) - 2: proteinRadius(d);
+            }
+        });
+
+        //colored circles
+        _componentColoredCircles
+            .attr({
+                r: function(pw,i){
+                    if(pw._selected){
+                        var component = d3.select(this.parentNode).datum();
+                        var selectedPathways = getSelectedPathways(component);
+                        var baseRadius = component.type == "complex" ?
+                            complexRadius(component) + selectedPathways.length*2 + 2 :
+                            proteinRadius(component) + selectedPathways.length*2 + 2 ;
+
+                        //if(selectedPathways.length > 0)
+                        //    debugger
+                        return selectedPathways.length > 0? baseRadius-selectedPathways.indexOf(pw)*2 : 0;
+
+                    } else return 0;
+                }
+            });
     };
 
     var tick = function(){
@@ -161,7 +221,8 @@ function DemoLineSet (containerSvg) {
 
 
     var onPathSelectionChanged = function(){
-        console.log("changed");
+
+        //update links according to the new selected nodes
         var links = [];
 
         _parser.pathways.filter(function(p){return p._selected}).forEach(function(pathway){

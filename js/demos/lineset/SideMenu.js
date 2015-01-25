@@ -5,7 +5,9 @@ function SideMenu(pathways) {
 
     var init = function() {
 
-        _pathways.forEach(function(p){p._selected = false});
+        _pathways.forEach(function(p){
+            p._selected = false
+        });
         _pathways[2]._selected = true;
         _pathways[4]._selected = true;
         _pathways[5]._selected = true;
