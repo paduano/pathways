@@ -13,7 +13,7 @@ function DemoComplex (containerSvg) {
     var _running = false;
     var _loopInterval;
 
-    var svg = containerSvg;
+    var svg = UISvgView(containerSvg);
 
     this.start = function() {
         drawLoop();
@@ -34,10 +34,15 @@ function DemoComplex (containerSvg) {
 
     var setUp = function() {
 
-        svg.attr("viewBox","-70 -100 120 120");
+        //svg.attr("viewBox","0 0 300 200");
+        svg.setAspectRatioOptions("xMinYMin meet");
+        svg.setFrame(0,0,"100%","100%");
 
-        self.layout = ComplexesPlanarLayout(self.complexes, 100, 100);
-
+        self.layout = ComplexesPlanarLayout(self.complexes, 200, 200);
+        self.layout.view.setAspectRatioOptions("xMidYMid meet");
+        self.layout.view.attr("viewBox","0 0 300 200");
+        self.layout.view.setFrame("10%",0,"100%","100%");
+        svg.append(self.layout);
     };
 
     var loadAssets = function(callback) {

@@ -4,9 +4,11 @@
  */
 var ComplexesProcessor = function(complexes) {
     var self = [];
+    var _debug = true;
 
     self.complexes = complexes;
 
+    var _precalculatedClosenessPairs = [];
     //# PUBLIC FUNCTIONS
 
     /**
@@ -15,6 +17,16 @@ var ComplexesProcessor = function(complexes) {
     self.processHierarchicalClustering = function() {
         //%% Why complete linkage? I don't want to consider close groups which have very different elements
         self.hierarchicalClustering = clusterfck.hcluster(self.complexes, self.closenessBetweenComplexes, clusterfck.COMPLETE_LINKAGE);
+    };
+
+    self.processClosenessPairs = function(threshold) {
+        _precalculatedClosenessPairs = [];
+        self.forEachCoupleOfComplexes(self.complexes, function(c1, c2) {
+            var closeness = self.closenessBetweenComplexes(c1, c2);
+            if(closeness >= threshold)
+                _precalculatedClosenessPairs.push({c1:c1, c2:c2, closeness:closeness});
+        });
+        if(_debug)console.log("Process " + _precalculatedClosenessPairs.length + " in the closeness list");
     };
 
     /**
@@ -57,6 +69,16 @@ var ComplexesProcessor = function(complexes) {
         }
     };
 
+
+    /**
+     *
+     */
+    self.forEachCoupleOfCloseComplexes = function(callback) {
+        _precalculatedClosenessPairs.forEach(function(p){
+           callback(p.c1, p.c2, p.closeness);
+        });
+    };
+
     /**
      * Build the list of unique elements
      */
@@ -88,7 +110,12 @@ var ComplexesProcessor = function(complexes) {
 
 
     var init = function() {
+        for(var i in self.complexes){
+            self.complexes[i].arrayPosition = i;
+        }
+
         self.processHierarchicalClustering();
+        self.processClosenessList();
     }();
 
     return self;

@@ -9,6 +9,10 @@ function vec2(x_,y_){
     return new Vec2(x_,y_);
 }
 
+function vec2(obj){
+    return new Vec2(obj.x,obj.y);
+}
+
 function Vec2(x_,y_)
 {
     this.x = x_;
