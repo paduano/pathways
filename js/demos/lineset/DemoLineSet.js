@@ -212,5 +212,5 @@ function DemoLineSet (containerSvg) {
 
 //PARAMS
 DemoLineSet.demoTitle = "LineSet Demo";
-DemoLineSet.demoDescription = "Description" ;
+DemoLineSet.demoDescription = "Implementation of the LineSet visualization for highlight how different pathways share protein and complexes" ;
 DemoLineSet.theme = "dark-theme";
