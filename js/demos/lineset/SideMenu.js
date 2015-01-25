@@ -3,6 +3,13 @@ function SideMenu(pathways) {
     var _pathways = pathways;
 
 
+    var changeSelection = function(gNode, d, i){
+        d._selected = !d._selected;
+        gNode.select("circle")
+            .attr("fill", function(d){return d._selected ? Colors.pathways[i] : "white"})
+        eventDispatch.pathwaysSelectionChanged.apply();
+    };
+
     var init = function() {
 
         _pathways.forEach(function(p){
@@ -28,10 +35,7 @@ function SideMenu(pathways) {
             .attr("stroke-width", 1)
             .attr("stroke", "white")
             .on("click", function(d,i){
-                d._selected = !d._selected;
-                d3.select(this)
-                    .attr("fill", function(d){return d._selected ? Colors.pathways[i] : "white"})
-                eventDispatch.pathwaysSelectionChanged.apply();
+                changeSelection(d3.select(this.parentNode), d, i);
             });
         entryGroup
             .append("text")
@@ -39,7 +43,10 @@ function SideMenu(pathways) {
             .attr("font-size", 10)
             .attr("x", 14)
             .attr("y", function(d,i){return i*20 + 11})
-            .text(function(d){return d.name});
+            .text(function(d){return d.name})
+            .on("click", function(d,i){
+                changeSelection(d3.select(this.parentNode), d, i);
+            });;
 
 
     }();
