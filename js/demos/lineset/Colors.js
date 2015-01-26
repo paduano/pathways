@@ -4,6 +4,11 @@ var Colors = {
     pathways : ["#e41a1c","#377eb8","#4daf4a","#984ea3","#ff7f00","#ffff33","#a65628"],
     deselected: {
         complex: "#aea09c",
-        protein: "#b8bdca"
+        protein: "#b8bdca",
+        pathway :"#b8bdca"
     }
+};
+
+Colors.desaturate = function(c){
+    return net.brehaut.Color(c).blend(net.brehaut.Color(Colors.deselected.pathway), 0.86).toCSS();
 };

@@ -41,6 +41,7 @@ function DemoLineSet (containerSvg) {
     var proteinRadius = function(p){
         return isComponentSelected(p)? 7 : 4;
     };
+    var belongsToHoveredPath = function(component){return component.pathways.filter(function(p){return p._hovered}).length > 0;}
 
     var pathFromLabelToNode = function(d){
 
@@ -66,6 +67,33 @@ function DemoLineSet (containerSvg) {
 
     };
 
+
+    var getFillForComponent = function(d){
+        //first pw selected
+        var firstPathwaysSelected = getSelectedPathways(d)[0];
+        if(firstPathwaysSelected){
+            return Colors.pathways[_parser.pathways.indexOf(firstPathwaysSelected)]
+        } else return d.type == "complex" ? Colors.deselected.complex : Colors.deselected.protein;
+    };
+
+
+    var coloredCircleRadius = function(pathways, component){
+        //remember to skip the first one, because the node itself is colored
+        if(pathways._selected){
+
+            var selectedPathways = getSelectedPathways(component);
+            var indexOfSelected = selectedPathways.indexOf(pathways);
+            if(indexOfSelected == 0) {
+                return 0;
+            } else {
+                var baseRadius = component.type == "complex" ?
+                complexRadius(component) + selectedPathways.length * 2 :
+                proteinRadius(component) + selectedPathways.length * 2 ;
+
+                return selectedPathways.length > 0? baseRadius-indexOfSelected*2 : 0;
+            }
+        } else return 0;
+    };
 
     //### Set up functions
 
@@ -115,7 +143,6 @@ function DemoLineSet (containerSvg) {
 
         _componentsPath.enter().append("path")
             .classed("pathways-path", true)
-            .attr("stroke", function(d,i){return Colors.pathways[i]})
             .attr("stroke-width", 7)
             .attr("stroke-linecap","round")
             .attr("opacity", 1)
@@ -158,8 +185,8 @@ function DemoLineSet (containerSvg) {
                 "stroke" : "black"
             })
             .attr("pointer-events", "all")
-            .on("mouseover", showLabels)
-            .on("mouseout", hideLabels);
+            .on("mouseover", mouseHoverOnComponent)
+            .on("mouseout", mouseOutFromComponent);
 
         //second circle for double stroke
         _componentNode
@@ -198,6 +225,7 @@ function DemoLineSet (containerSvg) {
                 "stroke-width" : 1,
                 opacity : 0.4,
                 stroke : "white"
+
             });
 
         var sideMenu = SideMenu(_parser.pathways);
@@ -206,14 +234,24 @@ function DemoLineSet (containerSvg) {
         sideMenu.view.x = 500;
         sideMenu.view.y = 50;
 
-        eventDispatch.on("pathwaysSelectionChanged", onPathSelectionChanged)
+        eventDispatch.on("pathwaysSelectionChanged", onPathSelectionChanged);
+        highlightAllPaths();
         hideLabels();
     };
 
-    var update = function(){
+    var updatePositions = function(){
 
+        _componentNode.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
+
+        //update path geometry
         _componentsPath
-            .attr("d", function(d){return _componentPathLineFunction(_pathwaysPath.computePositions(d))})
+            .attr("d", function(d){return _componentPathLineFunction(_pathwaysPath.computePositions(d))});
+
+        updateLabelLinePosition();
+    };
+
+    var updateVisiblePaths = function(){
+        _componentsPath
             .attr("opacity", function(d){return d._selected? 1 : 0});
 
 
@@ -222,13 +260,7 @@ function DemoLineSet (containerSvg) {
             r: function(d,i){
                 return d.type == "complex" ? complexRadius(d) : proteinRadius(d);
             },
-            "fill" : function(d,i){
-                //first pw selected
-                var firstPathwaysSelected = getSelectedPathways(d)[0];
-                if(firstPathwaysSelected){
-                    return Colors.pathways[_parser.pathways.indexOf(firstPathwaysSelected)]
-                } else return d.type == "complex" ? Colors.deselected.complex : Colors.deselected.protein;
-            }
+            "fill" : getFillForComponent
         });
 
         _componentNode.select(".component-inner-circle").transition().duration(100).attr({
@@ -240,35 +272,13 @@ function DemoLineSet (containerSvg) {
         //colored circles
         _componentColoredCircles
             .attr({
-                r: function(pw,i){
-                    //remember to skip the first one, because the node itself is colored
-                    if(pw._selected){
-
-                        var component = d3.select(this.parentNode).datum();
-                        var selectedPathways = getSelectedPathways(component);
-                        var indexOfSelected = selectedPathways.indexOf(pw);
-                        if(indexOfSelected == 0) {
-                            return 0;
-                        } else {
-                            var baseRadius = component.type == "complex" ?
-                            complexRadius(component) + selectedPathways.length*2 :
-                            proteinRadius(component) + selectedPathways.length*2 ;
-
-                            return selectedPathways.length > 0? baseRadius-indexOfSelected*2 : 0;
-                        }
-                    } else return 0;
-                }
+                r: function(pw,i){ return coloredCircleRadius(pw, d3.select(this.parentNode).datum());}
             });
 
-        updateLabelLinePosition();
     };
 
     var tick = function(){
-
-        _componentNode.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
-
-        update();
-
+        updatePositions();
     };
 
 
@@ -285,8 +295,34 @@ function DemoLineSet (containerSvg) {
 
         _forceLayout.links(links);
         _forceLayout.start();
+        updateVisiblePaths();
+
+    };
 
 
+    var mouseHoverOnComponent = function(d){
+
+        d.pathways.forEach(function(p){
+            if(p._selected){
+                p._hovered = true;    
+            }
+        });
+
+        highlightHoveredPaths();
+        showLabels();
+    };
+
+
+    var mouseOutFromComponent = function(d){
+
+        d.pathways.forEach(function(p){
+            if(p._selected)
+                p._hovered = false;
+        });
+
+
+        highlightAllPaths();
+        hideLabels();
     };
 
 
@@ -320,7 +356,7 @@ function DemoLineSet (containerSvg) {
                 },
                 //hide show text of selected paths
                 visibility: function (d) {
-                    return isComponentSelected(d) ? "visible" : "hidden"
+                    return belongsToHoveredPath(d) ? "visible" : "hidden"
                 }
             });
 
@@ -328,7 +364,7 @@ function DemoLineSet (containerSvg) {
             .attr({
                 //hide show text of selected paths
                 visibility: function (d) {
-                    return isComponentSelected(d) ? "visible" : "hidden"
+                    return belongsToHoveredPath(d) ? "visible" : "hidden"
                 }
             });
 
@@ -355,6 +391,7 @@ function DemoLineSet (containerSvg) {
         //    });
     };
 
+
     var hideLabels = function() {
         _componentLabels
             .attr({
@@ -370,6 +407,49 @@ function DemoLineSet (containerSvg) {
         //svg.selectAll("rect").remove();
     };
 
+
+    var highlightHoveredPaths = function() {
+        _componentsPath
+            .attr("stroke", function(d,i){
+
+                return d._hovered? Colors.pathways[i] : Colors.desaturate(Colors.pathways[i]);
+            }
+        );
+
+        _componentNode.select(".component-circle")
+            .attr("fill", function(component){
+                if(belongsToHoveredPath(component)){
+                    return getFillForComponent(component);
+
+                } else return Colors.desaturate(getFillForComponent(component));
+            });
+
+        _componentColoredCircles
+            .attr("r", function(pw,i) {
+                var component = d3.select(this.parentNode).datum();
+                if (!belongsToHoveredPath(component)){
+                    return 0;
+                } else{
+                    return coloredCircleRadius(pw, component);
+                }
+            });
+    };
+
+
+    var highlightAllPaths = function() {
+        _componentsPath
+            .attr("stroke", function(d,i){return Colors.pathways[i]});
+
+        _componentNode.select(".component-circle")
+            .attr("fill", getFillForComponent);
+
+        _componentColoredCircles
+            .attr("r", function(pw,i) {
+                    return coloredCircleRadius(pw, d3.select(this.parentNode).datum());
+            });
+    };
+
+
     var updateLabelLinePosition = function(){
         _componentLineLabels
             .attr({
@@ -378,6 +458,9 @@ function DemoLineSet (containerSvg) {
     };
 
 
+
+
+    //DEMO FUNCTIONS
 
     var loadAssets = function(callback) {
 
