@@ -40,6 +40,7 @@ var UIView = function(domElement) {
             //super_append(element);
         } else {
             //it is just a string
+            
             return self.super_append(element);
         }
 

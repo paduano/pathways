@@ -87,10 +87,10 @@ function DemosController (demos) {
             .classed("demos-controller-description-container",true);
 
 
-        _svgContainer = d3.select("body")
+        _svgContainer = UISvgView(d3.select("body")
             .append("svg")
             .classed("demos-controller",true)
-            .attr("preserveAspectRatio", "xMidYMin meet" )
+            .attr("preserveAspectRatio", "xMidYMin meet" ))
             ;
 
         setUpDropDownMenu();

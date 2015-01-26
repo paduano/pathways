@@ -46,7 +46,7 @@ function SideMenu(pathways) {
             .text(function(d){return d.name})
             .on("click", function(d,i){
                 changeSelection(d3.select(this.parentNode), d, i);
-            });;
+            });
 
 
     }();

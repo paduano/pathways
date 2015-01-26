@@ -14,23 +14,26 @@ function DemoLineSet (containerSvg) {
     var _running = false;
     var _loopInterval;
 
-    var svg = UISvgView(containerSvg);
+    var svg = containerSvg;
     var _forceLayout;
     var _componentNode, _componentColoredCircles;
-    var _componentsPath, _componentPathLineFunction;
+    var _componentsPath, _componentPathLineFunction,_componentLabels, _componentLineLabels;
 
 
     var _pathwaysPath;
 
     this.start = function() {
-        drawLoop();
+        //drawLoop();
     };
 
     this.stop = function() {
-        if(_running){
-            _running = false;
-            clearInterval(_loopInterval);
-        }
+        //if(_running){
+        //    _running = false;
+        //    clearInterval(_loopInterval);
+        //}
+
+        _forceLayout.stop();
+        
     };
 
 
@@ -43,6 +46,18 @@ function DemoLineSet (containerSvg) {
         return isComponentSelected(p)? 7 : 4;
     };
 
+    var pathFromLabelToNode = function(d){
+
+        var point1 = [d._labelRect.x + d._labelRect.width, d._labelRect.y + d._labelRect.height - 3],
+            point2 = [d._labelRect.x, d._labelRect.y + d._labelRect.height - 3];
+
+        if(Math.abs(d._labelRect.x - d.x) < Math.abs(d._labelRect.x + d._labelRect.width - d.x) ){
+            return d3.svg.line()([point1, point2, [d.x, d.y ]]);
+        } else {
+            return d3.svg.line()([point2, point1, [d.x, d.y ]]);
+        }
+
+    };
 
 
     //### Set up functions
@@ -51,15 +66,16 @@ function DemoLineSet (containerSvg) {
         var width = 500,
             height = 500;
         svg.attr("viewBox","0 0 600 600");
-        svg.setAspectRatioOptions("xMidYMid meet");
-        svg.setFrame(0,0,"100%","100%");
+        svg.attr("preserveAspectRatio", "xMidYMid meet");
+        svg.attr({
+            x:0, y:0, width:"100%", height:"100%"}
+        );
 
         var nodes = [];
         _parser.pathways.forEach(function(pw){
             pw.allComponents = pw.allComponents.filter(function(d){return d.type != "smallMolecule"});
            nodes = _.union(nodes, pw.allComponents);
         });
-
 
         _pathwaysPath = PathwaysPath(_parser.pathways);
 
@@ -72,8 +88,9 @@ function DemoLineSet (containerSvg) {
         _forceLayout
             .nodes(nodes)
             .links(links)
-            .charge(-350)
+            .charge(-600)
             .linkDistance(15)
+            .friction(0.5)
             .on("tick", tick)
             .start();
 
@@ -94,6 +111,7 @@ function DemoLineSet (containerSvg) {
             .classed("pathways-path", true)
             .attr("stroke", function(d,i){return Colors.pathways[i]})
             .attr("stroke-width", 7)
+            .attr("stroke-linecap","round")
             .attr("opacity", 1)
             .attr("fill", "none");
 
@@ -101,13 +119,12 @@ function DemoLineSet (containerSvg) {
             .append("g")
             .classed("component", true)
             .classed(function(d){return d.type}, true)
-            .attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";})
-            .on("mouseover", null)
-            .on("mouseout", null);
+            .attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
+
 
 
         //colored circles
-        _componentColoredCircles =_componentNode.selectAll(".colored-circle").data(function(d){return d.pathways})
+        _componentColoredCircles =_componentNode.selectAll(".colored-circle").data(function(d){return d.pathways});
 
         _componentColoredCircles
             .enter()
@@ -130,10 +147,13 @@ function DemoLineSet (containerSvg) {
                 r: function(d,i){
                     return d.type == "complex" ? complexRadius(d) : proteinRadius(d);
                 },
-                "fill" : function(d){return d.type == "complex" ? "#fec44f" : "#43a2ca" },
+                "fill" : function(d){return d.type == "complex" ? Colors.deselected.complex : Colors.deselected.protein },
                 "stroke-width" : 1,
                 "stroke" : "black"
-            });
+            })
+            .attr("pointer-events", "all")
+            .on("mouseover", showLabels)
+            .on("mouseout", hideLabels);
 
         //second circle for double stroke
         _componentNode
@@ -148,17 +168,31 @@ function DemoLineSet (containerSvg) {
                 "stroke" : "black"
             });
 
-        _componentNode
+
+        //names
+        _componentLabels = components.enter()
             .append("text")
-            .classed("component-name", true)
+            .classed("component-label", true)
             .attr({
-                x: 0,
-                y : 2,
                 "text-anchor": "middle",
                 fill: "white",
                 "font-size" : 7
             })
-            .text(function(d){return d.name;});
+            .text(function(d){return d.name;})
+            .each(function(d){
+                var bbox = d3.select(this)[0][0].getBBox();
+                d._labelRect = rect2d(d.x,d.y,bbox.width + 5,bbox.height + 5)
+            });
+
+        _componentLineLabels = components.enter()
+            .append("path")
+            .classed("component-line-label",true)
+            .attr({
+                fill: "none",
+                "stroke-width" : 1,
+                opacity : 0.4,
+                stroke : "white"
+            });
 
         var sideMenu = SideMenu(_parser.pathways);
         onPathSelectionChanged();
@@ -166,7 +200,8 @@ function DemoLineSet (containerSvg) {
         sideMenu.view.x = 500;
         sideMenu.view.y = 50;
 
-        eventDispatch.on("pathwaysSelectionChanged", onPathSelectionChanged);
+        eventDispatch.on("pathwaysSelectionChanged", onPathSelectionChanged)
+        hideLabels();
     };
 
     var update = function(){
@@ -175,13 +210,18 @@ function DemoLineSet (containerSvg) {
             .attr("d", function(d){return _componentPathLineFunction(_pathwaysPath.computePositions(d))})
             .attr("opacity", function(d){return d._selected? 1 : 0});
 
-        //hide show text of selected paths
-        _componentNode.select(".component-name").attr("opacity", function(d){return isComponentSelected(d)? 1 : 0});
 
-        //update element radius
+        //update element radius and first pw color
         _componentNode.select(".component-circle").transition().duration(100).attr({
             r: function(d,i){
                 return d.type == "complex" ? complexRadius(d) : proteinRadius(d);
+            },
+            "fill" : function(d,i){
+                //first pw selected
+                var firstPathwaysSelected = getSelectedPathways(d)[0];
+                if(firstPathwaysSelected){
+                    return Colors.pathways[_parser.pathways.indexOf(firstPathwaysSelected)]
+                } else return d.type == "complex" ? Colors.deselected.complex : Colors.deselected.protein;
             }
         });
 
@@ -195,20 +235,26 @@ function DemoLineSet (containerSvg) {
         _componentColoredCircles
             .attr({
                 r: function(pw,i){
+                    //remember to skip the first one, because the node itself is colored
                     if(pw._selected){
+
                         var component = d3.select(this.parentNode).datum();
                         var selectedPathways = getSelectedPathways(component);
-                        var baseRadius = component.type == "complex" ?
-                            complexRadius(component) + selectedPathways.length*2 + 2 :
-                            proteinRadius(component) + selectedPathways.length*2 + 2 ;
+                        var indexOfSelected = selectedPathways.indexOf(pw);
+                        if(indexOfSelected == 0) {
+                            return 0;
+                        } else {
+                            var baseRadius = component.type == "complex" ?
+                            complexRadius(component) + selectedPathways.length*2 :
+                            proteinRadius(component) + selectedPathways.length*2 ;
 
-                        //if(selectedPathways.length > 0)
-                        //    debugger
-                        return selectedPathways.length > 0? baseRadius-selectedPathways.indexOf(pw)*2 : 0;
-
+                            return selectedPathways.length > 0? baseRadius-indexOfSelected*2 : 0;
+                        }
                     } else return 0;
                 }
             });
+
+        updateLabelLinePosition();
     };
 
     var tick = function(){
@@ -233,6 +279,96 @@ function DemoLineSet (containerSvg) {
 
         _forceLayout.links(links);
         _forceLayout.start();
+
+
+    };
+
+
+    var showLabels = function() {
+
+        //POSITIONATE LABELS
+        var labelsLayout = RectLayout(0.1);
+
+        //add additional rects to the layout to avoid overlapping
+        _componentNode.select(".component-circle").each(function (d) {
+            var bbox = d3.select(this)[0][0].getBBox();
+            var rect = rect2d(d.x - bbox.width, d.y - bbox.height, bbox.width * 2, bbox.height * 2);
+            labelsLayout.addFixedRectangle(rect);
+        });
+
+        _componentLabels.each(function (d) {
+            if (isComponentSelected(d)) {
+                d._labelRect.x = d.x;
+                d._labelRect.y = d.y;
+                labelsLayout.addRectangle(d._labelRect);
+            }
+        });
+
+        _componentLabels
+            .attr({
+                x: function (d) {
+                    return d._labelRect.center().x
+                },
+                y: function (d) {
+                    return d._labelRect.y + d._labelRect.height / 2
+                },
+                //hide show text of selected paths
+                visibility: function (d) {
+                    return isComponentSelected(d) ? "visible" : "hidden"
+                }
+            });
+
+        _componentLineLabels
+            .attr({
+                //hide show text of selected paths
+                visibility: function (d) {
+                    return isComponentSelected(d) ? "visible" : "hidden"
+                }
+            });
+
+        updateLabelLinePosition();
+
+
+        //svg.selectAll("rect").data(labelsLayout.rects).enter().append("rect")
+        //    .attr({
+        //        x: function (d) {
+        //            return d.x
+        //        },
+        //        y: function (d) {
+        //            return d.y
+        //        },
+        //        width: function (d) {
+        //            return d.width
+        //        },
+        //        height: function (d) {
+        //            return d.height
+        //        },
+        //        fill: "none",
+        //        "stroke": "white",
+        //        "stroke-width": 2
+        //    });
+    };
+
+    var hideLabels = function() {
+        _componentLabels
+            .attr({
+                visibility: "hidden"
+            });
+
+        _componentLineLabels
+            .attr({
+                visibility: "hidden"
+            });
+
+
+        //svg.selectAll("rect").remove();
+    };
+
+    var updateLabelLinePosition = function(){
+        _componentLineLabels
+            .attr({
+                d : pathFromLabelToNode
+            });
     };
 
 
