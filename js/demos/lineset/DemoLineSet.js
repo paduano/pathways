@@ -44,25 +44,25 @@ function DemoLineSet (containerSvg) {
 
     var pathFromLabelToNode = function(d){
 
-        //var point1 = [d._labelRect.x + d._labelRect.width, d._labelRect.y + d._labelRect.height - 3],
-        //    point2 = [d._labelRect.x, d._labelRect.y + d._labelRect.height - 3];
-        //
-        //if(Math.abs(d._labelRect.x - d.x) < Math.abs(d._labelRect.x + d._labelRect.width - d.x) ){
-        //    return d3.svg.line()([point1, point2, [d.x, d.y ]]);
-        //} else {
-        //    return d3.svg.line()([point2, point1, [d.x, d.y ]]);
-        //}
-
+        var point1 = [d._labelRect.x + d._labelRect.width, d._labelRect.y + d._labelRect.height - 3],
+            point2 = [d._labelRect.x, d._labelRect.y + d._labelRect.height - 3];
 
         if(Math.abs(d._labelRect.x - d.x) < Math.abs(d._labelRect.x + d._labelRect.width - d.x) ){
-            var point1 = [d._labelRect.x + 0, d._labelRect.y + d._labelRect.height - 8],
-                point2 = [d._labelRect.x - 7, d._labelRect.y + d._labelRect.height - 8];
             return d3.svg.line()([point1, point2, [d.x, d.y ]]);
         } else {
-            var point1 = [d._labelRect.x + d._labelRect.width + 7, d._labelRect.y + d._labelRect.height - 8],
-                point2 = [d._labelRect.x + d._labelRect.width, d._labelRect.y + d._labelRect.height - 8];
             return d3.svg.line()([point2, point1, [d.x, d.y ]]);
         }
+
+
+        //if(Math.abs(d._labelRect.x - d.x) < Math.abs(d._labelRect.x + d._labelRect.width - d.x) ){
+        //    var point1 = [d._labelRect.x + 0, d._labelRect.y + d._labelRect.height - 8],
+        //        point2 = [d._labelRect.x - 7, d._labelRect.y + d._labelRect.height - 8];
+        //    return d3.svg.line()([point1, point2, [d.x, d.y ]]);
+        //} else {
+        //    var point1 = [d._labelRect.x + d._labelRect.width + 7, d._labelRect.y + d._labelRect.height - 8],
+        //        point2 = [d._labelRect.x + d._labelRect.width, d._labelRect.y + d._labelRect.height - 8];
+        //    return d3.svg.line()([point2, point1, [d.x, d.y ]]);
+        //}
 
     };
 
