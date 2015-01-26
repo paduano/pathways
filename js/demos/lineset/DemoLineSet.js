@@ -27,10 +27,6 @@ function DemoLineSet (containerSvg) {
     };
 
     this.stop = function() {
-        //if(_running){
-        //    _running = false;
-        //    clearInterval(_loopInterval);
-        //}
 
         _forceLayout.stop();
         
@@ -56,6 +52,17 @@ function DemoLineSet (containerSvg) {
         } else {
             return d3.svg.line()([point2, point1, [d.x, d.y ]]);
         }
+
+
+        //if(Math.abs(d._labelRect.x - d.x) < Math.abs(d._labelRect.x + d._labelRect.width - d.x) ){
+        //    var point1 = [d._labelRect.x + 0, d._labelRect.y + d._labelRect.height - 8],
+        //        point2 = [d._labelRect.x - 7, d._labelRect.y + d._labelRect.height - 8];
+        //    return d3.svg.line()([point1, point2, [d.x, d.y ]]);
+        //} else {
+        //    var point1 = [d._labelRect.x + d._labelRect.width + 7, d._labelRect.y + d._labelRect.height - 8],
+        //        point2 = [d._labelRect.x + d._labelRect.width, d._labelRect.y + d._labelRect.height - 8];
+        //    return d3.svg.line()([point2, point1, [d.x, d.y ]]);
+        //}
 
     };
 
@@ -93,7 +100,6 @@ function DemoLineSet (containerSvg) {
             .friction(0.5)
             .on("tick", tick)
             .start();
-
 
         var mainG = svg.append("g").attr("transform","translate(0,0)");
         var components = mainG.selectAll(".components").data(nodes);
@@ -259,7 +265,7 @@ function DemoLineSet (containerSvg) {
 
     var tick = function(){
 
-        _componentNode.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";})
+        _componentNode.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
 
         update();
 

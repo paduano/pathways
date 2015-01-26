@@ -41,12 +41,14 @@ function SideMenu(pathways) {
             .append("text")
             .attr("fill","white")
             .attr("font-size", 10)
+            .attr("cursor", "pointer")
             .attr("x", 14)
             .attr("y", function(d,i){return i*20 + 11})
             .text(function(d){return d.name})
             .on("click", function(d,i){
                 changeSelection(d3.select(this.parentNode), d, i);
             });
+
 
 
     }();
