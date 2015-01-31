@@ -2,11 +2,15 @@
  * DEMO
  */
 
-var eventDispatch = d3.dispatch(
-    "pathwaysSelectionChanged"
-);
 
 function DemoLineSet (containerSvg) {
+
+
+    var eventDispatch = d3.dispatch(
+        "pathwaysSelectionChanged"
+    );
+
+
     var self = this;
 
     var _parser;
@@ -228,7 +232,7 @@ function DemoLineSet (containerSvg) {
 
             });
 
-        var sideMenu = SideMenu(_parser.pathways);
+        var sideMenu = SideMenu(_parser.pathways, eventDispatch);
         onPathSelectionChanged();
         svg.append(sideMenu);
         sideMenu.view.x = 500;
@@ -464,7 +468,7 @@ function DemoLineSet (containerSvg) {
 
     var loadAssets = function(callback) {
 
-        var request = d3.xml("resources/demos/owl/1_RAF-Cascade.owl", "application/xml", function(d) {
+        var request = d3.xml("resources/demos/owl/Rb-E2F1.owl", "application/xml", function(d) {
             _parser = BiopaxParser(d3.select(d));
             window.parser = _parser;//
             callback(null,null);

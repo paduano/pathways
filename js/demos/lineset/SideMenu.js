@@ -1,4 +1,4 @@
-function SideMenu(pathways) {
+function SideMenu(pathways, eventDispatch) {
     var self = SvgViewController();
     var _pathways = pathways;
 

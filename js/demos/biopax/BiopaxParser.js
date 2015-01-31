@@ -171,12 +171,16 @@ function BiopaxParser(biopaxXml){
             pathway.pathways = [];
             pathway.componentsId.forEach(function(componentId){
                 var component = self.idsMap[componentId];
-                if(component.type == "reaction"){
-                    pathway.reactions.push(component);
-                    pathway.components = _.union(pathway.components, component.left);
-                    pathway.components = _.union(pathway.components, component.right);
-                } else if(component.type == "pathway"){
-                    pathway.pathways.push(component);
+                if(component){
+                    if(component.type == "reaction"){
+                        pathway.reactions.push(component);
+                        pathway.components = _.union(pathway.components, component.left);
+                        pathway.components = _.union(pathway.components, component.right);
+                    } else if(component.type == "pathway"){
+                        pathway.pathways.push(component);
+                    } else {
+                        console.warn(componentId + " does not exist");
+                    }
                 } else {
                     console.warn(componentId + " does not exist");
                 }
@@ -207,17 +211,28 @@ function BiopaxParser(biopaxXml){
         //flattern complex elements
         self.complexes.forEach(function(complex){
 
-            function getAllComponents(c){
+            function getAllProteins(c){
                 var components = [].concat(c.components.filter(function(e){return e.type == "protein"}));
                 //do not explore already expanded pathways
                 c.components.filter(function(e){return e.type == "complex"}).forEach(function(e){
-                    components = _.union(components, getAllComponents(e));
+                    components = _.union(components, getAllProteins(e));
                 });
 
                 return components;
             }
 
-            complex.allProteins = getAllComponents(complex);
+            function getAllComplexes(c){
+                var components = [].concat(c.components.filter(function(e){return e.type == "complex"}));
+                //do not explore already expanded pathways
+                c.components.filter(function(e){return e.type == "complex"}).forEach(function(e){
+                    components = _.union(components, getAllComplexes(e));
+                });
+
+                return components;
+            }
+
+            complex.allProteins = complex.allComponents = getAllProteins(complex);
+            complex.allComplexes = getAllComplexes(complex);
         });
 
 

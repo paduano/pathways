@@ -6,7 +6,15 @@ var Colors = {
         complex: "#aea09c",
         protein: "#b8bdca",
         pathway :"#b8bdca"
-    }
+    },
+
+    selected: {
+        protein: "#fd8d3c"
+    },
+
+    qualitativeSequence: ["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6"],
+    sequentialSequence: ["#f7fbff","#deebf7","#c6dbef","#9ecae1","#6baed6","#4292c6","#2171b5","#08519c","#08306b"]
+
 };
 
 Colors.desaturate = function(c){

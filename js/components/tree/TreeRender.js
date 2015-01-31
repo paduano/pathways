@@ -1,6 +1,10 @@
 function TreeRender(svg, jointsSystem, params) {
     params = params || {};
     params.flatBase = params.flatBase || false;
+    params.baseWidth = params.baseWidth == undefined ? 3 : params.baseWidth;
+    params.handleDistance = params.handleDistance == undefined ? 5 : params.handleDistance;
+    params.endBranchesThickness = params.endBranchesThickness == undefined ? 0.15 : params.endBranchesThickness;
+    params.straightEndBranches = params.straightEndBranches == undefined ? false : true;
 
     var self = this;
     var _jointsSystem = jointsSystem;
@@ -10,9 +14,9 @@ function TreeRender(svg, jointsSystem, params) {
         treePath = null;
 
     //Tree parameters
-    var _endBranchesThickness = 0.15,
-        _baseWidth = 3,
-        _handleDistance = 5,
+    var _endBranchesThickness = params.endBranchesThickness,
+        _baseWidth =  params.baseWidth,
+        _handleDistance = params.handleDistance,
         _leafHandleDistanceFactor = 0.5,
 
         _intraBranchesHandleAngle = 0.2,
@@ -140,6 +144,8 @@ function TreeRender(svg, jointsSystem, params) {
             .attr("d", getTreePath())
         ;
 
+        self.path = treePath;
+
     };
 
 
@@ -188,7 +194,7 @@ function TreeRender(svg, jointsSystem, params) {
         }
 
 
-        var d = "M 0 0 ";
+        var d = "M " + _jointsSystem.getRoot().position.toArray();
         var previousPivotPoint = null;
         var startHandleForNextPivot = null;
         var previousHandlePoint = null; //used for debugging purposes
@@ -251,7 +257,17 @@ function TreeRender(svg, jointsSystem, params) {
                 } else {
                     //LEAF
                     previousBranchDirection = joint.previousBranch.getVector().normalize();
-                    prePreviousBranchDirection = joint.previousBranch.parentJoint.previousBranch.getVector().normalize();
+
+                    if(joint.previousBranch.parentJoint.previousBranch){
+                        prePreviousBranchDirection = joint.previousBranch.parentJoint.previousBranch.getVector().normalize();
+                        //to fix the previous, otherwise just use the next one for a more straight results
+                        if(params.straightEndBranches)
+                            prePreviousBranchDirection = previousBranchDirection.clone();
+                    } else {
+                    //might not exist a "pre previous branch direction'
+                        prePreviousBranchDirection = previousBranchDirection.clone();
+                    }
+
                 }
 
                 var width = getWidthFromJoint(joint);
@@ -487,7 +503,8 @@ function TreeRender(svg, jointsSystem, params) {
      * Init function
      */
     var init = function () {
-        _g = svg.append("g");
+        _g = svg.append("g")
+            .classed("smooth-tree", true);
            // .attr("transform", "translate(0,0) scale(1,1) rotate(180)");
 
 

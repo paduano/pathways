@@ -14,6 +14,8 @@ function vec2(x_,y_){
     
 }
 
+var toRad = function(degrees) {return degrees * Math.PI / 180;};
+
 // function vec2(obj){
 //     return new Vec2(obj.x,obj.y);
 // }
