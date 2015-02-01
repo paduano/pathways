@@ -66,13 +66,13 @@ var ComplexPack = function(selection) {
         var node = g.selectAll(".node")
             .data(packLayout.nodes(mainComplex).filter(function(d){return d.type != "dummy"}))
             .enter().append("g")
-            .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
-            .on("click", openCloseNode);
+            .attr("class", function(d) { return d.children ? "node" : "leaf node"; });
         node.append("circle")
             .attr("pointer-events","visiblepainted")
             .attr("fill", fillForComponent)
             .attr("stroke", function(d) {return d.type == "complex" ? "white":"none"; })
-            .on("mouseover", onMouseOver);
+            .on("mouseover", onMouseOver)
+            .on("click", openCloseMainNode);
 
     };
 
@@ -141,6 +141,7 @@ var ComplexPack = function(selection) {
         var componentsToRoot = [];
         var siblings = [];
         var interspace = 30;
+        var dotsRadius = 6;
 
         do {
             if(current.parent){
@@ -173,6 +174,17 @@ var ComplexPack = function(selection) {
                 .attr("font-size", "10px")
                 .text(function(d){return d.name});
 
+
+            //parents dots
+            labels.append("circle")
+                .attr("r", dotsRadius)
+                .attr("cx", function(d){return dotsRadius + 4})
+                .attr("cy", function(d){return -3})
+                .attr("stroke-width", 1)
+                .attr("stroke", "white")
+                .attr("fill", fillForComponent);
+
+
             //get maximum length text
             var maxWidth = 0;
             labelsText.each(function () {
@@ -185,50 +197,69 @@ var ComplexPack = function(selection) {
             });
 
 
-            var siblingGroup = gLabel.append("g")
-                .classed("labels-sibling-group", true);
+            if(siblings.length > 0){
 
-            var siblingLabels = siblingGroup.selectAll(".label").data(siblings)
-                .enter()
-                .append("g")
-                .classed("label", true)
-                .attr("transform", function(d, i){
-                    return "translate(" + 0 + "," + (i * 30) + ")";
-                });
+                var siblingGroup = gLabel.append("g")
+                    .classed("labels-sibling-group", true);
 
-            var siblingsText = siblingLabels.append("text")
-                .attr("fill", function(d){return d===overedComponent? Colors.deselected.complex: "white"})
-                .attr("text-anchor", "start")
-                .attr("font-size", "10px")
-                .style("text-decoration",function(d){return d===overedComponent? "underline" : "none"})
-                .text(function(d){return d.name});
+                var siblingLabels = siblingGroup.selectAll(".label").data(siblings)
+                    .enter()
+                    .append("g")
+                    .classed("label", true)
+                    .attr("transform", function(d, i){
+                        return "translate(" + 0 + "," + (i * 30) + ")";
+                    });
+
+                var siblingsText = siblingLabels.append("text")
+                    .attr("fill", function(d){return d===overedComponent? Colors.overedElement: "white"})
+                    .attr("text-anchor", "start")
+                    .attr("font-size", "10px")
+                    .attr("dx", dotsRadius * 2 + 2)
+                    .style("text-decoration",function(d){return d===overedComponent? "underline" : "none"})
+                    .text(function(d){return d.name});
 
 
-            var siblingBbox = siblingGroup[0][0].getBBox();
-            var siblingGroupY = (overedComponent.depth-1) * interspace - (siblingBbox.height / 2) + 10;
-            siblingGroupY = siblingGroupY < 0 ? 0 : siblingGroupY;
+                var siblingBbox = siblingGroup[0][0].getBBox();
+                var siblingGroupY = (overedComponent.depth-1) * interspace - (siblingBbox.height / 2) + 10;
+                siblingGroupY = siblingGroupY < 0 ? 0 : siblingGroupY;
 
-            siblingGroup
-                .attr("transform", function(d){
-                    return "translate(" + (30) + "," + (siblingGroupY) + ")";
-                });
+                siblingGroup
+                    .attr("transform", function(d){
+                        return "translate(" + (50) + "," + (siblingGroupY) + ")";
+                    });
 
-            var line = d3.svg.line();
+                //labels circles
+                siblingLabels.append("circle")
+                    .attr("r", dotsRadius)
+                    .attr("cx", function(d){return  4})
+                    .attr("cy", function(d){return -3})
+                    .attr("stroke-width", 1)
+                    .attr("stroke", "white")
+                    .attr("fill", function (d) {
+                           if(d === overedComponent){
+                                return Colors.overedElement;
+                           }else{
+                               return fillForComponent(d)
+                           }
+                    });
 
-            //lines
-            //ver sibling
-            siblingGroup
-                .append("path")
-                .attr("d", line([[-5,-10],[-5,siblingBbox.height - 4]]))
-                .attr("stroke", "white")
-                .attr("stroke-width", 1);
+                var line = d3.svg.line();
 
-            //hor line sibling
-            gLabel
-                .append("path")
-                .attr("d", line([[5,(overedComponent.depth-1) * interspace - 2],[25,(overedComponent.depth-1) * interspace - 2]]))
-                .attr("stroke", "white")
-                .attr("stroke-width", 1);
+                //lines
+                //ver sibling
+                siblingGroup
+                    .append("path")
+                    .attr("d", line([[-5,-10],[-5,siblingBbox.height - 4]]))
+                    .attr("stroke", "white")
+                    .attr("stroke-width", 1);
+
+                //hor line sibling
+                gLabel
+                    .append("path")
+                    .attr("d", line([[15,(overedComponent.depth-1) * interspace - 2],[45,(overedComponent.depth-1) * interspace - 2]]))
+                    .attr("stroke", "white")
+                    .attr("stroke-width", 1);
+            }
 
             //sequence of lines
             var lines = gLabel.selectAll(".line-sequence").data(componentsToRoot.slice(1,componentsToRoot.length))
@@ -238,8 +269,11 @@ var ComplexPack = function(selection) {
                 .attr("stroke", "white")
                 .attr("stroke-width", 1)
                 .attr("d", function(d){
-                    return line([[-10, d.depth * interspace + 4],[-10, (d.depth+1) * interspace - 11]]);
+                    return line([[dotsRadius + 4, d.depth * interspace + 3],[dotsRadius + 4, (d.depth+1) * interspace - 9]]);
                 });
+
+            //Dots
+
 
         }
 
@@ -275,14 +309,15 @@ var ComplexPack = function(selection) {
     };
 
     var openCloseMainNode = function(complex){
-        var groupNode = d3.select(this.parentNode);
 
-        if(complex._expanded){
-            complex._expanded = false;
-            closeMainNode();
+        //var groupNode = d3.select(this.parentNode);
+
+        if(mainComplex._expanded){
+            mainComplex._expanded = false;
+           // closeMainNode();
         } else {
-            complex._expanded = true;
-            expandMainNode();
+            mainComplex._expanded = true;
+           // expandMainNode();
         }
 
         update();
