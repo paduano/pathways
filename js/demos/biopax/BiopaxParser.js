@@ -242,7 +242,7 @@ function BiopaxParser(biopaxXml){
                 var reactions = [].concat(pw.reactions);
                 //do not explore already expanded pathways
                 pw.pathways.filter(function(p){return expanded.indexOf(p) == -1}).forEach(function(subpw){
-                    reactions = _.union(reactions, getAllComponents(subpw, expanded));
+                    reactions = _.union(reactions, getAllReactions(subpw, expanded));
                 });
 
                 return reactions;

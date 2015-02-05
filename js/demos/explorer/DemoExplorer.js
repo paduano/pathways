@@ -57,7 +57,8 @@ function DemoExplorer (divContainer) {
 
 
         _pathwayGraph = PathwaysGraph();
-        _pathwayGraph.setDataset(_parser.proteins,
+        _pathwayGraph.setDataset(
+            _parser.proteins,
             _parser.complexes,
             _parser.reactions,
             _parser.pathways);
@@ -68,16 +69,18 @@ function DemoExplorer (divContainer) {
 
         contextArea.onContextChange = function() {
             _pathwayGraph.updateContext();
+        };
+
+        searchArea.onFiltersChanged = function() {
+            _pathwayGraph.updateFilters(searchArea.filters);
         }
-
-
 
     };
 
 
     var loadAssets = function(callback) {
-        //var request = d3.xml("resources/demos/owl/Rb-E2F1.owl", "application/xml", function(d) {
-        var request = d3.xml("resources/demos/owl/1_RAF-Cascade.owl", "application/xml", function(d) {
+        var request = d3.xml("resources/demos/owl/Rb-E2F1.owl", "application/xml", function(d) {
+        //var request = d3.xml("resources/demos/owl/1_RAF-Cascade.owl", "application/xml", function(d) {
             _parser = BiopaxParser(d3.select(d));
             callback(null,null);
         });

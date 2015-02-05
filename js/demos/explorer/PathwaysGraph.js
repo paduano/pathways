@@ -2,10 +2,10 @@ function PathwaysGraph() {
     var self = UISvgView();
 
     //Parameters
-    var _width = 500, _height = 500,
-        proteinRadius = 10,
-        _complexBaseSize = 20;
+    var _width = 500, _height = 500;
 
+    //filters
+    var _nameFilters = [];
 
     //D3 Tools
 
@@ -15,7 +15,8 @@ function PathwaysGraph() {
     //D3 elements
     var _gComponents,
         _gReactions,
-        _allElements,
+        _allComponentElements,
+        _allLinkElements,
         _complexElements,
         _proteinElements;
 
@@ -27,6 +28,7 @@ function PathwaysGraph() {
         _proteins,
         _complexes,
         _reactions,
+        _visibleReactions,
         _pathways;
 
     var _selectedComponents = [],
@@ -40,10 +42,11 @@ function PathwaysGraph() {
     //D3 helpers functions
 
     var componentKey = function(c){return c.name};
+    var reactionKey = function(c){return c.source.name + c.target.name + c.pathways.length}; //XXX wrong
     var getSelectedPathways = function(p){return p.pathways.filter(function(pw){return pw._selected})};
     //var isComponentSelected = function(p){return getSelectedPathways(p).length > 0};
-    //var proteinRadius = function(p){return isComponentSelected(p)? 7 : 4;};
-    var complexSize = function(c){return _complexBaseSize + Math.min(3,c.allProteins.length)};
+    var proteinRadius = PathwaysGraphDrawingUtils.proteinRadius;
+    var complexSize = PathwaysGraphDrawingUtils.complexSize;
 
     var forceLayoutChargeFunction = function(component){
         if(component._expanded){
@@ -73,7 +76,7 @@ function PathwaysGraph() {
                     var baseRadius = complexSize(component) + selectedPathways.length * 4;
                     return selectedPathways.length > 0 ? baseRadius - indexOfSelected*4 : 0;
                 } else {
-                    var baseRadius = proteinRadius + selectedPathways.length * 2 ;
+                    var baseRadius = proteinRadius(component) + selectedPathways.length * 2 ;
                     return selectedPathways.length > 0 ? baseRadius - indexOfSelected*2 : 0;
                 }
 
@@ -96,7 +99,7 @@ function PathwaysGraph() {
             .size([_width, _height])
             .charge(forceLayoutChargeFunction)
             .gravity(0.2)
-            .linkDistance(35)
+            .linkDistance(45)
             .friction(0.5)
             .on("tick", forceLayoutTick)
 
@@ -117,7 +120,7 @@ function PathwaysGraph() {
         var newElements = components.enter()
             .append("g")
             .classed("pathway-component", true)
-            .classed(function(d){return "pathway-" + d.type}, true)
+            .classed(function(d){return "pathway-" + d.type}, true);
 
 
         var enterComplexElements = newElements.filter(function(d){return d3.select(this).datum().type == "complex"});
@@ -178,13 +181,13 @@ function PathwaysGraph() {
 
         //Update
 
-        _allElements = _gComponents.selectAll(".pathway-component");
+        _allComponentElements = _gComponents.selectAll(".pathway-component");
 
-        _complexElements = _allElements.filter(function(d){
+        _complexElements = _allComponentElements.filter(function(d){
                 return d3.select(this).datum().type == "complex"}
         );
 
-        _proteinElements = _allElements.filter(function(d){
+        _proteinElements = _allComponentElements.filter(function(d){
                 return d3.select(this).datum().type == "protein"}
         );
 
@@ -212,7 +215,26 @@ function PathwaysGraph() {
     };
 
 
-    var updateLinksElements = function() {
+    var updateReactionsElements = function() {
+
+
+        var links = _gReactions.selectAll(".pathway-link").data(_forceLayoutLinks,reactionKey );
+
+        var newLinks = links.enter()
+            .append("g")
+            .classed("pathway-link", true);
+
+
+        newLinks.selectAll(".pathway-link-polygon").data(function(link){return link.pathways}).enter()
+            .append("polygon")
+            .classed("pathway-link-polygon", true)
+            .attr({
+                fill: function(pw){return pw.color}
+            });
+
+        links.exit().remove();
+
+        _allLinkElements = _gReactions.selectAll(".pathway-link");
 
     };
 
@@ -224,15 +246,13 @@ function PathwaysGraph() {
 
 
     var updateElementsPosition = function () {
-        _allElements.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
+        _allComponentElements.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
+        _allLinkElements.selectAll(".pathway-link-polygon")
+            .attr({points: function(pw){ return PathwaysGraphDrawingUtils.link(d3.select(this.parentNode).datum(),pw)}});
     };
 
 
     //Graphics Elements
-
-    var updateComponents = function() {
-
-    };
 
 
     //Processing
@@ -251,15 +271,18 @@ function PathwaysGraph() {
         _visibleComponents.forEach(function (component) {
             component.nextComponents = [];
 
-            _reactions.forEach(function (reaction) {
+            _visibleReactions.forEach(function (reaction) {
                 if(reaction.left.indexOf(component) > -1){
                     var rights = reaction.right.filter(function(d){return d.type == "complex" || d.type == "protein" });
                     rights.forEach(function (right) {
-                        //search if there is already a link
-                        var existingLink = findSameLink(component,right);
-                        if(existingLink){
-                            existingLink.pathways.push(pathway)
-                        } else links.push({source: component, target: right, pathways:reaction.pathways});
+                        if(_visibleComponents.indexOf(right) > -1) { //XXX NOT EFFICIENT. STORE in COMPONENT
+                            //search if there is already a link
+                            var existingLink = findSameLink(component,right);
+                            if(existingLink){
+                                existingLink.pathways.push(pathway)
+                            } else links.push({source: component, target: right,
+                                pathways:reaction.pathways.filter(function(pw){return pw._selected})});
+                        }
                     });
                 }
             });
@@ -270,13 +293,29 @@ function PathwaysGraph() {
         _forceLayoutLinks = links;
     };
 
-    var computeVisibleComponent = function(){
+    var computeVisibleComponentAndReactions = function(){
         _visibleComponents = [];
+        _visibleReactions = [];
         _pathways.forEach(function (pathway) {
-            if(pathway._selected)
-                _visibleComponents = _.union(_visibleComponents, pathway.allComponents);
+            if(pathway._selected){
+
+                var filteredComponents = pathway.allComponents.filter(function(component){
+                    for(var i = 0; i < _nameFilters.length; i++){
+                        var filter = _nameFilters[i];
+                        if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+
+                _visibleComponents = _.union(_visibleComponents, filteredComponents);
+                _visibleReactions = _.union(_visibleReactions, pathway.allReactions);
+            }
+                
         });
     };
+
 
     //## PUBLIC FUNCTIONS
 
@@ -288,17 +327,28 @@ function PathwaysGraph() {
         _allComponents = _proteins.concat(_complexes);
 
 
-        computeVisibleComponent();
+        computeVisibleComponentAndReactions();
         createLinks();
+
         updateForceLayoutNodesAndLinks();
+
         updateComplexesAndProteinsElements();
+        updateReactionsElements();
     };
 
     self.updateContext = function(){
 
-        computeVisibleComponent();
+        computeVisibleComponentAndReactions();
+        createLinks();
         updateForceLayoutNodesAndLinks();
+
         updateComplexesAndProteinsElements();
+        updateReactionsElements();
+    };
+
+    self.updateFilters = function(filters){
+        _nameFilters = filters;
+        self.updateContext();
     };
 
 
@@ -310,3 +360,4 @@ function PathwaysGraph() {
 
     return self;
 }
+

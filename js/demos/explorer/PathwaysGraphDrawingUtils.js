@@ -1,19 +1,42 @@
 var PathwaysGraphDrawingUtils = {};
 
-PathwaysGraphDrawingUtils.link = function (link) {
-    var thick = 5,
-        shift = 0,
-        margin = 1;
+
+PathwaysGraphDrawingUtils.complexBaseSize = 15;
+PathwaysGraphDrawingUtils.proteinRadius = function(p){return 7};
+PathwaysGraphDrawingUtils.complexSize = function(c){return PathwaysGraphDrawingUtils.complexBaseSize + Math.min(3,c.allProteins.length)};
+
+PathwaysGraphDrawingUtils.link = function (link, pathway) {
+    var thick = 2,
+        shift = link.pathways.indexOf(pathway) * thick * 2.1,
+        margin = 5,
+        arrowTip = 10;
 
 
     var start = vec2(link.source.x, link.source.y),
         end = vec2(link.target.x, link.target.y);
 
+    var direction = end.subV(start).normalize();
+
+    //start shift
+    if(link.source.type == "complex"){
+        start = start.addV(direction.mulS(PathwaysGraphDrawingUtils.complexSize(link.source)*0.5));
+    } else if (link.source.type == "protein"){
+        start = start.addV(direction.mulS(PathwaysGraphDrawingUtils.proteinRadius(link.source)*0.5));
+    }
+
+    //end shift
+
+    if(link.source.type == "complex"){
+        end = end.subV(direction.mulS(PathwaysGraphDrawingUtils.complexSize(link.source)*0.5));
+    } else if (link.source.type == "protein"){
+        end = end.subV(direction.mulS(PathwaysGraphDrawingUtils.proteinRadius(link.target)*0.5));
+    }
+
 
     var length = end.subV(start).length() - margin*2;
     var parallel = end.subV(start).normalize();
     var perpendicular = parallel.clone().perpendicular().normalize();
-    var arrowTip = 1;
+
 
     var newStart = start.addV(parallel.mulS(margin)).addV(perpendicular.mulS(shift));
 

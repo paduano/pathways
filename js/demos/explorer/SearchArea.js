@@ -1,7 +1,9 @@
 var SearchArea = function(){
     var self = UIDivView();
 
-    var filters = [];
+    self.onFiltersChanged = null;
+
+    self.filters = [];
 
     var filtersDiv, inputJElement;
 
@@ -10,9 +12,9 @@ var SearchArea = function(){
         if(value.length == 0)
             return;
 
-        filters.push(value);
+        self.filters.push(value);
 
-        var element = filtersDiv.selectAll(".search-element").data(filters).enter()
+        var element = filtersDiv.selectAll(".search-element").data(self.filters).enter()
                 .append("div")
                 .classed("search-element", true)
                 .classed("filter-element", true)
@@ -25,11 +27,18 @@ var SearchArea = function(){
 
 
         inputJElement.val("");
+
+        if(self.onFiltersChanged)
+            self.onFiltersChanged();
     };
 
 
     var removeFilter = function(filter){
-        d3.selectAll(".filter-element").filter(function(d){return d === filter}).remove() ;
+        self.filters = _.without(self.filters, filter);
+        d3.selectAll(".filter-element").filter(function(d){return d === filter}).remove();
+
+        if(self.onFiltersChanged)
+            self.onFiltersChanged();
     };
 
 
