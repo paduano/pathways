@@ -111,6 +111,39 @@ function BiopaxParser(biopaxXml){
         "bp:Pathway" : parsePathway
     };
 
+    //create links between complexes and proteins if there are on left and right of a reaction
+    //DEPRECATED
+    self.createComponentsConnections = function(){
+
+        var links = [];
+
+        self.complexes.concat(self.proteins).forEach(function (component) {
+            component.nextComponents = [];
+
+            self.pathways.forEach(function (pathway) {
+                pathway.reactions.forEach(function (reaction) {
+                    if(reaction.left.indexOf(component) > -1){
+                        var rights = reaction.right.filter(function(d){return d.type == "complex" || d.type == "protein" });
+                        rights.forEach(function (right) {
+                            links.push({source: component, target: right, pathway:pathway});
+                        });
+                    }
+                })
+            });
+
+            //self.reactions.forEach(function (reaction) {
+            //
+            //    if(reaction.left.indexOf(component) > -1){
+            //        var right = reaction.right.filter(function(d){return d.type == "complex" || d.type == "protein" });
+            //        component.nextComponents = _.union(component.nextComponents, right);
+            //    }
+            //})
+        });
+
+        return links;
+    };
+
+
     var init = function(){
         //parse elements
         self.biopaxXml.selectAll("Protein, Complex, BiochemicalReaction, SmallMolecule, Pathway").each(function(d){
@@ -204,7 +237,19 @@ function BiopaxParser(biopaxXml){
                 return components;
             }
 
+            function getAllReactions(pw, expanded){
+                expanded.push(pw);
+                var reactions = [].concat(pw.reactions);
+                //do not explore already expanded pathways
+                pw.pathways.filter(function(p){return expanded.indexOf(p) == -1}).forEach(function(subpw){
+                    reactions = _.union(reactions, getAllComponents(subpw, expanded));
+                });
+
+                return reactions;
+            }
+
             pathway.allComponents = getAllComponents(pathway, []);
+            pathway.allReactions = getAllReactions(pathway, []);
         });
 
 
@@ -243,6 +288,16 @@ function BiopaxParser(biopaxXml){
                if(pathway.allComponents.indexOf(component) > -1){
                    component.pathways.push(pathway);
                }
+            });
+        });
+
+        //create the references from reactions to pathways
+        self.reactions.forEach(function(reaction){
+            reaction.pathways = [];
+            self.pathways.forEach(function(pathway){
+                if(pathway.allReactions.indexOf(reaction) > -1){
+                    reaction.pathways.push(pathway);
+                }
             });
         });
 

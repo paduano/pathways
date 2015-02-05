@@ -1,15 +1,40 @@
-var ComplexPack = function(selection) {
+var ComplexPack = function(selection, structureSvg, onCloseComplex) {
+
+
+    var createDataStructure = function(root) {
+
+        var copyElement = function(element){
+            return {name:element.name, type:element.type};
+        };
+
+        var newElement = copyElement(root);
+        if(newElement.type == "complex"){
+            newElement.components = [];
+            root.components.forEach(function (c) {
+                if(c.type == "complex" || c.type == "protein" )
+                    newElement.components.push(createDataStructure(c));
+            });
+        }
+
+        return newElement;
+    };
+
+
 
     var self = {};
-    var mainComplex = selection.datum();
+    var originalMainComplex = selection.datum();
+    var mainComplex = createDataStructure(selection.datum());
     var packLayout;
-    var g = selection.append("g");
-    var gLabel = g.append("g");
+    var g;
+    var gLabel = structureSvg.append("g");
+    var _elementCircle;
 
-    var enlargedRadius = 140;
+    var enlargedRadius = ComplexPackUtils.radiusFromComponent(originalMainComplex);
+    var closedRadius = 20;
 
     //element currently over
     var overedElement = null;
+
 
     var getRadiusFromComponent = function(c){
         if(c.type == "protein"){
@@ -43,11 +68,13 @@ var ComplexPack = function(selection) {
         }
     };
 
-    var setUp = function(){
 
+    var setUp = function(){
+        g = selection.selectAll(".component-node").data([{empty:true}]).enter().append("g").classed("component-node", true);
+        g.attr("transform","translate(" + [-enlargedRadius, -enlargedRadius] + ")");
 
         packLayout = d3.layout.pack()
-            .size([enlargedRadius*2 + 4, enlargedRadius*2 + 4])
+            .size([enlargedRadius*2, enlargedRadius*2])
             .padding(4)
             .value(getRadiusFromComponent)
             .children(function(d){{
@@ -63,22 +90,25 @@ var ComplexPack = function(selection) {
 
         packLayout(mainComplex);
 
-        var node = g.selectAll(".node")
+        var node = g.selectAll(".complex-pack-node")
             .data(packLayout.nodes(mainComplex).filter(function(d){return d.type != "dummy"}))
-            .enter().append("g")
-            .attr("class", function(d) { return d.children ? "node" : "leaf node"; });
-        node.append("circle")
+            .enter()
+            .append("g")
+            .attr("class", function(d) { return d.children ? "complex-pack-node" : "complex-pack-lead complex-pack-node"; });
+
+        _elementCircle = node.append("circle")
+            .classed("complex-pack-component-circle", function(d){return d === mainComplex})
+            .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
             .attr("pointer-events","visiblepainted")
             .attr("fill", fillForComponent)
-            .attr("stroke", function(d) {return d.type == "complex" ? "white":"none"; })
+            .attr("stroke", function(d) {return d.type == "complex" ? "black":"none"; })
+            .attr("r", 0)
             .on("mouseover", onMouseOver)
+            .on("mouseout", onMouseOut)
             .on("click", openCloseMainNode);
 
-    };
-
-
-    var createStructure = function(){
-
+        mainComplex._expanded = true;
+        update();
     };
 
 
@@ -88,32 +118,31 @@ var ComplexPack = function(selection) {
 
         packLayout(mainComplex);
 
-        var node = g.selectAll(".node").data(packLayout.nodes);
+        var node = g.selectAll(".node").data(packLayout.nodes(mainComplex).filter(function(d){return d.type != "dummy"}));
 
         node
             .enter().append("g")
             .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
-            .on("click", openCloseNode)
             .append("circle")
             .attr("r", function(d) {return 0; })
             .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
 
-        node.selectAll("circle")
+        _elementCircle
             .transition()
             .attr("r", function(d) {
-                if(mainComplex._expanded)
+                if(mainComplex._expanded) {
                     return d.r;
-                else {
+                } else {
                     if(d === mainComplex){
-                        return 30;
+                        return closedRadius;
                     } else {
                         return 0
                     }
                 }
             })
             .attr("fill", fillForComponent)
-            .attr("stroke", function(d) {return d === mainComplex ?"white":"none"; })
+            .attr("stroke", function(d) {return d === mainComplex ?"black":"none"; })
             .attr("transform", function(d) {
                 if(mainComplex._expanded)
                     return "translate(" + d.x + "," + d.y + ")";
@@ -127,7 +156,7 @@ var ComplexPack = function(selection) {
 
             });
 
-        node.exit().remove();
+        //node.exit().remove();
 
 
     };
@@ -136,28 +165,26 @@ var ComplexPack = function(selection) {
     var updateLabels = function(){
         gLabel.html("");
 
-        var overedComponent = overedElement.datum();
-        var current = overedComponent;
-        var componentsToRoot = [];
-        var siblings = [];
-        var interspace = 30;
-        var dotsRadius = 6;
-
-        do {
-            if(current.parent){
-                current = current.parent;
-            }
-            componentsToRoot.push(current);
-        } while(current.depth != 0);
-
-        if(overedComponent.parent){
-            siblings = overedComponent.parent.components;
-        } else {
-            siblings = [];
-        }
-
-
         if(overedElement){
+            var overedComponent = overedElement.datum();
+            var current = overedComponent;
+            var componentsToRoot = [];
+            var siblings = [];
+            var interspace = 30;
+            var dotsRadius = 6;
+
+            do {
+                if(current.parent){
+                    current = current.parent;
+                }
+                componentsToRoot.push(current);
+            } while(current.depth != 0);
+
+            if(overedComponent.parent){
+                siblings = overedComponent.parent.components;
+            } else {
+                siblings = [];
+            }
 
             var labels = gLabel.selectAll(".label").data(componentsToRoot)
                 .enter()
@@ -192,8 +219,9 @@ var ComplexPack = function(selection) {
                 maxWidth = maxWidth > bbox.width ? maxWidth : bbox.width;
             });
 
+
             gLabel.attr("transform", function(d){
-                return "translate(" + (enlargedRadius * 2 + maxWidth) + "," + 30 + ")";
+                return "translate(" + (maxWidth) + "," + 30 + ")";
             });
 
 
@@ -277,18 +305,10 @@ var ComplexPack = function(selection) {
 
         }
 
-
-
     };
 
 
     var onMouseOver = function(d){
-        console.log("over");
-
-        //old overed
-        if(overedElement){
-            overedElement.attr("fill", fillForComponent);
-        }
 
         overedElement = d3.select(this);
 
@@ -298,29 +318,49 @@ var ComplexPack = function(selection) {
     };
 
 
-    var openCloseNode = function(complex){
-        if(complex._expanded){
-            complex._expanded = false;
-        } else {
-            complex._expanded = true;
-        }
+    var onMouseOut = function(d){
 
-        update();
+        ////old overed
+        if(overedElement){
+            overedElement.attr("fill", fillForComponent);
+        }
+        overedElement = null;
+
+        updateLabels();
     };
 
+
+    //var openCloseNode = function(complex){
+    //    if(complex._expanded){
+    //        complex._expanded = false;
+    //    } else {
+    //
+    //
+    //        complex._expanded = true;
+    //    }
+    //
+    //    update();
+    //};
+
     var openCloseMainNode = function(complex){
-
-        //var groupNode = d3.select(this.parentNode);
-
-        if(mainComplex._expanded){
-            mainComplex._expanded = false;
-           // closeMainNode();
-        } else {
-            mainComplex._expanded = true;
-           // expandMainNode();
-        }
-
-        update();
+        //
+        ////var groupNode = d3.select(this.parentNode);
+        //
+        //if(mainComplex._expanded){
+        //    mainComplex._expanded = false;
+        //   // closeMainNode();
+        //} else {
+        //    //take the old value
+        //    closedRadius = parseFloat(g.selectAll(".complex-pack-component-circle").attr("r"));
+        //    mainComplex._expanded = true;
+        //   // expandMainNode();
+        //}
+        //
+        //update();
+        _elementCircle.transition().attr("r",0).each("end",function(){g.remove()});
+        onCloseComplex(originalMainComplex);
+        gLabel.remove();
+        d3.event.stopPropagation()
     };
 
 
@@ -353,4 +393,9 @@ var ComplexPack = function(selection) {
 
 
     return self;
+};
+
+var ComplexPackUtils = {};
+ComplexPackUtils.radiusFromComponent = function (component) {
+    return Math.max(Math.sqrt(component.allComponents.length),2) * 10;
 };

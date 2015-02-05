@@ -2,8 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="318a2219-f8c1-411f-9548-a7a9896b4340" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/img/blank.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/img/close-icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/img/search-icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/demos/explorer/ContextArea.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/styles/DemoExplorer.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/demos/explorer/DemoExplorer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/demos/lineset2/DemoLineSet2.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/demos/explorer/PathwaysGraph.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/demos/explorer/PathwaysGraphDrawingUtils.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/demos/explorer/SearchArea.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/demos/biopax/BiopaxParser.js" afterPath="$PROJECT_DIR$/js/demos/biopax/BiopaxParser.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/demos/lineset/Colors.js" afterPath="$PROJECT_DIR$/js/demos/lineset/Colors.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/demos/complex hierarchy/ComplexPack.js" afterPath="$PROJECT_DIR$/js/demos/complex hierarchy/ComplexPack.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/demos/complex hierarchy/DemoCirclePacking.js" afterPath="$PROJECT_DIR$/js/demos/complex hierarchy/DemoCirclePacking.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/demos/lineset/DemoLineSet.js" afterPath="$PROJECT_DIR$/js/demos/lineset/DemoLineSet.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/styles/DemosController.css" afterPath="$PROJECT_DIR$/styles/DemosController.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/demos/DemosController.js" afterPath="$PROJECT_DIR$/js/demos/DemosController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/demos/lineset/SideMenu.js" afterPath="$PROJECT_DIR$/js/demos/lineset/SideMenu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/main.js" afterPath="$PROJECT_DIR$/js/main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="pathways.iws" />
@@ -27,50 +45,78 @@
     <favorites_list name="pathways" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="ComplexPack.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/demos/complex hierarchy/ComplexPack.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6613546" vertical-offset="2787" max-vertical-offset="5415">
-              <caret line="219" column="0" selection-start-line="219" selection-start-column="0" selection-end-line="219" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Colors.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/demos/lineset/Colors.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
-              <caret line="15" column="116" selection-start-line="15" selection-start-column="116" selection-end-line="15" selection-end-column="116" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-              <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DemoLineSet.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/demos/lineset/DemoLineSet.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="14.923077" vertical-offset="5353" max-vertical-offset="7545">
-              <caret line="339" column="55" selection-start-line="339" selection-start-column="12" selection-end-line="339" selection-end-column="55" />
-              <folding>
-                <element signature="e#1607#1699#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5863284">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="ContextArea.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/js/demos/explorer/ContextArea.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="900">
+                  <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="PathwaysGraph.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/js/demos/explorer/PathwaysGraph.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-1.1783042" vertical-offset="1185" max-vertical-offset="3285">
+                  <caret line="16" column="19" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="19" />
+                  <folding>
+                    <element signature="e#3209#6718#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="PathwaysGraphDrawingUtils.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/js/demos/explorer/PathwaysGraphDrawingUtils.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+                  <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/index.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-24.75" vertical-offset="516" max-vertical-offset="1320">
+                  <caret line="74" column="63" selection-start-line="74" selection-start-column="63" selection-end-line="74" selection-end-column="63" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="DemoLineSet2.js" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/js/demos/lineset2/DemoLineSet2.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.20278834" vertical-offset="2630" max-vertical-offset="8775">
+                  <caret line="186" column="10" selection-start-line="186" selection-start-column="10" selection-end-line="186" selection-end-column="10" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="BiopaxParser.js" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/js/demos/biopax/BiopaxParser.js">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0" vertical-offset="3837" max-vertical-offset="4710">
+                  <caret line="277" column="0" selection-start-line="277" selection-start-column="0" selection-end-line="277" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -78,7 +124,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/styles/theme.css" />
         <option value="$PROJECT_DIR$/js/demos/complex/ComplexesHelpers.js" />
         <option value="$PROJECT_DIR$/js/demos/helpers/Performance.js" />
         <option value="$PROJECT_DIR$/js/demos/complex/ComplexesProcessor.js" />
@@ -89,32 +134,40 @@
         <option value="$PROJECT_DIR$/js/demos/complex/DemoComplex.js" />
         <option value="$PROJECT_DIR$/js/components/complexes/ComplexesPlanarLayout.js" />
         <option value="$PROJECT_DIR$/js/components/complexes/ComplexesProcessor.js" />
-        <option value="$PROJECT_DIR$/styles/DemosController.css" />
         <option value="$PROJECT_DIR$/js/demos/lineset/sideMenu.js" />
         <option value="$PROJECT_DIR$/js/demos/lineset/PathwaysPath.js" />
         <option value="$PROJECT_DIR$/js/components/node.js" />
         <option value="$PROJECT_DIR$/js/components/viewController/view/UIView.js" />
-        <option value="$PROJECT_DIR$/js/demos/DemosController.js" />
         <option value="$PROJECT_DIR$/js/components/viewController/view/UISvgView.js" />
         <option value="$PROJECT_DIR$/js/demos/overlappingRects/DemoOverlappingRects.js" />
         <option value="$PROJECT_DIR$/js/libs/rect2d.js" />
         <option value="$PROJECT_DIR$/js/libs/color-1.0.1.js" />
-        <option value="$PROJECT_DIR$/js/demos/lineset/SideMenu.js" />
         <option value="$PROJECT_DIR$/js/demos/helpers/TreeHelpers.js" />
         <option value="$PROJECT_DIR$/js/demos/DemoPlainTree.js" />
         <option value="$PROJECT_DIR$/js/libs/vec2d.js" />
         <option value="$PROJECT_DIR$/js/components/tree/TreeRender.js" />
         <option value="$PROJECT_DIR$/js/demos/complex hierarchy/ComplexCircularLayout.js" />
         <option value="$PROJECT_DIR$/js/demos/complex hierarchy/DemoComplexHierarchy.js" />
-        <option value="$PROJECT_DIR$/js/demos/biopax/BiopaxParser.js" />
         <option value="$PROJECT_DIR$/js/demos/overlappingRects/RectLayout.js" />
-        <option value="$PROJECT_DIR$/js/main.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/demos/complex hierarchy/dummyComplex.js" />
-        <option value="$PROJECT_DIR$/js/demos/complex hierarchy/DemoCirclePacking.js" />
         <option value="$PROJECT_DIR$/js/demos/lineset/DemoLineSet.js" />
+        <option value="$PROJECT_DIR$/js/demos/lineset/SideMenu.js" />
         <option value="$PROJECT_DIR$/js/demos/lineset/Colors.js" />
+        <option value="$PROJECT_DIR$/js/demos/complex hierarchy/DemoCirclePacking.js" />
         <option value="$PROJECT_DIR$/js/demos/complex hierarchy/ComplexPack.js" />
+        <option value="$PROJECT_DIR$/js/main.js" />
+        <option value="$PROJECT_DIR$/js/demos/DemosController.js" />
+        <option value="$PROJECT_DIR$/styles/DemosController.css" />
+        <option value="$PROJECT_DIR$/styles/theme.css" />
+        <option value="$PROJECT_DIR$/js/demos/explorer/SearchArea.js" />
+        <option value="$PROJECT_DIR$/js/demos/lineset2/DemoLineSet2.js" />
+        <option value="$PROJECT_DIR$/js/demos/biopax/BiopaxParser.js" />
+        <option value="$PROJECT_DIR$/styles/DemoExplorer.css" />
+        <option value="$PROJECT_DIR$/js/demos/explorer/ContextArea.js" />
+        <option value="$PROJECT_DIR$/js/demos/explorer/DemoExplorer.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/demos/explorer/PathwaysGraphDrawingUtils.js" />
+        <option value="$PROJECT_DIR$/js/demos/explorer/PathwaysGraph.js" />
       </list>
     </option>
   </component>
@@ -122,9 +175,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="873" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -208,6 +260,24 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="img" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pathways" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pathways" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -253,82 +323,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathways" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathways" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathways" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathways" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathways" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathways" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="overlappingRects" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathways" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathways" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="demos" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="complex hierarchy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -337,27 +331,31 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="SearchEverywhereHistoryKey" value="Color&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/Colors.js&#10;main&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/main.js&#10;lines&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/DemoLineSet.js&#10;lineS&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/DemoLineSet.js&#10;color&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/libs/color-1.0.1.js&#10;colo&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/libs/color-1.0.1.js&#10;index&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/index.html&#10;inde&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/index.html&#10;dummy&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/dummyComplex.js&#10;line&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/DemoLineSet.js&#10;dumm&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/dummyComplex.js&#10;parser&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/biopax/BiopaxParser.js&#10;demo&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoComplexHierarchy.js&#10;d&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoComplexHierarchy.js&#10;vec2&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/libs/vec2d.js&#10;tree&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/DemoCircularTrees.js&#10;circula&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/DemoCircularTrees.js&#10;biopa&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/biopax/BiopaxParser.js&#10;dum&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/dummyComplex.js&#10;Demo&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoComplexHierarchy.js&#10;side&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/SideMenu.js&#10;De&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoComplexHierarchy.js&#10;biop&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/biopax/BiopaxParser.js&#10;rect&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/overlappingRects/DemoOverlappingRects.js&#10;rectL&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/overlappingRects/RectLayout.js&#10;uiS&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/viewController/view/UISvgView.js&#10;tre&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/DemoCircularTrees.js&#10;node&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/node.js&#10;vec&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/libs/vec2d.js&#10;UI&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/viewController/view/UIGView.js&#10;proce&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/complexes/ComplexesProcessor.js&#10;geneti&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/complexes/ComplexesPlanarLayoutGenetic.js&#10;compl&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/complexes/view/ComplexView.js&#10;json&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/resources/demos/complex/out.json&#10;DemoC&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex/DemoComplex.js&#10;GV&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/viewController/view/UIGView.js&#10;per&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/helpers/Performance.js" />
-    <property name="FullScreen" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../right-here-right-now/app/js/viewController/map/mapViewController.js" />
+    <property name="SearchEverywhereHistoryKey" value="index&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/index.html&#10;css&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/styles/DemoExplorer.css&#10;contex&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/explorer/ContextArea.js&#10;biopax&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/biopax/BiopaxParser.js&#10;pathwa&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/explorer/PathwaysGraph.js&#10;explo&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/explorer/DemoExplorer.js&#10;_parser&#9;null&#9;null&#10;line&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset2/DemoLineSet2.js&#10;Path&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/explorer/PathwaysGraph.js&#10;inde&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/index.html&#10;searc&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/resources/img/search-icon.png&#10;view&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/viewController/view/UISvgView.js&#10;demosC&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/DemosController.js&#10;main&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/main.js&#10;vec2&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/libs/vec2d.js&#10;parser&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/biopax/BiopaxParser.js&#10;packin&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoCirclePacking.js&#10;complex&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoComplexHierarchy.js&#10;vec&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/libs/vec2d.js&#10;side&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/SideMenu.js&#10;bring&#9;null&#9;null&#10;pack&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoCirclePacking.js&#10;Demo&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoCirclePacking.js&#10;Complex&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/ComplexPack.js&#10;Colors&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/Colors.js&#10;color&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/libs/color-1.0.1.js&#10;biopa&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/biopax/BiopaxParser.js&#10;lin&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/DemoLineSet.js&#10;li&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/DemoLineSet.js&#10;lines&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/DemoLineSet.js&#10;bio&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/biopax/BiopaxParser.js&#10;lineset&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/DemoLineSet.js&#10;Color&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/Colors.js&#10;lineS&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/lineset/DemoLineSet.js&#10;colo&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/libs/color-1.0.1.js&#10;dummy&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/dummyComplex.js&#10;dumm&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/dummyComplex.js&#10;demo&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoComplexHierarchy.js&#10;d&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoComplexHierarchy.js&#10;tree&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/DemoCircularTrees.js&#10;circula&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/DemoCircularTrees.js&#10;dum&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/dummyComplex.js&#10;De&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/complex hierarchy/DemoComplexHierarchy.js&#10;biop&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/biopax/BiopaxParser.js&#10;rect&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/overlappingRects/DemoOverlappingRects.js&#10;rectL&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/overlappingRects/RectLayout.js&#10;uiS&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/viewController/view/UISvgView.js&#10;tre&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/demos/DemoCircularTrees.js&#10;node&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/node.js&#10;UI&#9;FILE&#9;file:///Users/fra/WebstormProjects/pathways/js/components/viewController/view/UIGView.js" />
+    <property name="FullScreen" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../bicyclerace.github.io" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/styles" />
+      <recent name="$PROJECT_DIR$/js/demos/explorer" />
+      <recent name="$PROJECT_DIR$/js/demos/lineset2" />
       <recent name="$PROJECT_DIR$/js/demos/complex hierarchy" />
       <recent name="$PROJECT_DIR$/js/libs" />
-      <recent name="$PROJECT_DIR$/js/demos/overlappingRects" />
-      <recent name="$PROJECT_DIR$/resources/demos/owl" />
-      <recent name="$PROJECT_DIR$/js/demos/lineset" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/js/components/complexes" />
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+      <method />
+    </configuration>
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <method />
     </configuration>
-    <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
@@ -365,10 +363,6 @@
       <setting name="settingsFile" value="" />
       <setting name="serverType" value="INTERNAL" />
       <setting name="preferredDebugBrowser" value="Chrome" />
-      <method />
-    </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
@@ -482,20 +476,25 @@
       <option name="project" value="LOCAL" />
       <updated>1422747056501</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="circles packing colors">
+      <created>1422811821880</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1422811821880</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="873" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290653" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290653" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1587708" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1574904" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15715292" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21115819" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -503,12 +502,34 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290653" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290653" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290653" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1574904" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290653" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290653" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21115819" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-    </layout>
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -533,78 +554,14 @@
     <MESSAGE value="rect layout" />
     <MESSAGE value="before complex hierarchy&#10;" />
     <MESSAGE value="circles packing" />
-    <option name="LAST_COMMIT_MESSAGE" value="circles packing" />
+    <MESSAGE value="circles packing colors" />
+    <option name="LAST_COMMIT_MESSAGE" value="circles packing colors" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/js/libs/vec2d.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="1920">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/libs/clusterfck-0.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="420" max-vertical-offset="2775">
-          <caret line="9" column="34" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="735">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/demos/complex/DemoComplex.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1545">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/demos/complex/out.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="225" max-vertical-offset="735">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/demos/complex/DemoComplex.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1545">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/demos/complex/out.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="90">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/styles/theme.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
-          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/libs/clusterfck-0.1.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2775">
@@ -644,7 +601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="250" max-vertical-offset="1065">
           <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -690,13 +646,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/styles/DemosController.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17880794" vertical-offset="0" max-vertical-offset="1140">
-          <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-16.88" vertical-offset="223" max-vertical-offset="765">
@@ -708,29 +657,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1545">
           <caret line="26" column="26" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/components/viewController/view/UISvgView.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3675">
-          <caret line="8" column="18" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/demos/DemosController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1560">
-          <caret line="17" column="36" selection-start-line="17" selection-start-column="36" selection-end-line="17" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/demos/lineset/PathwaysPath.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27888447" vertical-offset="45" max-vertical-offset="1080">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -746,15 +672,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
           <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/demos/lineset/SideMenu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="960">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -762,7 +679,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1695">
           <caret line="0" column="9" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -770,15 +686,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.66887414" vertical-offset="865" max-vertical-offset="1620">
           <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/libs/vec2d.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.3461537" vertical-offset="0" max-vertical-offset="2010">
-          <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -786,7 +693,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1435" max-vertical-offset="2340">
           <caret line="123" column="51" selection-start-line="107" selection-start-column="7" selection-end-line="123" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -794,7 +700,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5960265" vertical-offset="135" max-vertical-offset="1200">
           <caret line="39" column="16" selection-start-line="39" selection-start-column="16" selection-end-line="39" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -802,7 +707,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="765">
           <caret line="18" column="32" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -810,7 +714,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="7830">
           <caret line="6" column="30" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -818,15 +721,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3480">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/demos/biopax/BiopaxParser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2269" max-vertical-offset="3885">
-          <caret line="167" column="38" selection-start-line="167" selection-start-column="38" selection-end-line="167" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -834,7 +728,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17928287" vertical-offset="0" max-vertical-offset="2220">
           <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -842,7 +735,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27888447" vertical-offset="0" max-vertical-offset="1755">
           <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -858,75 +750,191 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="75" max-vertical-offset="1035">
           <caret line="15" column="66" selection-start-line="15" selection-start-column="66" selection-end-line="15" selection-end-column="66" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.375" vertical-offset="0" max-vertical-offset="1215">
-          <caret line="31" column="61" selection-start-line="31" selection-start-column="61" selection-end-line="31" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/demos/complex hierarchy/DemoComplexHierarchy.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3137" max-vertical-offset="5430">
-          <caret line="221" column="0" selection-start-line="221" selection-start-column="0" selection-end-line="239" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/libs/color-1.0.1.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="10502" max-vertical-offset="12720">
-          <caret line="775" column="40" selection-start-line="775" selection-start-column="40" selection-end-line="775" selection-end-column="40" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/demos/complex hierarchy/DemoCirclePacking.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="782" max-vertical-offset="1770">
-          <caret line="70" column="31" selection-start-line="70" selection-start-column="31" selection-end-line="70" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/demos/lineset/DemoLineSet.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="14.923077" vertical-offset="5353" max-vertical-offset="7545">
-          <caret line="339" column="55" selection-start-line="339" selection-start-column="12" selection-end-line="339" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.3625498" vertical-offset="6792" max-vertical-offset="7560">
+          <caret line="479" column="31" selection-start-line="479" selection-start-column="31" selection-end-line="479" selection-end-column="31" />
           <folding>
             <element signature="e#1607#1699#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/main.js">
+    <entry file="file://$PROJECT_DIR$/js/demos/lineset/PathwaysPath.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-          <folding />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1080">
+          <caret line="0" column="9" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/demos/lineset/Colors.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
-          <caret line="15" column="116" selection-start-line="15" selection-start-column="116" selection-end-line="15" selection-end-column="116" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="465">
+          <caret line="4" column="145" selection-start-line="4" selection-start-column="145" selection-end-line="4" selection-end-column="145" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/complex hierarchy/DemoCirclePacking.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.40239045" vertical-offset="1047" max-vertical-offset="1830">
+          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="90" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/complex hierarchy/DemoComplexHierarchy.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17662683" vertical-offset="3137" max-vertical-offset="5430">
+          <caret line="218" column="6" selection-start-line="218" selection-start-column="6" selection-end-line="218" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/demos/complex hierarchy/ComplexPack.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6613546" vertical-offset="2787" max-vertical-offset="5415">
-          <caret line="219" column="0" selection-start-line="219" selection-start-column="0" selection-end-line="219" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.3559097" vertical-offset="4217" max-vertical-offset="6090">
+          <caret line="299" column="44" selection-start-line="299" selection-start-column="44" selection-end-line="299" selection-end-column="44" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/libs/vec2d.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4951857" vertical-offset="420" max-vertical-offset="2010">
+          <caret line="57" column="32" selection-start-line="57" selection-start-column="32" selection-end-line="57" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/lineset/SideMenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08366534" vertical-offset="177" max-vertical-offset="930">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/components/viewController/view/UISvgView.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5392022" vertical-offset="808" max-vertical-offset="3675">
+          <caret line="80" column="51" selection-start-line="80" selection-start-column="51" selection-end-line="80" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/img/search-icon.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/styles/DemosController.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21912351" vertical-offset="225" max-vertical-offset="1125">
+          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+          <caret line="1" column="4" selection-start-line="1" selection-start-column="4" selection-end-line="1" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/styles/theme.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/DemosController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3984064" vertical-offset="195" max-vertical-offset="1725">
+          <caret line="33" column="107" selection-start-line="33" selection-start-column="107" selection-end-line="33" selection-end-column="107" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/libs/color-1.0.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="4039" max-vertical-offset="12360">
+          <caret line="310" column="8" selection-start-line="310" selection-start-column="8" selection-end-line="310" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/explorer/SearchArea.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33864543" vertical-offset="0" max-vertical-offset="1050">
+          <caret line="17" column="48" selection-start-line="17" selection-start-column="48" selection-end-line="17" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/biopax/BiopaxParser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3837" max-vertical-offset="4710">
+          <caret line="277" column="0" selection-start-line="277" selection-start-column="0" selection-end-line="277" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/styles/DemoExplorer.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="811" max-vertical-offset="1875">
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-24.75" vertical-offset="516" max-vertical-offset="1320">
+          <caret line="74" column="63" selection-start-line="74" selection-start-column="63" selection-end-line="74" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/explorer/PathwaysGraphDrawingUtils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="585">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/lineset2/DemoLineSet2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20278834" vertical-offset="2630" max-vertical-offset="8775">
+          <caret line="186" column="10" selection-start-line="186" selection-start-column="10" selection-end-line="186" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/explorer/DemoExplorer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3117871" vertical-offset="0" max-vertical-offset="1800">
+          <caret line="69" column="39" selection-start-line="69" selection-start-column="39" selection-end-line="69" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/explorer/ContextArea.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="900">
+          <caret line="10" column="32" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/demos/explorer/PathwaysGraph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1783042" vertical-offset="1185" max-vertical-offset="3285">
+          <caret line="16" column="19" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="19" />
+          <folding>
+            <element signature="e#3209#6718#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

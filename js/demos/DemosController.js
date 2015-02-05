@@ -30,13 +30,23 @@ function DemosController (demos) {
         if(demoClass.theme)
             d3.select("body").classed(demoClass.theme, true);
 
-        _currentDemo = new demoClass(_svgContainer);
+        if(demoClass.divContainer){
+            _currentDemo = new demoClass(d3.select("body").append("div").classed("demo-explorer-area", true));
+            $(_svgContainer[0]).hide();
+        }
+        else{
+            _currentDemo = new demoClass(_svgContainer);
+        }
 
         demo = _currentDemo;
 
         _titleDiv.text(demoClass.demoTitle);
         _descriptionContainer.text(demoClass.demoDescription);
         _currentDemo.start()
+    };
+
+    self.hideDetailsContainer = function() {
+        $(_detailsContainer[0]).hide();
     };
 
     var setUpDropDownMenu = function() {
@@ -65,6 +75,7 @@ function DemosController (demos) {
         $(_titleContainer[0]).mouseleave(function(){$(dropDownList[0]).stop();$(dropDownList[0]).slideUp()});
 
         $(dropDownList[0]).hide();
+
     };
 
     var init = function() {

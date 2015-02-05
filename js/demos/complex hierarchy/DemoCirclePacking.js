@@ -44,14 +44,18 @@ function DemoCirclePacking (containerSvg) {
             x:0, y:0, width:"100%", height:"100%"}
         );
 
-        var mainG = svg.append("g").attr("transform","translate(0,0)");
+        var svgComplexStructure = svg.append("svg").attr("viewBox","0 0 600 600").attr({
+                x:300, y:20, width:"100%", height:"100%"}
+        );
+
+        var mainG = svg.append("g").attr("transform","translate(300,300)");
 
         var complexNode = mainG.selectAll(".main-complex").data([_mainComplex]);
 
         complexNode.enter().append("g").each(function(complex, i){
             complex._expanded = false;
             complex._color = Colors.pathways[i];
-        }).call(ComplexPack);
+        }).call(ComplexPack, svgComplexStructure);
 
     };
 
