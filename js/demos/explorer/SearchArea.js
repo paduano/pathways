@@ -7,7 +7,7 @@ var SearchArea = function(){
 
     var filtersDiv, inputJElement;
 
-    var addFilter = function(value) {
+    self.addFilter = function(value) {
 
         if(value.length == 0)
             return;
@@ -23,7 +23,7 @@ var SearchArea = function(){
         var closeIcon = element.append("img")
                             .classed("filter-close-icon", true)
                             .attr("src", "resources/img/blank.png")
-                            .on("click", removeFilter);
+                            .on("click", self.removeFilter);
 
 
         inputJElement.val("");
@@ -33,7 +33,7 @@ var SearchArea = function(){
     };
 
 
-    var removeFilter = function(filter){
+    self.removeFilter = function(filter){
         self.filters = _.without(self.filters, filter);
         d3.selectAll(".filter-element").filter(function(d){return d === filter}).remove();
 
@@ -61,7 +61,7 @@ var SearchArea = function(){
         inputJElement.keyup(function(e){
             if(e.keyCode == 13)//enter
             {
-                addFilter($(this).val());
+                self.addFilter($(this).val());
             }
         });
 

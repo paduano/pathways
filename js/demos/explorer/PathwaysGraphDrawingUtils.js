@@ -3,7 +3,10 @@ var PathwaysGraphDrawingUtils = {};
 
 PathwaysGraphDrawingUtils.complexBaseSize = 15;
 PathwaysGraphDrawingUtils.proteinRadius = function(p){return 7};
-PathwaysGraphDrawingUtils.complexSize = function(c){return PathwaysGraphDrawingUtils.complexBaseSize + Math.min(3,c.allProteins.length)};
+PathwaysGraphDrawingUtils.complexSize = function(c){
+    if(c._expanded){
+        return c._expandedSize;
+    }else return PathwaysGraphDrawingUtils.complexBaseSize};
 
 PathwaysGraphDrawingUtils.link = function (link, pathway) {
     var thick = 2,
@@ -27,7 +30,7 @@ PathwaysGraphDrawingUtils.link = function (link, pathway) {
     //end shift
 
     if(link.source.type == "complex"){
-        end = end.subV(direction.mulS(PathwaysGraphDrawingUtils.complexSize(link.source)*0.5));
+        end = end.subV(direction.mulS(PathwaysGraphDrawingUtils.complexSize(link.target)*0.5));
     } else if (link.source.type == "protein"){
         end = end.subV(direction.mulS(PathwaysGraphDrawingUtils.proteinRadius(link.target)*0.5));
     }
@@ -54,4 +57,16 @@ PathwaysGraphDrawingUtils.link = function (link, pathway) {
         v4.toArray() + " " +
         v5.toArray();
 
+};
+
+PathwaysGraphDrawingUtils.pathFromLabelToNode = function(d){
+
+    var point1 = [d._labelRect.x + d._labelRect.width, d._labelRect.y + d._labelRect.height - 3],
+        point2 = [d._labelRect.x, d._labelRect.y + d._labelRect.height - 3];
+
+    if(Math.abs(d._labelRect.x - d.x) < Math.abs(d._labelRect.x + d._labelRect.width - d.x) ){
+        return d3.svg.line()([point1, point2, [d.x, d.y ]]);
+    } else {
+        return d3.svg.line()([point2, point1, [d.x, d.y ]]);
+    }
 };

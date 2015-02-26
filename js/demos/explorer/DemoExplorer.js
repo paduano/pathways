@@ -38,6 +38,7 @@ function DemoExplorer (divContainer) {
 
         var sideContainer = divContainer
             .append("div")
+            .style("-webkit-user-select","none")
             .classed("demo-explorer-side-container", true);
         searchArea.appendTo(sideContainer);
         contextArea.appendTo(sideContainer);
@@ -75,10 +76,15 @@ function DemoExplorer (divContainer) {
             _pathwayGraph.updateFilters(searchArea.filters);
         }
 
+        searchArea.addFilter("cyclin E/A:cdk2:p27/p21");
+        searchArea.addFilter("rbl2:E2F4/5:DP1/2:cyclin E/A");
+
+
     };
 
 
     var loadAssets = function(callback) {
+        //var request = d3.xml("immune-system.owl", "application/xml", function(d) {
         var request = d3.xml("resources/demos/owl/Rb-E2F1.owl", "application/xml", function(d) {
         //var request = d3.xml("resources/demos/owl/1_RAF-Cascade.owl", "application/xml", function(d) {
             _parser = BiopaxParser(d3.select(d));

@@ -11,14 +11,32 @@ function PathwaysGraph() {
 
     var _componentsForceLayout;
 
+    //Behaviours
+    //var dragBehaviour = d3.behavior.drag()
+    //    .origin(function(d) { return d; })
+    //    .on("dragstart", dragstarted)
+    //    .on("drag", dragged)
+    //    .on("dragend", dragended),
+        var _zoomBehaviour = d3.behavior.zoom()
+        .scaleExtent([0.1, 10])
+        .on("zoom", zoomed),
+        _componentDragBehaviour;
+
+    //states
+    var _isDraggingComponent = false;
 
     //D3 elements
-    var _gComponents,
+    var _gVisualization,
+        _gComponents,
         _gReactions,
+        _svgComplexStructure,
         _allComponentElements,
         _allLinkElements,
         _complexElements,
-        _proteinElements;
+        _proteinElements,
+        //labels
+        _gLabels,
+        _searchPathLine;
 
 
     //Components
@@ -35,6 +53,8 @@ function PathwaysGraph() {
         _forceLayoutLinks;
 
 
+    //STATE
+    var _startComponent, _endComponent, _pathDragging = false;
 
     //## PRIVATE FUNCTIONS
 
@@ -44,7 +64,8 @@ function PathwaysGraph() {
     var componentKey = function(c){return c.name};
     var reactionKey = function(c){return c.source.name + c.target.name + c.pathways.length}; //XXX wrong
     var getSelectedPathways = function(p){return p.pathways.filter(function(pw){return pw._selected})};
-    //var isComponentSelected = function(p){return getSelectedPathways(p).length > 0};
+    var getHighlightedPathways = function(p){return p.pathways.filter(function(pw){return pw._highlighted && pw._selected})};
+    var isComponentHighlighted = function(p){return getHighlightedPathways(p).length > 0};
     var proteinRadius = PathwaysGraphDrawingUtils.proteinRadius;
     var complexSize = PathwaysGraphDrawingUtils.complexSize;
 
@@ -52,7 +73,7 @@ function PathwaysGraph() {
         if(component._expanded){
             return -ComplexPackUtils.radiusFromComponent(component) * 100;
         } else {
-            return -500;
+            return -2800;//XXX 800
         }
     };
 
@@ -87,9 +108,35 @@ function PathwaysGraph() {
     //init helpers
 
     var initElements = function(){
-        _gComponents = self.append("g");
-        _gReactions = self.append("g");
 
+
+
+
+        _gVisualization = self.append("g").call(_zoomBehaviour).on("dblclick.zoom", null);
+
+        //dummy rect
+        var rect = _gVisualization.append("rect")
+            .attr("width", _width)
+            .attr("height", _height)
+            .style("fill", "none")
+            .style("pointer-events", "all");
+
+        _gComponents = _gVisualization.append("g");
+        _gReactions = _gVisualization.append("g");
+        _gLabels = _gVisualization.append("g");
+        _svgComplexStructure = self.append("svg")
+            .classed("complex-structure", true)
+            .attr("viewBox","0 0 800 800").attr({
+                x:400, y:20, width:"100%", height:"100%"}
+        );
+
+        _componentDragBehaviour = d3.behavior.drag()
+            .on("dragstart", onDragStartOnComponent)
+            .on("drag", onDragMoveOnComponent)
+            .on("dragend", onDragEndOnComponent);
+
+        d3.select(window)
+            .on("mousemove", onMouseMove);
     };
 
 
@@ -98,7 +145,7 @@ function PathwaysGraph() {
             d3.layout.force()
             .size([_width, _height])
             .charge(forceLayoutChargeFunction)
-            .gravity(0.2)
+            .gravity(0.4)
             .linkDistance(45)
             .friction(0.5)
             .on("tick", forceLayoutTick)
@@ -120,10 +167,17 @@ function PathwaysGraph() {
         var newElements = components.enter()
             .append("g")
             .classed("pathway-component", true)
-            .classed(function(d){return "pathway-" + d.type}, true);
-
+            .classed(function(d){return "pathway-" + d.type}, true)
+            .attr("cursor", "pointer")
+            .on("click", onClickOnComponent)
+            .on("mouseover", onMouseEnterOnComponent)
+            .on("mouseout", onMouseOutOnComponent)
+            .on("mousedown", onMouseDownOnComponent)
+            .on("mouseup", onMouseUpOnComponent)
+            .call(_componentDragBehaviour);
 
         var enterComplexElements = newElements.filter(function(d){return d3.select(this).datum().type == "complex"});
+
 
         var enterProteinElements = newElements.filter(function(d){return d3.select(this).datum().type == "protein"});
 
@@ -150,7 +204,8 @@ function PathwaysGraph() {
                 ry : 3,
                 fill : function(pathway){return pathway.color}
             })
-            .attr("pointer-events", "all");
+            .attr("pointer-events", "all")
+
 
 
         enterProteinElements.append("circle")
@@ -211,7 +266,6 @@ function PathwaysGraph() {
                 height: function(d){return this._width}
             });
 
-
     };
 
 
@@ -239,8 +293,47 @@ function PathwaysGraph() {
     };
 
 
+    var updateLabels = function() {
+        //UPDATE LABELS
+        var components = _gLabels.selectAll(".component-label").data(_visibleComponents, componentKey);
+        var newElements = components.enter()
+            .append("g")
+            .classed("component-label", true);
+        //names
+        newElements
+            .append("text")
+            .classed("component-label-text", true)
+            .attr({
+                "text-anchor": "middle",
+                fill: "black",
+                "font-size" : 7
+            })
+            .text(function(d){return d.name;})
+            .each(function(d){
+                var bbox = d3.select(this)[0][0].getBBox();
+                d._labelRect = rect2d(d.x,d.y,bbox.width + 5,bbox.height + 5)
+            });
+
+        //lines
+        newElements
+            .append("path")
+            .classed("component-line-label",true)
+            .attr({
+                fill: "none",
+                "stroke-width" : 1,
+                opacity : 0.4,
+                stroke : "black"
+
+            });
+        components.exit().remove();
+
+
+
+    };
+
     //Timing
-    var forceLayoutTick = function() {
+    var forceLayoutTick = function(e) {
+        if(e)updateLayoutForces(e.alpha);
         updateElementsPosition();
     };
 
@@ -252,8 +345,368 @@ function PathwaysGraph() {
     };
 
 
+    var updateLayoutForces = function (alpha) {
+
+        var k = alpha * 30;
+        _allLinkElements.each(function (link) {
+            link.source.y -= k;
+            link.target.y += k;
+        });
+    };
+
     //Graphics Elements
 
+    //Labelling
+    var showLabels = function() {
+
+        //POSITIONATE LABELS
+        var labelsLayout = RectLayout(0.1);
+
+        //add additional rects to the layout to avoid overlapping
+        _allComponentElements.selectAll(".protein-circle,.complex-rect").each(function (d) {
+            var bbox = d3.select(this)[0][0].getBBox();
+            var rect = rect2d(d.x - bbox.width, d.y - bbox.height, bbox.width * 2, bbox.height * 2);
+            labelsLayout.addFixedRectangle(rect);
+        });
+
+        _gLabels.selectAll(".component-label-text").each(function (d) {
+            if (isComponentHighlighted(d)) {
+                d._labelRect.x = d.x;
+                d._labelRect.y = d.y;
+                labelsLayout.addRectangle(d._labelRect);
+            }
+        });
+
+        _gLabels.selectAll(".component-label-text")
+            .attr({
+                x: function (d) {
+                    return d._labelRect.center().x
+                },
+                y: function (d) {
+                    return d._labelRect.y + d._labelRect.height / 2
+                },
+                //hide show text of selected paths
+                visibility: function (d) {
+                    return isComponentHighlighted(d) ? "visible" : "hidden"
+                }
+            });
+
+        _gLabels.selectAll(".component-line-label")
+            .attr({
+                //hide show text of selected paths
+                visibility: function (d) {
+                    return isComponentHighlighted(d) ? "visible" : "hidden"
+                }
+            });
+
+        _gLabels.selectAll(".component-line-label")
+            .attr({
+                d : PathwaysGraphDrawingUtils.pathFromLabelToNode
+            });
+
+
+        //labelsLayout.rects.forEach(function (rect) {
+        //
+        //
+        //    _gLabels.append("rect")
+        //        .attr({
+        //            x:rect.x,
+        //            y:rect.y,
+        //            width:rect.width,
+        //            height:rect.height,
+        //            fill:"none",
+        //            "stroke": "black",
+        //            "stroke-width": 2
+        //        })
+        //});
+
+
+    };
+
+
+    var hideLabels = function() {
+        _gLabels.selectAll(".component-label-text")
+            .attr({
+                visibility: "hidden"
+            });
+
+        _gLabels.selectAll(".component-line-label")
+            .attr({
+                visibility: "hidden"
+            });
+    };
+
+
+    var highlightPathways = function () {
+        _gComponents.selectAll(".complex-rect")
+            .attr("fill", function(d,i){
+                return isComponentHighlighted(d)? getFillForComponent(d) : Colors.desaturate(getFillForComponent(d));
+            }
+        );
+
+        _gComponents.selectAll(".protein-circle")
+            .attr("fill", function(d,i){
+                return isComponentHighlighted(d)? getFillForComponent(d) : Colors.desaturate(getFillForComponent(d));
+            }
+        );
+
+        _gComponents.selectAll(".complex-colored-rectangle")
+            .attr("fill", function(pw,i){
+                return pw._highlighted? pw.color : Colors.desaturate(pw.color);
+            }
+        );
+
+        _gComponents.selectAll(".protein-colored-circle")
+            .attr("fill", function(pw,i){
+                return pw._highlighted? pw.color : Colors.desaturate(pw.color);
+            }
+        );
+
+        _gReactions.selectAll(".pathway-link-polygon")
+            .attr("fill", function(pw,i){
+                return pw._highlighted? pw.color : Colors.desaturate(pw.color);
+            }
+        );
+
+    };
+
+
+    //Interactions
+
+    var clickedOnce = false, onDragging = false;
+    var clickTimer;
+
+    var onMouseDownOnComponent = function (component) {
+        _pathDragging = true;
+        _startComponent = component;
+
+        //XXX
+        //disableDragging();
+        //disablePanningAndZooming();
+        //var xxx_keepLabelsHidden = false;
+        //hideLabels();
+        //
+        //_searchPathLine = _gReactions.append("path")
+        //    .style("stroke-dasharray", ("3, 3"))
+        //    .classed("search-line", true)
+        //    .attr("stroke","gray")
+        //    .attr("stroke-width", 3)
+        //    .attr("d", d3.svg.line()([[_startComponent.x, _startComponent.y],
+        //        [_startComponent.x, _startComponent.y]]));
+    };
+
+    var onMouseUpOnComponent = function (component) {
+        _endComponent = component;
+        expandPath(_startComponent, _endComponent);
+        _pathDragging = false;
+        _searchPathLine.remove();
+        console.log("up");
+    };
+
+    var onMouseMove = function (component) {
+        if(_pathDragging){
+            var coordinates = d3.mouse(_gReactions.node());
+            var x = coordinates[0];
+            var y = coordinates[1];
+            _searchPathLine
+                .attr("d", d3.svg.line()([[_startComponent.x, _startComponent.y],[x,y]]));
+        }
+    };
+
+    var onClickOnComponent = function (component) {
+        if (clickedOnce) {
+            onDoubleClickOnComponent.apply(this, [component]);
+            clickedOnce = false;
+        } else {
+            clickTimer = setTimeout(function() {
+                if(!onDragging && clickedOnce)
+                    onSingleClickOnComponent.apply(this, [component]);
+                clickedOnce = false;
+            }, 200);
+            clickedOnce = true;
+        }
+    };
+
+    var onSingleClickOnComponent = function(component){
+        expandDownstream(component);
+        expandUpstream(component);
+        self.updateContext();
+    };
+
+    var onDoubleClickOnComponent = function (component) {
+
+        if(component.type == "complex")
+            openComplex(this, component);
+    };
+
+    var onMouseEnterOnComponent = function (component) {
+        _pathways.forEach(function (pw) {
+            if(_.contains(component.pathways, pw))
+                pw._highlighted = true;
+            else
+                pw._highlighted = false;
+        });
+        //component.pathways.forEach(function (pw) {pw._highlighted = true});
+        if(!xxx_keepLabelsHidden)
+            showLabels();
+        highlightPathways();
+    };
+
+    var onMouseOutOnComponent = function (component) {
+        _pathways.forEach(function (pw) {pw._highlighted = true});
+        //component.pathways.forEach(function (pw) {pw._highlighted = false});
+        hideLabels();
+        highlightPathways();
+
+    };
+
+    var onDragStartOnComponent = function(d, i) {
+        //_componentsForceLayout.stop(); // stops the force auto positioning before you start dragging
+        d.fixed = true;
+
+        disablePanningAndZooming();
+    };
+
+    var onDragMoveOnComponent = function (d, i) {
+        onDragging = true;
+        d.px += d3.event.dx;
+        d.py += d3.event.dy;
+        d.x += d3.event.dx;
+        d.y += d3.event.dy;
+        forceLayoutTick();
+
+    };
+
+    var onDragEndOnComponent = function (d, i) {
+        setTimeout(function() {
+            onDragging = false;
+        }, 500);
+        d.fixed = true;
+       // forceLayoutTick(1);
+        _componentsForceLayout.resume();
+
+        //Resome PANNING AND ZOOM
+        _gVisualization.call(_zoomBehaviour).on("dblclick.zoom", null);
+    };
+
+    var enableDragging = function () {
+        _allComponentElements.call(_componentDragBehaviour);
+
+    };
+
+    var disableDragging = function () {
+        d3.selectAll(".pathway-component").on('mousedown.drag', null);
+    };
+
+    var disablePanningAndZooming = function () {
+        _gVisualization.on("mousedown.zoom", null);
+    };
+
+    //GENERAL dragging
+    //function dragstarted(d) {
+    //    d3.event.sourceEvent.stopPropagation();
+    //    d3.select(this).classed("dragging", true);
+    //}
+    //
+    //function dragged(d) {
+    //    d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+    //}
+    //
+    //function dragended(d) {
+    //    d3.select(this).classed("dragging", false);
+    //}
+
+    function zoomed() {
+
+        _gVisualization.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+
+        //forceLayoutTick();
+    }
+
+    var xxx_keepLabelsHidden = false;
+    var openComplex = function(element, d) {
+        //bring to front
+        element.parentNode.appendChild(element);
+
+        //XXX
+        _gComponents.node().parentNode.appendChild(_gComponents.node());
+        xxx_keepLabelsHidden = true;
+
+        d._expanded = true;
+        d3.select(element).call(ComplexPack,
+            _svgComplexStructure,
+            onCloseComplex,
+            {useRect : true, coloringMode : "flat", color : getFillForComponent(d)});
+
+        //d.fixed = true; XXX
+        _componentsForceLayout.start();
+    };
+
+    var onCloseComplex = function(d){
+        d._expanded = false;
+        d.fixed = false;
+        _componentsForceLayout.start();
+    };
+
+
+    var expandDownstream = function (component) {
+        component.nextComponents.forEach(function (nextComponent) {
+            nextComponent._visible = true;
+        });
+
+    };
+
+
+    var expandUpstream = function (component) {
+        component.previousComponents.forEach(function (previousComponent) {
+            previousComponent._visible = true;
+        });
+    };
+
+
+    var expandPath = function (start, end, previous) {
+        if(!previous)
+            previous = [];
+        _searchPathLine.remove();
+        //XXX stupid and dummy search
+        var elements = previous;
+        var next = start;
+        while(next.nextComponents.length > 0 ){
+            var exit = false;
+            if(next.nextComponents.length == 1){
+                next = next.nextComponents[0];
+                elements.push(next);
+            } else {
+                next.nextComponents.forEach(function (e) {
+
+                    if(e == end){
+                        elements.push(e);
+                        elements.forEach(function (element) {
+                            element._visible = true;
+                        });
+                        self.updateContext();
+                        exit = true
+                    }  else if(previous.length < 5) {
+                       expandPath(e, end, elements.concat(e));
+                   }
+                   exit = true;
+                });
+            }
+
+            if(exit)
+                break;
+
+
+            if(next == end){
+                elements.forEach(function (element) {
+                    element._visible = true;
+                });
+                self.updateContext();
+                break;
+            }
+        }
+
+    };
 
     //Processing
 
@@ -269,7 +722,6 @@ function PathwaysGraph() {
         }
 
         _visibleComponents.forEach(function (component) {
-            component.nextComponents = [];
 
             _visibleReactions.forEach(function (reaction) {
                 if(reaction.left.indexOf(component) > -1){
@@ -293,6 +745,27 @@ function PathwaysGraph() {
         _forceLayoutLinks = links;
     };
 
+
+    var createNextElements = function () {
+        _allComponents.forEach(function (component) {
+            component.nextComponents = [];
+            component.previousComponents = component.previousComponents || [];
+
+            _reactions.forEach(function (reaction) {
+                if(reaction.left.indexOf(component) > -1){
+                    var right = reaction.right.filter(function(d){return d.type == "complex" || d.type == "protein" });
+                    component.nextComponents = _.union(component.nextComponents, right);
+
+                    right.forEach(function (r) {
+                        r.previousComponents = r.previousComponents || [];
+                        r.previousComponents = _.union(r.previousComponents, [component]);
+                    });
+                }
+            })
+        });
+    };
+
+
     var computeVisibleComponentAndReactions = function(){
         _visibleComponents = [];
         _visibleReactions = [];
@@ -300,9 +773,15 @@ function PathwaysGraph() {
             if(pathway._selected){
 
                 var filteredComponents = pathway.allComponents.filter(function(component){
+                    //expanded
+                    if(component._visible)
+                        return true;
+
+                    //match searching criteria
                     for(var i = 0; i < _nameFilters.length; i++){
                         var filter = _nameFilters[i];
-                        if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){
+                        //if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){//XXX
+                        if(component.name.toLowerCase().indexOf(filter.toLowerCase()) == 0){
                             return true;
                         }
                     }
@@ -326,7 +805,9 @@ function PathwaysGraph() {
         _pathways = pathways;
         _allComponents = _proteins.concat(_complexes);
 
+        _pathways.forEach(function (pw) {pw._highlighted = true});
 
+        createNextElements();
         computeVisibleComponentAndReactions();
         createLinks();
 
@@ -334,6 +815,8 @@ function PathwaysGraph() {
 
         updateComplexesAndProteinsElements();
         updateReactionsElements();
+        updateLabels();
+        highlightPathways();
     };
 
     self.updateContext = function(){
@@ -344,6 +827,8 @@ function PathwaysGraph() {
 
         updateComplexesAndProteinsElements();
         updateReactionsElements();
+        updateLabels();
+        highlightPathways();
     };
 
     self.updateFilters = function(filters){

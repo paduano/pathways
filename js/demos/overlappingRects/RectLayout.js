@@ -14,7 +14,7 @@ function RectLayout(distanceFactor) {
         var intersects = [];
         for(var i = 0; i < rects.length; i++){
             var rect = rects[i];
-            if(rect.overlappingArea(r) > 0){//
+            if(rect.overlappingArea(r) >= 0){//XXX
                 intersects.push(rect);
             }
         }

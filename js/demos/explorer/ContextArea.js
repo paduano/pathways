@@ -3,7 +3,7 @@ var ContextArea = function(){
 
     var pathways = [];
 
-    var colorScale = d3.scale.category10();
+    var colorScale = d3.scale.category20();
 
     var elementsList;
 
@@ -39,10 +39,12 @@ var ContextArea = function(){
             .style("padding-top", "14px")
             .style("padding-left", "14px");
 
+
+
         //append input box
         var filterDiv = self.append("div");
 
-        filterDiv.append("h3").text("Context");
+        filterDiv.append("h3").text("Field of Interest");
 
         elementsList = filterDiv.append("ul");
 

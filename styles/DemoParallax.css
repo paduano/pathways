@@ -1,0 +1,15 @@
+.parallax-demo .link {
+    stroke: #000;
+    stroke-width: 1.5px;
+}
+
+.parallax-demo .node {
+    cursor: move;
+    fill: #ccc;
+    stroke: #000;
+    stroke-width: 1.5px;
+}
+
+.parallax-demo .node.fixed {
+    fill: #f00;
+}

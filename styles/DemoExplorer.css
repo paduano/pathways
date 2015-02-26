@@ -118,3 +118,15 @@
     border-radius: 4px;
 
 }
+
+.complex-structure text {
+    fill: black !important;
+}
+
+.complex-structure path {
+    stroke: black !important;
+}
+
+.complex-structure circle {
+    stroke: black !important;
+}

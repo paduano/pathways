@@ -13,7 +13,8 @@ $(document).ready(function() {
         DemoComplexHierarchy,
         DemoCirclePacking,
         DemoLineSet2,
-        DemoExplorer
+        DemoExplorer,
+        DemoParallaxGraph
     ]);
 
     var demoTitle = getParameterByName("demo") || DemoExplorer.demoTitle;
