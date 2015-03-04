@@ -3,7 +3,7 @@ var ContextArea = function(){
 
     var pathways = [];
 
-    var colorScale = d3.scale.category20();
+    var colorScale = d3.scale.category10();
 
     var elementsList;
 
@@ -31,6 +31,8 @@ var ContextArea = function(){
             });
 
     };
+
+
 
 
     var init = function() {

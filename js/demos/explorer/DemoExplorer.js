@@ -51,6 +51,9 @@ function DemoExplorer (divContainer) {
         );
 
         //XXX
+        _parser.pathways = _.without(_parser.pathways, _parser.pathways[0]);
+        _parser.pathways = _.without(_parser.pathways, _parser.pathways[5]);
+
         _parser.pathways.forEach(function (p) {
             p._selected = true;
             contextArea.addContext(p);

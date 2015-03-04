@@ -111,15 +111,16 @@ function PathwaysGraph() {
 
 
 
-
-        _gVisualization = self.append("g").call(_zoomBehaviour).on("dblclick.zoom", null);
+        self.call(_zoomBehaviour).on("dblclick.zoom", null);
+        _gVisualization = self.append("g");
 
         //dummy rect
         var rect = _gVisualization.append("rect")
             .attr("width", _width)
             .attr("height", _height)
             .style("fill", "none")
-            .style("pointer-events", "all");
+            .style("pointer-events", "all")
+            .on("mousedown", mouseDownOnBackground);
 
         _gComponents = _gVisualization.append("g");
         _gReactions = _gVisualization.append("g");
@@ -186,6 +187,7 @@ function PathwaysGraph() {
 
         coloredCircleElement.enter()
             .append("circle")
+            .attr("pointer-events", "none")
             .classed("protein-colored-circle",true)
             .attr({
                 r:0,
@@ -198,13 +200,14 @@ function PathwaysGraph() {
         var coloredRectangleElement = enterComplexElements.selectAll(".complex-colored-rectangle").data(function(d){return d.pathways});
         coloredRectangleElement.enter()
             .append("rect")
+            .attr("pointer-events", "none")
             .classed("complex-colored-rectangle",true)
             .attr({
                 rx : 3,
                 ry : 3,
                 fill : function(pathway){return pathway.color}
             })
-            .attr("pointer-events", "all")
+
 
 
 
@@ -228,7 +231,7 @@ function PathwaysGraph() {
                 rx : 3,
                 ry : 3
             })
-            .attr("pointer-events", "all");
+            .attr("pointer-events", "visiblePainted");
 
         //Remove
         components.exit().remove();
@@ -298,7 +301,8 @@ function PathwaysGraph() {
         var components = _gLabels.selectAll(".component-label").data(_visibleComponents, componentKey);
         var newElements = components.enter()
             .append("g")
-            .classed("component-label", true);
+            .classed("component-label", true)
+            .attr("pointer-events","none");
         //names
         newElements
             .append("text")
@@ -477,30 +481,20 @@ function PathwaysGraph() {
     var clickTimer;
 
     var onMouseDownOnComponent = function (component) {
-        _pathDragging = true;
-        _startComponent = component;
 
-        //XXX
-        //disableDragging();
-        //disablePanningAndZooming();
-        //var xxx_keepLabelsHidden = false;
-        //hideLabels();
-        //
-        //_searchPathLine = _gReactions.append("path")
-        //    .style("stroke-dasharray", ("3, 3"))
-        //    .classed("search-line", true)
-        //    .attr("stroke","gray")
-        //    .attr("stroke-width", 3)
-        //    .attr("d", d3.svg.line()([[_startComponent.x, _startComponent.y],
-        //        [_startComponent.x, _startComponent.y]]));
     };
 
     var onMouseUpOnComponent = function (component) {
-        _endComponent = component;
-        expandPath(_startComponent, _endComponent);
-        _pathDragging = false;
-        _searchPathLine.remove();
-        console.log("up");
+
+
+    };
+
+    var mouseDownOnBackground = function () {
+        if(_pathDragging){
+            _pathDragging = false;
+            _searchPathLine.remove();
+        }
+
     };
 
     var onMouseMove = function (component) {
@@ -514,23 +508,55 @@ function PathwaysGraph() {
     };
 
     var onClickOnComponent = function (component) {
+        console.log("click")
+        var event = d3.event;
         if (clickedOnce) {
             onDoubleClickOnComponent.apply(this, [component]);
             clickedOnce = false;
         } else {
             clickTimer = setTimeout(function() {
                 if(!onDragging && clickedOnce)
-                    onSingleClickOnComponent.apply(this, [component]);
+                    onSingleClickOnComponent.apply(this, [event,component]);
                 clickedOnce = false;
             }, 200);
             clickedOnce = true;
         }
     };
 
-    var onSingleClickOnComponent = function(component){
-        expandDownstream(component);
-        expandUpstream(component);
-        self.updateContext();
+    var onSingleClickOnComponent = function(event, component){
+
+        if(_pathDragging){
+            _endComponent = component;
+            expandPath(_startComponent, _endComponent);
+            _pathDragging = false;
+            _searchPathLine.remove();
+        } else if(event.shiftKey){
+            if(!_pathDragging){
+
+                _pathDragging = true;
+                _startComponent = component;
+
+                //XXX
+                //disableDragging();
+                //disablePanningAndZooming();
+                var xxx_keepLabelsHidden = false;
+                hideLabels();
+
+                _searchPathLine = _gReactions.append("path")
+                    .style("stroke-dasharray", ("3, 3"))
+                    .classed("search-line", true)
+                    .attr("stroke","gray")
+                    .attr("stroke-width", 3)
+                    .attr("d", d3.svg.line()([[_startComponent.x, _startComponent.y],
+                        [_startComponent.x, _startComponent.y]]));
+
+            }
+        } else {
+            expandDownstream(component);
+            expandUpstream(component);
+            self.updateContext();
+        }
+
     };
 
     var onDoubleClickOnComponent = function (component) {
@@ -562,7 +588,7 @@ function PathwaysGraph() {
 
     var onDragStartOnComponent = function(d, i) {
         //_componentsForceLayout.stop(); // stops the force auto positioning before you start dragging
-        d.fixed = true;
+        //d.fixed = true;XXX
 
         disablePanningAndZooming();
     };
@@ -581,7 +607,7 @@ function PathwaysGraph() {
         setTimeout(function() {
             onDragging = false;
         }, 500);
-        d.fixed = true;
+        //d.fixed = true;XXX
        // forceLayoutTick(1);
         _componentsForceLayout.resume();
 
@@ -630,7 +656,7 @@ function PathwaysGraph() {
 
         //XXX
         _gComponents.node().parentNode.appendChild(_gComponents.node());
-        xxx_keepLabelsHidden = true;
+//        xxx_keepLabelsHidden = true;
 
         d._expanded = true;
         d3.select(element).call(ComplexPack,
@@ -780,8 +806,8 @@ function PathwaysGraph() {
                     //match searching criteria
                     for(var i = 0; i < _nameFilters.length; i++){
                         var filter = _nameFilters[i];
-                        //if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){//XXX
-                        if(component.name.toLowerCase().indexOf(filter.toLowerCase()) == 0){
+                        if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){
+                        //if(component.name.toLowerCase().indexOf(filter.toLowerCase()) == 0){
                             return true;
                         }
                     }
