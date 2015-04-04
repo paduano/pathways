@@ -29,6 +29,7 @@ function PathwaysGraph() {
     var _gVisualization,
         _gComponents,
         _gReactions,
+        _gOverlayLayer,
         _svgComplexStructure,
         _allComponentElements,
         _allLinkElements,
@@ -43,6 +44,7 @@ function PathwaysGraph() {
 
     var _visibleComponents,
         _allComponents,
+        _expansionMarkers,
         _proteins,
         _complexes,
         _reactions,
@@ -68,6 +70,8 @@ function PathwaysGraph() {
     var isComponentHighlighted = function(p){return getHighlightedPathways(p).length > 0};
     var proteinRadius = PathwaysGraphDrawingUtils.proteinRadius;
     var complexSize = PathwaysGraphDrawingUtils.complexSize;
+    var hasUpstream = function(c){return c.previousComponents.filter(function (el) {return !el._visible}).length > 0};
+    var hasDownstream = function(c){return c.nextComponents.filter(function (el) { return  !el._visible}).length > 0};
 
     var forceLayoutChargeFunction = function(component){
         if(component._expanded){
@@ -109,8 +113,6 @@ function PathwaysGraph() {
 
     var initElements = function(){
 
-
-
         self.call(_zoomBehaviour).on("dblclick.zoom", null);
         _gVisualization = self.append("g");
 
@@ -125,6 +127,7 @@ function PathwaysGraph() {
         _gComponents = _gVisualization.append("g");
         _gReactions = _gVisualization.append("g");
         _gLabels = _gVisualization.append("g");
+        _gOverlayLayer = _gVisualization.append("g");
         _svgComplexStructure = self.append("svg")
             .classed("complex-structure", true)
             .attr("viewBox","0 0 800 800").attr({
@@ -206,9 +209,7 @@ function PathwaysGraph() {
                 rx : 3,
                 ry : 3,
                 fill : function(pathway){return pathway.color}
-            })
-
-
+            });
 
 
         enterProteinElements.append("circle")
@@ -269,6 +270,28 @@ function PathwaysGraph() {
                 height: function(d){return this._width}
             });
 
+        //add upstream and downstream markers
+        //var allNewElements =
+
+        var newExpansionMarkers = d3.selectAll(enterComplexElements[0].concat(enterProteinElements[0])).append('g')
+            .classed("expansion-marker",true);
+
+        newExpansionMarkers.append('polygon')
+            .classed("expansion-marker-downstream", true)
+            .attr('points', '-3.5 0.5, 3.5 0.5 ,0 5');
+
+        newExpansionMarkers.append('polygon')
+            .classed("expansion-marker-upstream", true)
+            .attr('points', '-3.5 -0.5, 3.5 -0.5 ,0 -5');
+
+
+        _expansionMarkers = d3.selectAll('.expansion-marker');
+
+        _expansionMarkers.selectAll(".expansion-marker-downstream")
+            .attr('opacity', function(d){return hasDownstream(d) ? 0.5 : 0});
+
+        _expansionMarkers.selectAll(".expansion-marker-upstream")
+            .attr('opacity', function(d){return hasUpstream(d) ? 0.5 : 0});
     };
 
 
@@ -346,6 +369,9 @@ function PathwaysGraph() {
         _allComponentElements.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
         _allLinkElements.selectAll(".pathway-link-polygon")
             .attr({points: function(pw){ return PathwaysGraphDrawingUtils.link(d3.select(this.parentNode).datum(),pw)}});
+
+
+        //_expansionMarkers.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
     };
 
 
@@ -491,8 +517,7 @@ function PathwaysGraph() {
 
     var mouseDownOnBackground = function () {
         if(_pathDragging){
-            _pathDragging = false;
-            _searchPathLine.remove();
+            onEndPathExpansion();
         }
 
     };
@@ -508,7 +533,6 @@ function PathwaysGraph() {
     };
 
     var onClickOnComponent = function (component) {
-        console.log("click")
         var event = d3.event;
         if (clickedOnce) {
             onDoubleClickOnComponent.apply(this, [component]);
@@ -526,30 +550,10 @@ function PathwaysGraph() {
     var onSingleClickOnComponent = function(event, component){
 
         if(_pathDragging){
-            _endComponent = component;
-            expandPath(_startComponent, _endComponent);
-            _pathDragging = false;
-            _searchPathLine.remove();
+            onEndPathExpansion(component);
         } else if(event.shiftKey){
             if(!_pathDragging){
-
-                _pathDragging = true;
-                _startComponent = component;
-
-                //XXX
-                //disableDragging();
-                //disablePanningAndZooming();
-                var xxx_keepLabelsHidden = false;
-                hideLabels();
-
-                _searchPathLine = _gReactions.append("path")
-                    .style("stroke-dasharray", ("3, 3"))
-                    .classed("search-line", true)
-                    .attr("stroke","gray")
-                    .attr("stroke-width", 3)
-                    .attr("d", d3.svg.line()([[_startComponent.x, _startComponent.y],
-                        [_startComponent.x, _startComponent.y]]));
-
+                onStartPathExpansion(component);
             }
         } else {
             expandDownstream(component);
@@ -690,10 +694,60 @@ function PathwaysGraph() {
     };
 
 
+    var onStartPathExpansion = function (component) {
+
+
+        _pathDragging = true;
+        _startComponent = component;
+        //XXX
+        //disableDragging();
+        //disablePanningAndZooming();
+        var xxx_keepLabelsHidden = false;
+        hideLabels();
+
+        _searchPathLine = _gReactions.append("path")
+            .style("stroke-dasharray", ("3, 3"))
+            .classed("search-line", true)
+            .attr("stroke","gray")
+            .attr("stroke-width", 3)
+            .attr("d", d3.svg.line()([[_startComponent.x, _startComponent.y],
+                [_startComponent.x, _startComponent.y]]));
+
+        //highlightDownstream/upstream
+        var results = PathwaysSearchUtils.searchPath(component);
+        var upstream = results[1],
+            downstream = results[0];
+
+        var downStreamElements = _allComponentElements.filter(function (d) { return downstream.indexOf(d) > -1 });
+        var upStreamElements = _allComponentElements.filter(function (d) { return upstream.indexOf(d) > -1 });
+        downStreamElements.append('polygon')
+            .classed('path-marker', true)
+            .attr('points', "-20 -1, 20 -1, 0 15")
+            .attr('opacity',0.5);
+
+        //upStreamElements.append('polygon')
+        //    .classed('path-marker', true)
+        //    .attr('points', "-20 1, 20 1, 0 -15")
+        //    .attr('opacity',0.5);
+
+
+    };
+
+    var onEndPathExpansion = function (component) {
+        if(component){
+            _endComponent = component;
+            expandPath(_startComponent, _endComponent);
+        }
+
+        _pathDragging = false;
+        _searchPathLine.remove();
+        d3.selectAll('.path-marker').remove();
+    };
+
+
     var expandPath = function (start, end, previous) {
         if(!previous)
             previous = [];
-        _searchPathLine.remove();
         //XXX stupid and dummy search
         var elements = previous;
         var next = start;
@@ -800,18 +854,20 @@ function PathwaysGraph() {
 
                 var filteredComponents = pathway.allComponents.filter(function(component){
                     //expanded
-                    if(component._visible)
+                    if(component._visible){
                         return true;
-
-                    //match searching criteria
-                    for(var i = 0; i < _nameFilters.length; i++){
-                        var filter = _nameFilters[i];
-                        if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){
-                        //if(component.name.toLowerCase().indexOf(filter.toLowerCase()) == 0){
-                            return true;
+                    } else{
+                        //match searching criteria
+                        for(var i = 0; i < _nameFilters.length; i++){
+                            var filter = _nameFilters[i];
+                            if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){
+                            //if(component.name.toLowerCase().indexOf(filter.toLowerCase()) == 0){
+                                component._visible = true; //XXX
+                                return true;
+                            }
                         }
+                        return false;
                     }
-                    return false;
                 });
 
                 _visibleComponents = _.union(_visibleComponents, filteredComponents);

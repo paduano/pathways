@@ -146,7 +146,8 @@ function BiopaxParser(biopaxXml){
 
     var init = function(){
         //parse elements
-        self.biopaxXml.selectAll("Protein, Complex, BiochemicalReaction, SmallMolecule, Pathway").each(function(d){
+        //self.biopaxXml.selectAll("Protein, Complex, BiochemicalReaction, SmallMolecule, Pathway").each(function(d){
+        self.biopaxXml.selectAll("Protein, Complex, BiochemicalReaction, Pathway").each(function(d){
             var parser = parsers[this.tagName];
             if(parser){
                 var newElement = parser(this);

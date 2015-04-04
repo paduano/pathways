@@ -77,9 +77,10 @@ function DemoExplorer (divContainer) {
 
         searchArea.onFiltersChanged = function() {
             _pathwayGraph.updateFilters(searchArea.filters);
-        }
+        };
 
         searchArea.addFilter("cyclin E/A:cdk2:p27/p21");
+        searchArea.addFilter("cyclin E/A:cdk2:phospho-p27/p21:");
         searchArea.addFilter("rbl2:E2F4/5:DP1/2:cyclin E/A");
 
 
