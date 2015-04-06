@@ -63,7 +63,7 @@ function PathwaysGraph() {
 
     //D3 helpers functions
 
-    var componentKey = function(c){return c.name};
+    var componentKey = function(c){return c.id};
     var reactionKey = function(c){return c.source.name + c.target.name + c.pathways.length}; //XXX wrong
     var getSelectedPathways = function(p){return p.pathways.filter(function(pw){return pw._selected})};
     var getHighlightedPathways = function(p){return p.pathways.filter(function(pw){return pw._highlighted && pw._selected})};
@@ -118,8 +118,10 @@ function PathwaysGraph() {
 
         //dummy rect
         var rect = _gVisualization.append("rect")
-            .attr("width", _width)
-            .attr("height", _height)
+            .attr("x", -_width)
+            .attr("x", -_height)
+            .attr("width", _width*2)
+            .attr("height", _height*2)
             .style("fill", "none")
             .style("pointer-events", "all")
             .on("mousedown", mouseDownOnBackground);
@@ -162,6 +164,7 @@ function PathwaysGraph() {
             .nodes(_visibleComponents)
             .links(_forceLayoutLinks)
             .start();
+
     };
 
 
@@ -171,7 +174,7 @@ function PathwaysGraph() {
         var newElements = components.enter()
             .append("g")
             .classed("pathway-component", true)
-            .classed(function(d){return "pathway-" + d.type}, true)
+            //.classed(function(d){return "pathway-" + d.type}, true)
             .attr("cursor", "pointer")
             .on("click", onClickOnComponent)
             .on("mouseover", onMouseEnterOnComponent)
@@ -580,6 +583,8 @@ function PathwaysGraph() {
         if(!xxx_keepLabelsHidden)
             showLabels();
         highlightPathways();
+
+        _componentsForceLayout.stop();
     };
 
     var onMouseOutOnComponent = function (component) {
@@ -587,6 +592,8 @@ function PathwaysGraph() {
         //component.pathways.forEach(function (pw) {pw._highlighted = false});
         hideLabels();
         highlightPathways();
+
+        _componentsForceLayout.resume();
 
     };
 
@@ -794,12 +801,30 @@ function PathwaysGraph() {
         var links = [];
 
         function findSameLink(source, target){
-            links.forEach(function(l){
-                if(l.source == source && l.target == target)
+            for(var i = 0; i < links.length; i++){
+                var l = links[i];
+                if(l.source == source && l.target == target) {
                     return l;
-            });
+                }
+            }
             return null;
         }
+
+        function selectedPathways(reaction){
+            return reaction.pathways.filter(function (pw) {
+                return pw._selected
+            })
+        }
+
+        //function findOppositeLink(pathway, source, target){
+        //    for(var i = 0; i < links.length; links++){
+        //        var l = links[i];
+        //        if(l.target == source && l.source == target && l.pathways.indexOf(pathway) > -1) {
+        //            return l;
+        //        }
+        //    }
+        //    return null;
+        //}
 
         _visibleComponents.forEach(function (component) {
 
@@ -811,9 +836,28 @@ function PathwaysGraph() {
                             //search if there is already a link
                             var existingLink = findSameLink(component,right);
                             if(existingLink){
-                                existingLink.pathways.push(pathway)
-                            } else links.push({source: component, target: right,
-                                pathways:reaction.pathways.filter(function(pw){return pw._selected})});
+                                console.error("this should not happen");
+                                //existingLink.pathways.push(pathway)
+                            } else {
+                                var oppositeLink = findSameLink(right, component);
+                                if(oppositeLink) {
+                                    links.push({
+                                        source: component, target: right,
+                                        pathways: _.difference(selectedPathways(reaction),oppositeLink.pathways)
+                                    });
+                                    links.push({
+                                        source: right, target: component,
+                                        pathways: _.difference(oppositeLink.pathways,selectedPathways(reaction))
+                                    });
+                                    oppositeLink.double = true;
+                                    oppositeLink.pathways = _.intersection(oppositeLink.pathways, selectedPathways(reaction));
+                                } else {
+                                    links.push({
+                                        source: component, target: right,
+                                        pathways: selectedPathways(reaction)
+                                    });
+                                }
+                            }
                         }
                     });
                 }

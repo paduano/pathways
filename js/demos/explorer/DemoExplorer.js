@@ -51,14 +51,15 @@ function DemoExplorer (divContainer) {
         );
 
         //XXX
-        _parser.pathways = _.without(_parser.pathways, _parser.pathways[0]);
-        _parser.pathways = _.without(_parser.pathways, _parser.pathways[5]);
+        //_parser.pathways = _.without(_parser.pathways, _parser.pathways[0]);
+        //  _parser.pathways = _.without(_parser.pathways, _parser.pathways[5]);
 
         _parser.pathways.forEach(function (p) {
-            p._selected = true;
+            //p._selected = true;
             contextArea.addContext(p);
         });
 
+        contextArea.selectOnlyRoots();
 
         _pathwayGraph = PathwaysGraph();
         _pathwayGraph.setDataset(
@@ -88,12 +89,33 @@ function DemoExplorer (divContainer) {
 
 
     var loadAssets = function(callback) {
-        //var request = d3.xml("immune-system.owl", "application/xml", function(d) {
-        var request = d3.xml("resources/demos/owl/Rb-E2F1.owl", "application/xml", function(d) {
-        //var request = d3.xml("resources/demos/owl/1_RAF-Cascade.owl", "application/xml", function(d) {
-            _parser = BiopaxParser(d3.select(d));
+
+        _parser = BiopaxParser();
+        var owlQueue = queue();
+
+        [
+            "S-phase.owl",
+            "Mitotic-G1-G1-S-phase.owl",
+            "Regulation-of-DNA-replication.owl",
+            "Mitotic-G2-G2-M-phases.owl"
+        ].forEach(function (owl) {
+            owlQueue.defer(function(nestedCallback) {
+                var request = d3.xml("resources/demos/owl/yao/" + owl, "application/xml", function (d) {
+                    _parser.loadBiopax(d3.select(d));
+                    nestedCallback(null, null);
+                });
+            })
+        });
+
+        owlQueue.await(function () {
             callback(null,null);
         });
+
+        //var request = d3.xml("immune-system.owl", "application/xml", function(d) {
+        //var request = d3.xml("resources/demos/owl/Rb-E2F1.owl", "application/xml", function(d) {
+        //var request = d3.xml("resources/demos/owl/1_RAF-Cascade.owl", "application/xml", function(d) {
+        //var request = d3.xml("resources/demos/owl/Mitotic-G1-G1-S-phase.owl", "application/xml", function(d) {
+
     };
 
     var drawLoop = function() {

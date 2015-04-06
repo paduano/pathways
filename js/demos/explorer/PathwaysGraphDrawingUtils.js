@@ -43,15 +43,29 @@ PathwaysGraphDrawingUtils.link = function (link, pathway) {
 
     var newStart = start.addV(parallel.mulS(margin)).addV(perpendicular.mulS(shift));
 
-    //FROM A TO B
-    var v1 = vec2(newStart).addV(perpendicular.mulS(thick)) ,
-        v2 = v1.addV(parallel.mulS(length-arrowTip)),
-        v3 = vec2(newStart).addV(parallel.mulS(length)),
-        v5 = vec2(newStart).subV(perpendicular.mulS(thick)),
-        v4 = v5.addV(parallel.mulS(length-arrowTip))
-        ;
+   var v0,v1,v2,v3,v4,v5;
 
-    return  v1.toArray() + " " +
+    if(!link.double){
+        //single arrow
+        v0 = newStart;
+        v1 = vec2(newStart).addV(perpendicular.mulS(thick));
+        v2 = v1.addV(parallel.mulS(length-arrowTip));
+        v3 = vec2(newStart).addV(parallel.mulS(length));
+        v5 = vec2(newStart).subV(perpendicular.mulS(thick));
+        v4 = v5.addV(parallel.mulS(length-arrowTip));
+
+    }else {
+        //double arrow
+        v0 = newStart;
+        v1 = vec2(newStart).addV(perpendicular.mulS(thick)).addV(parallel.mulS(arrowTip));
+        v2 = v1.addV(parallel.mulS(length-(arrowTip*2)));
+        v3 = vec2(newStart).addV(parallel.mulS(length));
+        v5 = vec2(newStart).subV(perpendicular.mulS(thick)).addV(parallel.mulS(arrowTip));
+        v4 = v5.addV(parallel.mulS(length-(arrowTip*2)));
+
+    }
+
+    return  v0.toArray() + " " + v1.toArray() + " " +
         v2.toArray() + " " +
         v3.toArray() + " " +
         v4.toArray() + " " +
