@@ -103,7 +103,7 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
 
 
     var setUp = function(){
-
+        structureSvg.style('pointer-events', 'none');
         g = selection.selectAll(".component-node").data([{empty:true}]).enter().append("g").classed("component-node", true);
 
         if(useRect){
@@ -300,6 +300,9 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
     var updateLabels = function(){
         gLabel.html("");
 
+
+        //
+
         if(overedElement){
             var overedComponent = overedElement.datum();
             var current = overedComponent;
@@ -321,6 +324,15 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
                 siblings = [];
             }
 
+            var backgroundRect = gLabel.append('rect')
+                .attr('x',-200)
+                .attr('y',-40)
+                .attr('width','100%')
+                .attr('height',100)
+                .attr('fill', 'white')
+                .attr('opacity', 0.85);
+
+
             var labels = gLabel.selectAll(".label").data(componentsToRoot)
                 .enter()
                 .append("g")
@@ -337,11 +349,14 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
                 .text(function(d){return d.name});
 
 
-            //parents dots
-            labels.append("circle")
-                .attr("r", dotsRadius)
-                .attr("cx", function(d){return dotsRadius + 4})
-                .attr("cy", function(d){return -3})
+            //parents RECT
+            labels.append("rect")
+                .attr("width", dotsRadius*2.3)
+                .attr("height", dotsRadius*2.3)
+                .attr("rx", 2)
+                .attr("ry", 2)
+                .attr("x", function(d){return 3})
+                .attr("y", function(d){return -10})
                 .attr("stroke-width", 1)
                 .attr("stroke", "white")
                 .attr("fill", fillForComponent);
@@ -396,6 +411,9 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
                     .attr("r", dotsRadius)
                     .attr("cx", function(d){return  4})
                     .attr("cy", function(d){return -3})
+                    .style("visibility", function(d) {
+                        return d.type != "protein"? "hidden" : "visible";
+                    })
                     .attr("stroke-width", 1)
                     .attr("stroke", "white")
                     .attr("fill", function (d) {
@@ -404,6 +422,26 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
                            }else{
                                return fillForComponent(d)
                            }
+                    });
+
+                siblingLabels.append("rect")
+                    .attr("width", dotsRadius*2.3)
+                    .attr("height", dotsRadius*2.3)
+                    .attr("rx", 2)
+                    .attr("ry", 2)
+                    .style("visibility", function(d) {
+                        return d.type != "complex"? "hidden" : "visible";
+                    })
+                    .attr("x", function(d){return -3})
+                    .attr("y", function(d){return -10})
+                    .attr("stroke-width", 1)
+                    .attr("stroke", "white")
+                    .attr("fill", function (d) {
+                        if(d === overedComponent){
+                            return Colors.overedElement;
+                        }else{
+                            return fillForComponent(d)
+                        }
                     });
 
                 var line = d3.svg.line();
@@ -437,6 +475,10 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
 
             //Dots
 
+
+            var maxBottom = siblingGroupY + siblings.length * 30 + 40;
+            maxBottom = maxBottom ? maxBottom : 70;
+            backgroundRect.attr('height', maxBottom);
 
         }
 

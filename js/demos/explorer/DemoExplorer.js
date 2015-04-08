@@ -2,6 +2,8 @@
  * DEMO PATHWAYS DemoExplorer
  */
 
+var G;
+
 function DemoExplorer (divContainer) {
     var self = this;
 
@@ -60,8 +62,9 @@ function DemoExplorer (divContainer) {
         });
 
         contextArea.selectOnlyRoots();
+        contextArea.collapseAll();
 
-        _pathwayGraph = PathwaysGraph();
+        G = _pathwayGraph = PathwaysGraph();
         _pathwayGraph.setDataset(
             _parser.proteins,
             _parser.complexes,
@@ -81,8 +84,8 @@ function DemoExplorer (divContainer) {
         };
 
         searchArea.addFilter("cyclin E/A:cdk2:p27/p21");
-        searchArea.addFilter("cyclin E/A:cdk2:phospho-p27/p21:");
-        searchArea.addFilter("rbl2:E2F4/5:DP1/2:cyclin E/A");
+        //searchArea.addFilter("cyclin E/A:cdk2:phospho-p27/p21:");
+        //searchArea.addFilter("rbl2:E2F4/5:DP1/2:cyclin E/A");
 
 
     };
@@ -94,8 +97,8 @@ function DemoExplorer (divContainer) {
         var owlQueue = queue();
 
         [
-            "S-phase.owl",
             "Mitotic-G1-G1-S-phase.owl",
+            "S-phase.owl",
             "Regulation-of-DNA-replication.owl",
             "Mitotic-G2-G2-M-phases.owl"
         ].forEach(function (owl) {

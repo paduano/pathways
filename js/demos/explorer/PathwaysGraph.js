@@ -63,7 +63,7 @@ function PathwaysGraph() {
 
     //D3 helpers functions
 
-    var componentKey = function(c){return c.id};
+    var componentKey = function(c){return c.name};
     var reactionKey = function(c){return c.source.name + c.target.name + c.pathways.length}; //XXX wrong
     var getSelectedPathways = function(p){return p.pathways.filter(function(pw){return pw._selected})};
     var getHighlightedPathways = function(p){return p.pathways.filter(function(pw){return pw._highlighted && pw._selected})};
@@ -118,10 +118,10 @@ function PathwaysGraph() {
 
         //dummy rect
         var rect = _gVisualization.append("rect")
-            .attr("x", -_width)
-            .attr("x", -_height)
-            .attr("width", _width*2)
-            .attr("height", _height*2)
+            .attr("x", -_width*100)
+            .attr("y", -_height*100)
+            .attr("width", _width*200)
+            .attr("height", _height*200)
             .style("fill", "none")
             .style("pointer-events", "all")
             .on("mousedown", mouseDownOnBackground);
@@ -133,7 +133,7 @@ function PathwaysGraph() {
         _svgComplexStructure = self.append("svg")
             .classed("complex-structure", true)
             .attr("viewBox","0 0 800 800").attr({
-                x:400, y:20, width:"100%", height:"100%"}
+                x:100, y:0, width:"100%", height:"100%"}
         );
 
         _componentDragBehaviour = d3.behavior.drag()
@@ -162,9 +162,8 @@ function PathwaysGraph() {
     var updateForceLayoutNodesAndLinks = function(){
         _componentsForceLayout
             .nodes(_visibleComponents)
-            .links(_forceLayoutLinks)
-            .start();
-
+            .links(_forceLayoutLinks);
+            //.start();
     };
 
 
@@ -305,6 +304,9 @@ function PathwaysGraph() {
 
         var newLinks = links.enter()
             .append("g")
+            .each(function (d) {
+                d._justVisible = true;
+            })
             .classed("pathway-link", true);
 
 
@@ -357,34 +359,78 @@ function PathwaysGraph() {
             });
         components.exit().remove();
 
-
+        _gLabels.attr('visibility','hidden');
 
     };
 
     //Timing
     var forceLayoutTick = function(e) {
+
         if(e)updateLayoutForces(e.alpha);
+        //updateElementsPosition();
+    };
+
+    var updateLayout = function() {
+        for(var i = 0; i<150; i++){
+            _componentsForceLayout.start();
+            _componentsForceLayout.tick();
+            _componentsForceLayout.stop();
+        }
         updateElementsPosition();
     };
 
 
     var updateElementsPosition = function () {
-        _allComponentElements.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
-        _allLinkElements.selectAll(".pathway-link-polygon")
+        var TRANSITION_DURATION = 500;
+
+        _allComponentElements.filter(function (d) {return d._justVisible})
+            .attr('opacity', 0)
+            .attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";})
+            .transition()
+            .duration(TRANSITION_DURATION)
+            .attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";})
+            .attr('opacity', 1);
+
+        _allComponentElements.filter(function (d) {return !d._justVisible})
+            .transition()
+            .duration(TRANSITION_DURATION)
+            .attr('opacity', 1)
+            .attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
+
+        _allLinkElements.selectAll(".pathway-link-polygon").filter(function () {return d3.select(this.parentNode).datum()._justVisible})
+            .attr({points: function(){
+                var source = d3.select(this.parentNode).datum().source;
+                var points = ' ' + [source.x,source.y];
+                for(var i = 0; i < 5; i++)points += ', ' + [source.x,source.y];
+                return points;
+            }})
+            .transition()
+            .duration(TRANSITION_DURATION)
             .attr({points: function(pw){ return PathwaysGraphDrawingUtils.link(d3.select(this.parentNode).datum(),pw)}});
 
+
+        _allLinkElements.selectAll(".pathway-link-polygon").filter(function (d) {return !d._justVisible})
+            .transition()
+            .duration(TRANSITION_DURATION)
+            .attr({points: function(pw){ return PathwaysGraphDrawingUtils.link(d3.select(this.parentNode).datum(),pw)}});
+
+
+        _visibleComponents.concat(_visibleReactions).forEach(function (c) {
+            c._justVisible = false;
+        });
 
         //_expansionMarkers.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
     };
 
 
     var updateLayoutForces = function (alpha) {
-
-        var k = alpha * 30;
-        _allLinkElements.each(function (link) {
-            link.source.y -= k;
-            link.target.y += k;
-        });
+        if(alpha && _allLinkElements){
+            var k = alpha * 30;
+            _allLinkElements.each(function (link) {
+                link.source.y -= k;
+                link.target.y += k;
+            });
+        }
     };
 
     //Graphics Elements
@@ -593,7 +639,7 @@ function PathwaysGraph() {
         hideLabels();
         highlightPathways();
 
-        _componentsForceLayout.resume();
+        //_componentsForceLayout.resume();
 
     };
 
@@ -620,7 +666,7 @@ function PathwaysGraph() {
         }, 500);
         //d.fixed = true;XXX
        // forceLayoutTick(1);
-        _componentsForceLayout.resume();
+        //_componentsForceLayout.resume();
 
         //Resome PANNING AND ZOOM
         _gVisualization.call(_zoomBehaviour).on("dblclick.zoom", null);
@@ -676,19 +722,19 @@ function PathwaysGraph() {
             {useRect : true, coloringMode : "flat", color : getFillForComponent(d)});
 
         //d.fixed = true; XXX
-        _componentsForceLayout.start();
+        //_componentsForceLayout.start();
     };
 
     var onCloseComplex = function(d){
         d._expanded = false;
         d.fixed = false;
-        _componentsForceLayout.start();
+        //_componentsForceLayout.start();
     };
 
 
     var expandDownstream = function (component) {
         component.nextComponents.forEach(function (nextComponent) {
-            nextComponent._visible = true;
+            setComponentVisibility(nextComponent, true);
         });
 
     };
@@ -696,7 +742,7 @@ function PathwaysGraph() {
 
     var expandUpstream = function (component) {
         component.previousComponents.forEach(function (previousComponent) {
-            previousComponent._visible = true;
+            setComponentVisibility(previousComponent, true);
         });
     };
 
@@ -769,7 +815,7 @@ function PathwaysGraph() {
                     if(e == end){
                         elements.push(e);
                         elements.forEach(function (element) {
-                            element._visible = true;
+                            setComponentVisibility(element, true);
                         });
                         self.updateContext();
                         exit = true
@@ -786,12 +832,21 @@ function PathwaysGraph() {
 
             if(next == end){
                 elements.forEach(function (element) {
-                    element._visible = true;
+                    setComponentVisibility(element, true);
                 });
                 self.updateContext();
                 break;
             }
         }
+
+    };
+
+    var setComponentVisibility = function(component, visibility){
+        if(visibility && !component._visible){
+            component._justVisible = true;
+        }
+
+        component._visible = visibility;
 
     };
 
@@ -906,7 +961,7 @@ function PathwaysGraph() {
                             var filter = _nameFilters[i];
                             if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){
                             //if(component.name.toLowerCase().indexOf(filter.toLowerCase()) == 0){
-                                component._visible = true; //XXX
+                                setComponentVisibility(component, true); //XXX
                                 return true;
                             }
                         }
@@ -919,10 +974,28 @@ function PathwaysGraph() {
             }
                 
         });
+
+        _.difference(_allComponents, _visibleComponents)
+            .forEach(function (c) {setComponentVisibility(c,false)});
+
     };
 
 
     //## PUBLIC FUNCTIONS
+
+
+    self.getComponentsByName = function (name) {
+        var components = [];
+        _pathways.forEach(function (pathway) {
+            var filteredComponents = pathway.allComponents.filter(function(component){
+                if(component.name.toLowerCase().indexOf(name.toLowerCase()) > -1){
+                    return true;
+                }else return false;
+            });
+            components = _.union(components, filteredComponents);
+        });
+        return components;
+    };
 
     self.setDataset = function(proteins, complexes, reactions, pathways) {
         _proteins = proteins;
@@ -941,8 +1014,11 @@ function PathwaysGraph() {
 
         updateComplexesAndProteinsElements();
         updateReactionsElements();
-        updateLabels();
+
         highlightPathways();
+
+        updateLayout();
+        updateLabels();
     };
 
     self.updateContext = function(){
@@ -953,8 +1029,12 @@ function PathwaysGraph() {
 
         updateComplexesAndProteinsElements();
         updateReactionsElements();
-        updateLabels();
+
+        hideLabels();
         highlightPathways();
+
+        updateLayout();
+        updateLabels();
     };
 
     self.updateFilters = function(filters){

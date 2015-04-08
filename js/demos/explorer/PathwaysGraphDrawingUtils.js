@@ -15,8 +15,14 @@ PathwaysGraphDrawingUtils.link = function (link, pathway) {
         arrowTip = 10;
 
 
+
     var start = vec2(link.source.x, link.source.y),
         end = vec2(link.target.x, link.target.y);
+
+    //overlapping
+    if(start.x == end.x && start.y == end.y){
+        return '0,0';
+    }
 
     var direction = end.subV(start).normalize();
 
@@ -44,6 +50,7 @@ PathwaysGraphDrawingUtils.link = function (link, pathway) {
     var newStart = start.addV(parallel.mulS(margin)).addV(perpendicular.mulS(shift));
 
    var v0,v1,v2,v3,v4,v5;
+
 
     if(!link.double){
         //single arrow

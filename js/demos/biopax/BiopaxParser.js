@@ -23,6 +23,8 @@ function BiopaxParser(biopaxXml){
         };
         var existing = checkForExistingComponent(self.proteins, protein);
         if(existing) {
+            //the id might change
+            existing.id = protein.id;
             components.proteins.push(existing);
             return existing;
         } else {
@@ -51,9 +53,14 @@ function BiopaxParser(biopaxXml){
             "type" : "complex"
         };
 
+        //if(complex.name.toLowerCase() == "cyclin E/A:cdk2:p27/p21 complex".toLowerCase())debugger
+
+
         var existing = checkForExistingComponent(self.complexes, complex);
 
         if(existing) {
+            //the id might change
+            existing.id = complex.id;
             components.complexes.push(existing);
             return existing;
         } else {
@@ -78,26 +85,27 @@ function BiopaxParser(biopaxXml){
             "type" : "reaction"
         };
 
+        reaction.leftIds = [];
+        reaction.rightIds = [];
+
+        ["left", "right"].forEach(function(side){
+            d3.select(node).selectAll(side).each(function(d){
+                var id =  parseId(d3.select(this).attr("rdf:resource"));
+                if(side == "left"){
+                    reaction.leftIds.push(id);
+                } else {
+                    reaction.rightIds.push(id);
+                }
+            });
+        });
+
         var existing = checkForExistingComponent(self.reactions, reaction);
         if(existing) {
+            //the id might change
+            existing.id = reaction.id;
             components.reactions.push(existing);
             return existing;
         } else {
-
-            reaction.leftIds = [];
-            reaction.rightIds = [];
-
-            ["left", "right"].forEach(function(side){
-                d3.select(node).selectAll(side).each(function(d){
-                    var id =  parseId(d3.select(this).attr("rdf:resource"));
-                    if(side == "left"){
-                        reaction.leftIds.push(id);
-                    } else {
-                        reaction.rightIds.push(id);
-                    }
-                });
-            });
-
             self.reactions.push(reaction);
             components.reactions.push(reaction);
             return reaction;
@@ -206,7 +214,7 @@ function BiopaxParser(biopaxXml){
 
         //create connections for complexes
         components.complexes.forEach(function(complex){
-            //if is not already made
+            //if is not already parsed
             if(complex.componentsId){
                 complex.components = [];
                 complex.componentsId.forEach(function(componentId){
@@ -223,7 +231,7 @@ function BiopaxParser(biopaxXml){
             }
         });
 
-        var reactionsToBeRemoved = [];
+        //var reactionsToBeRemoved = [];
         //create connection for reactions
         components.reactions.forEach(function(reaction){
             //if the reaction has not already been parsed in previous pws
@@ -238,7 +246,7 @@ function BiopaxParser(biopaxXml){
                         reaction.left.push(component);
                     } else {
                         //console.warn(componentId + " does not exist");
-                        reactionsToBeRemoved.push(reaction);
+                        //reactionsToBeRemoved.push(reaction);
                     }
                 });
 
@@ -248,7 +256,7 @@ function BiopaxParser(biopaxXml){
                         reaction.right.push(component);
                     } else {
                         //console.warn(componentId + " does not exist");
-                        reactionsToBeRemoved.push(reaction);
+                        //reactionsToBeRemoved.push(reaction);
                     }
 
                 });
@@ -258,9 +266,9 @@ function BiopaxParser(biopaxXml){
             }
         });
 
-        console.warn(reactionsToBeRemoved.length + " reactions discarded");
-        components.reactions = _.difference(components.reactions, reactionsToBeRemoved);
-        reactionsToBeRemoved.forEach(function (reaction) {idsMap[reaction.id] = undefined});
+        //console.warn(reactionsToBeRemoved.length + " reactions discarded");
+        //components.reactions = _.difference(components.reactions, reactionsToBeRemoved);
+        //reactionsToBeRemoved.forEach(function (reaction) {idsMap[reaction.id] = undefined});
 
         //create connection for pathways
         components.pathways.forEach(function(pathway){
@@ -291,6 +299,18 @@ function BiopaxParser(biopaxXml){
             }
 
         });
+
+        ////connect isolate proteins/complexes and reactions to root pathway
+        //components.proteins.concat(components.complexes).concat(components.reactions).forEach(function (component) {
+        //    if(!component.pathways){
+        //        component.pathways = [components.pathways[0]];
+        //        if(component.type == "reaction") {
+        //            components.pathways[0].reactions.push(component);
+        //        } else {
+        //            components.pathways[0].components.push(component);
+        //        }
+        //    }
+        //});
 
         //flattern pathways elements
         components.pathways.forEach(function(pathway){
@@ -362,7 +382,7 @@ function BiopaxParser(biopaxXml){
 
         //create the references from reactions to pathways
         components.reactions.forEach(function(reaction){
-            reaction.pathways = [];
+            reaction.pathways = reaction.pathways || [];
             components.pathways.forEach(function(pathway){
                 if(pathway.allReactions.indexOf(reaction) > -1){
                     reaction.pathways.push(pathway);
