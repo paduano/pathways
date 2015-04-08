@@ -20,9 +20,53 @@
     width: 100%;
     height: 100%;
     float: left;
+    overflow: hidden;
 }
 
 .demo-explorer-search-area {
+}
+
+.demo-explorer-legenda {
+    position: fixed;
+    width: 300px;
+    height: 200px;
+    bottom: 0;
+    right: 0;
+}
+
+.demo-explorer-legenda-container {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background-color: rgba(255,255,255,0.75);
+}
+
+.demo-explorer-legenda-image {
+    width: calc(100% - 10px);
+    height: calc(100% - 0px);
+    margin-left: 10px;
+    margin-top: 0px;
+    background-image: url("../resources/img/legenda.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+}
+
+.demo-explorer-legenda-button {
+    cursor: pointer;
+    width: 40px;
+    height: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.demo-explorer-legenda-button-close {
+    background-image: url("../resources/img/legenda-show.png");
+}
+
+
+.demo-explorer-legenda-button-open {
+    background-image: url("../resources/img/legenda-hide.png");
 }
 
 .demo-explorer-search-area ul {

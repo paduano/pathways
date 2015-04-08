@@ -136,13 +136,7 @@ function PathwaysGraph() {
                 x:100, y:0, width:"100%", height:"100%"}
         );
 
-        _componentDragBehaviour = d3.behavior.drag()
-            .on("dragstart", onDragStartOnComponent)
-            .on("drag", onDragMoveOnComponent)
-            .on("dragend", onDragEndOnComponent);
 
-        d3.select(window)
-            .on("mousemove", onMouseMove);
     };
 
 
@@ -155,6 +149,17 @@ function PathwaysGraph() {
             .linkDistance(45)
             .friction(0.5)
             .on("tick", forceLayoutTick)
+
+    };
+
+    var initActions = function () {
+        _componentDragBehaviour = d3.behavior.drag()
+            .on("dragstart", onDragStartOnComponent)
+            .on("drag", onDragMoveOnComponent)
+            .on("dragend", onDragEndOnComponent);
+
+        d3.select(window)
+            .on("mousemove", onMouseMove);
 
     };
 
@@ -294,6 +299,9 @@ function PathwaysGraph() {
 
         _expansionMarkers.selectAll(".expansion-marker-upstream")
             .attr('opacity', function(d){return hasUpstream(d) ? 0.5 : 0});
+
+
+        enableDragging();
     };
 
 
@@ -365,9 +373,7 @@ function PathwaysGraph() {
 
     //Timing
     var forceLayoutTick = function(e) {
-
         if(e)updateLayoutForces(e.alpha);
-        //updateElementsPosition();
     };
 
     var updateLayout = function() {
@@ -376,11 +382,11 @@ function PathwaysGraph() {
             _componentsForceLayout.tick();
             _componentsForceLayout.stop();
         }
-        updateElementsPosition();
+        updateElementsPositionWithAnimation();
     };
 
 
-    var updateElementsPosition = function () {
+    var updateElementsPositionWithAnimation = function () {
         var TRANSITION_DURATION = 500;
 
         _allComponentElements.filter(function (d) {return d._justVisible})
@@ -419,7 +425,16 @@ function PathwaysGraph() {
             c._justVisible = false;
         });
 
-        //_expansionMarkers.attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
+    };
+
+    var updateElementsPosition = function () {
+
+        _allComponentElements
+            .attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
+
+        _allLinkElements.selectAll(".pathway-link-polygon")
+            .attr({points: function(pw){ return PathwaysGraphDrawingUtils.link(d3.select(this.parentNode).datum(),pw)}});
+
     };
 
 
@@ -639,13 +654,12 @@ function PathwaysGraph() {
         hideLabels();
         highlightPathways();
 
-        //_componentsForceLayout.resume();
 
     };
 
     var onDragStartOnComponent = function(d, i) {
         //_componentsForceLayout.stop(); // stops the force auto positioning before you start dragging
-        //d.fixed = true;XXX
+        d.fixed = true;
 
         disablePanningAndZooming();
     };
@@ -657,19 +671,16 @@ function PathwaysGraph() {
         d.x += d3.event.dx;
         d.y += d3.event.dy;
         forceLayoutTick();
-
+        updateElementsPosition();
     };
 
     var onDragEndOnComponent = function (d, i) {
         setTimeout(function() {
             onDragging = false;
         }, 500);
-        //d.fixed = true;XXX
-       // forceLayoutTick(1);
-        //_componentsForceLayout.resume();
 
-        //Resome PANNING AND ZOOM
-        _gVisualization.call(_zoomBehaviour).on("dblclick.zoom", null);
+        //Resume PANNING AND ZOOM
+        enablePanningAndZooming();
     };
 
     var enableDragging = function () {
@@ -682,28 +693,18 @@ function PathwaysGraph() {
     };
 
     var disablePanningAndZooming = function () {
-        _gVisualization.on("mousedown.zoom", null);
+        self.on("mousedown.zoom", null);
     };
 
-    //GENERAL dragging
-    //function dragstarted(d) {
-    //    d3.event.sourceEvent.stopPropagation();
-    //    d3.select(this).classed("dragging", true);
-    //}
-    //
-    //function dragged(d) {
-    //    d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
-    //}
-    //
-    //function dragended(d) {
-    //    d3.select(this).classed("dragging", false);
-    //}
+    var enablePanningAndZooming = function () {
+        self.call(_zoomBehaviour).on("dblclick.zoom", null);
+    };
+
+
+
 
     function zoomed() {
-
         _gVisualization.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-
-        //forceLayoutTick();
     }
 
     var xxx_keepLabelsHidden = false;
@@ -735,6 +736,7 @@ function PathwaysGraph() {
     var expandDownstream = function (component) {
         component.nextComponents.forEach(function (nextComponent) {
             setComponentVisibility(nextComponent, true);
+            nextComponent._explored = true;
         });
 
     };
@@ -743,6 +745,7 @@ function PathwaysGraph() {
     var expandUpstream = function (component) {
         component.previousComponents.forEach(function (previousComponent) {
             setComponentVisibility(previousComponent, true);
+            previousComponent._explored = true;
         });
     };
 
@@ -871,15 +874,6 @@ function PathwaysGraph() {
             })
         }
 
-        //function findOppositeLink(pathway, source, target){
-        //    for(var i = 0; i < links.length; links++){
-        //        var l = links[i];
-        //        if(l.target == source && l.source == target && l.pathways.indexOf(pathway) > -1) {
-        //            return l;
-        //        }
-        //    }
-        //    return null;
-        //}
 
         _visibleComponents.forEach(function (component) {
 
@@ -953,7 +947,8 @@ function PathwaysGraph() {
 
                 var filteredComponents = pathway.allComponents.filter(function(component){
                     //expanded
-                    if(component._visible){
+                    if(component._explored || component._visible){
+                        setComponentVisibility(component, true); //XXX
                         return true;
                     } else{
                         //match searching criteria
@@ -1046,6 +1041,7 @@ function PathwaysGraph() {
     var init = function(){
         initElements();
         initForceLayout();
+        initActions();
     }();
 
 

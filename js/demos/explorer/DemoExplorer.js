@@ -2,7 +2,6 @@
  * DEMO PATHWAYS DemoExplorer
  */
 
-var G;
 
 function DemoExplorer (divContainer) {
     var self = this;
@@ -37,7 +36,6 @@ function DemoExplorer (divContainer) {
         var contextArea = ContextArea();
 
 
-
         var sideContainer = divContainer
             .append("div")
             .style("-webkit-user-select","none")
@@ -45,26 +43,24 @@ function DemoExplorer (divContainer) {
         searchArea.appendTo(sideContainer);
         contextArea.appendTo(sideContainer);
 
-        var svg = divContainer.append("div").classed("demo-explorer-visualization-area",true).append("svg");
+        var visualizationArea = divContainer.append("div")
+            .classed("demo-explorer-visualization-area",true);
+        var svg = visualizationArea.append("svg");
         svg.attr("viewBox","0 0 800 600");
         svg.attr("preserveAspectRatio", "xMidYMid meet");
         svg.attr({
                 x:0, y:0, width:"100%", height:"100%"}
         );
 
-        //XXX
-        //_parser.pathways = _.without(_parser.pathways, _parser.pathways[0]);
-        //  _parser.pathways = _.without(_parser.pathways, _parser.pathways[5]);
 
         _parser.pathways.forEach(function (p) {
-            //p._selected = true;
             contextArea.addContext(p);
         });
 
         contextArea.selectOnlyRoots();
         contextArea.collapseAll();
 
-        G = _pathwayGraph = PathwaysGraph();
+        _pathwayGraph = PathwaysGraph();
         _pathwayGraph.setDataset(
             _parser.proteins,
             _parser.complexes,
@@ -73,6 +69,9 @@ function DemoExplorer (divContainer) {
 
 
         _pathwayGraph.appendTo(svg);
+
+        Legenda(visualizationArea);
+
 
 
         contextArea.onContextChange = function() {
@@ -83,10 +82,9 @@ function DemoExplorer (divContainer) {
             _pathwayGraph.updateFilters(searchArea.filters);
         };
 
-        searchArea.addFilter("cyclin E/A:cdk2:p27/p21");
-        //searchArea.addFilter("cyclin E/A:cdk2:phospho-p27/p21:");
-        //searchArea.addFilter("rbl2:E2F4/5:DP1/2:cyclin E/A");
-
+        //searchArea.addFilter("cyclin E/A:cdk2:p27/p21");
+        searchArea.addFilter("prerc");
+        searchArea.addFilter("ubiquitin");
 
     };
 
@@ -100,7 +98,9 @@ function DemoExplorer (divContainer) {
             "Mitotic-G1-G1-S-phase.owl",
             "S-phase.owl",
             "Regulation-of-DNA-replication.owl",
-            "Mitotic-G2-G2-M-phases.owl"
+            "Mitotic-G2-G2-M-phases.owl",
+            "M-phase.owl",
+            "M-G1-transition.owl"
         ].forEach(function (owl) {
             owlQueue.defer(function(nestedCallback) {
                 var request = d3.xml("resources/demos/owl/yao/" + owl, "application/xml", function (d) {
@@ -113,12 +113,6 @@ function DemoExplorer (divContainer) {
         owlQueue.await(function () {
             callback(null,null);
         });
-
-        //var request = d3.xml("immune-system.owl", "application/xml", function(d) {
-        //var request = d3.xml("resources/demos/owl/Rb-E2F1.owl", "application/xml", function(d) {
-        //var request = d3.xml("resources/demos/owl/1_RAF-Cascade.owl", "application/xml", function(d) {
-        //var request = d3.xml("resources/demos/owl/Mitotic-G1-G1-S-phase.owl", "application/xml", function(d) {
-
     };
 
     var drawLoop = function() {
