@@ -93,6 +93,20 @@ var ContextArea = function(){
         self.updateContext();
     };
 
+    self.selectOnlyFirstRoots = function (n) {
+        pathways.forEach(function (p) {
+            if(p.parent){
+                self.deselectPathway(p);
+            } else {
+                if(n > 0){
+                    n--;
+                    self.selectPathway(p);
+                }
+            }
+        });
+        self.updateContext();
+    };
+
     self.collapseAll = function () {
         pathways.forEach(function (p) {
             p._collapsed = true;

@@ -57,7 +57,10 @@ function DemoExplorer (divContainer) {
             contextArea.addContext(p);
         });
 
-        contextArea.selectOnlyRoots();
+        contextArea.selectOnlyFirstRoots(3);
+
+
+
         contextArea.collapseAll();
 
         _pathwayGraph = PathwaysGraph();

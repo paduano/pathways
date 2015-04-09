@@ -627,6 +627,14 @@ function PathwaysGraph() {
 
     };
 
+
+    var onClickOnPathExpansionTriangle = function(component){
+        if(_pathDragging){
+            onEndPathExpansion(component);
+        }
+    };
+
+
     var onDoubleClickOnComponent = function (component) {
 
         if(component.type == "complex")
@@ -765,6 +773,7 @@ function PathwaysGraph() {
             .style("stroke-dasharray", ("3, 3"))
             .classed("search-line", true)
             .attr("stroke","gray")
+            .attr("pointer-events","none")
             .attr("stroke-width", 3)
             .attr("d", d3.svg.line()([[_startComponent.x, _startComponent.y],
                 [_startComponent.x, _startComponent.y]]));
@@ -779,7 +788,8 @@ function PathwaysGraph() {
         downStreamElements.append('polygon')
             .classed('path-marker', true)
             .attr('points', "-20 -1, 20 -1, 0 15")
-            .attr('opacity',0.5);
+            .attr('opacity',0.5)
+            .on('click', onClickOnPathExpansionTriangle);
 
         //upStreamElements.append('polygon')
         //    .classed('path-marker', true)
@@ -819,6 +829,7 @@ function PathwaysGraph() {
                         elements.push(e);
                         elements.forEach(function (element) {
                             setComponentVisibility(element, true);
+                            element._explored = true;
                         });
                         self.updateContext();
                         exit = true
@@ -836,6 +847,7 @@ function PathwaysGraph() {
             if(next == end){
                 elements.forEach(function (element) {
                     setComponentVisibility(element, true);
+                    element._explored = true;
                 });
                 self.updateContext();
                 break;
@@ -947,7 +959,7 @@ function PathwaysGraph() {
 
                 var filteredComponents = pathway.allComponents.filter(function(component){
                     //expanded
-                    if(component._explored || component._visible){
+                    if(component._explored){
                         setComponentVisibility(component, true); //XXX
                         return true;
                     } else{

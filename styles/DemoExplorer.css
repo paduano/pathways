@@ -213,3 +213,7 @@
 .complex-structure circle {
     stroke: black !important;
 }
+
+.path-marker {
+    cursor: pointer;
+}
