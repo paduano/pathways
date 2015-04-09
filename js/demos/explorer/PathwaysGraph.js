@@ -990,6 +990,32 @@ function PathwaysGraph() {
 
     //## PUBLIC FUNCTIONS
 
+    self.updateColors = function () {
+
+        _gVisualization.selectAll('.complex-colored-rectangle').attr('fill', function (d) {
+            return d.color;
+        });
+
+        _gVisualization.selectAll('.protein-colored-circle').attr('fill', function (d) {
+            return d.color;
+        });
+
+        _gVisualization.selectAll('.protein-circle').attr('fill', function (d) {
+            return getFillForComponent(d);
+        });
+
+
+        _gVisualization.selectAll('.complex-rect').attr('fill', function (d) {
+            return getFillForComponent(d);
+        });
+
+        _gVisualization.selectAll('.pathway-link-polygon').attr('fill', function (d) {
+            return d.color;
+        });
+
+
+    };
+
 
     self.getComponentsByName = function (name) {
         var components = [];

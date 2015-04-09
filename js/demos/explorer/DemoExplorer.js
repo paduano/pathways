@@ -1,7 +1,7 @@
 /**
  * DEMO PATHWAYS DemoExplorer
  */
-
+var ExplorerSettings;
 
 function DemoExplorer (divContainer) {
     var self = this;
@@ -33,7 +33,7 @@ function DemoExplorer (divContainer) {
 
 
         var searchArea = SearchArea();
-        var contextArea = ContextArea();
+
 
 
         var sideContainer = divContainer
@@ -41,7 +41,6 @@ function DemoExplorer (divContainer) {
             .style("-webkit-user-select","none")
             .classed("demo-explorer-side-container", true);
         searchArea.appendTo(sideContainer);
-        contextArea.appendTo(sideContainer);
 
         var visualizationArea = divContainer.append("div")
             .classed("demo-explorer-visualization-area",true);
@@ -53,16 +52,6 @@ function DemoExplorer (divContainer) {
         );
 
 
-        _parser.pathways.forEach(function (p) {
-            contextArea.addContext(p);
-        });
-
-        contextArea.selectOnlyFirstRoots(3);
-
-
-
-        contextArea.collapseAll();
-
         _pathwayGraph = PathwaysGraph();
         _pathwayGraph.setDataset(
             _parser.proteins,
@@ -73,9 +62,25 @@ function DemoExplorer (divContainer) {
 
         _pathwayGraph.appendTo(svg);
 
+        ExplorerSettings = Settings(visualizationArea);
         Legenda(visualizationArea);
 
 
+        var contextArea = ContextArea();
+        contextArea.appendTo(sideContainer);
+
+        ExplorerSettings.onChangeColor = function () {
+            contextArea.updateColors();
+            _pathwayGraph.updateColors();
+        };
+
+        _parser.pathways.forEach(function (p) {
+            contextArea.addContext(p);
+        });
+
+
+        contextArea.selectOnlyFirstRoots(3);
+        contextArea.collapseAll();
 
         contextArea.onContextChange = function() {
             _pathwayGraph.updateContext();

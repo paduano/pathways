@@ -5,7 +5,8 @@ var Legenda = function (container) {
 
     var init = function () {
         var legenda = container.append('div')
-            .classed('demo-explorer-legenda', true);
+            .classed('demo-explorer-legenda', true)
+            .style('pointer-events', 'visiblePainted');
 
 
         var animContainer = legenda.append('div')
@@ -26,11 +27,14 @@ var Legenda = function (container) {
                 if(opened){
                     animContainer.transition()
                         .style('margin-left','0px')
-                        .style('margin-top','0px')
+                        .style('margin-top','0px');
+                    legenda.style('pointer-events', 'visiblePainted');
                 }else {
                     animContainer.transition()
-                        .style('margin-left','255px')
-                        .style('margin-top','185px')
+                        .style('margin-left','250px')
+                        .style('margin-top','180px');
+                    legenda.style('pointer-events', 'none');
+
                 }
             });
 

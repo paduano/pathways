@@ -3,20 +3,9 @@ var ContextArea = function(){
 
     var pathways = [];
 
-    var colorScale = d3.scale.category10();
-
     var elementsList;
 
-    var colors = ["#BE5DD2",
-        "#55B752",
-        "#C55E32",
-        "#52A0A4",
-        "#74628A",
-        "#4C733B",
-        "#BB4F5D",
-        "#C85298",
-        "#97A638",
-        "#7B85D4"];//['#1f78b4','#33a02c','#e31a1c', '#ff7f00', '#6a3d9a','#b15928'];
+    var colors = ExplorerSettings.colors;
     var availableColors = colors;
 
     //callbacks
@@ -119,8 +108,13 @@ var ContextArea = function(){
         if(availableColors.indexOf(pathway.color) > -1) {
             availableColors = _.without(availableColors, pathway.color);
         } else {
-            pathway.color = availableColors[0];
-            availableColors = _.without(availableColors, pathway.color);
+            if(availableColors.length > 0){
+                pathway.color = availableColors[0];
+                availableColors = _.without(availableColors, pathway.color);
+            } else {
+                alert('The color palette selected has only ' + colors.length + ' colors. You can check the colors preferences in the SETTINGS menu')
+                pathway.color = 'black';
+            }
         }
     };
 
@@ -130,6 +124,20 @@ var ContextArea = function(){
         if(pathway.color){
             availableColors = _.union(availableColors, [pathway.color])
         }
+    };
+
+    self.updateColors = function () {
+        colors = ExplorerSettings.colors;
+        availableColors = ExplorerSettings.colors;
+
+        pathways.forEach(function (pw) {
+            if(pw._selected){
+                pw.color = null;
+                self.selectPathway(pw);
+            }
+        });
+
+        self.updateContext();
     };
 
 
