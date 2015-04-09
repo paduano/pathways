@@ -7,6 +7,7 @@ var ContextArea = function(){
 
     var colors = ExplorerSettings.colors;
     var availableColors = colors;
+    var alerted = false;
 
     //callbacks
     self.onContextChange = null;
@@ -105,6 +106,7 @@ var ContextArea = function(){
 
     self.selectPathway = function (pathway) {
         pathway._selected = true;
+
         if(availableColors.indexOf(pathway.color) > -1) {
             availableColors = _.without(availableColors, pathway.color);
         } else {
@@ -112,10 +114,16 @@ var ContextArea = function(){
                 pathway.color = availableColors[0];
                 availableColors = _.without(availableColors, pathway.color);
             } else {
-                alert('The color palette selected has only ' + colors.length + ' colors. You can check the colors preferences in the SETTINGS menu')
-                pathway.color = 'black';
+                if(!alerted){
+                    alert('The color palette selected has only ' + colors.length + ' colors. You can check the colors preferences in the SETTINGS menu')
+                    alerted = true;
+                }
+                pathway._selected = false;
+                return true;
             }
         }
+
+        return false;
     };
 
     self.deselectPathway = function (pathway) {
@@ -127,17 +135,22 @@ var ContextArea = function(){
     };
 
     self.updateColors = function () {
+        var changeOfContext = false;
+        alerted = false;
         colors = ExplorerSettings.colors;
         availableColors = ExplorerSettings.colors;
 
         pathways.forEach(function (pw) {
             if(pw._selected){
                 pw.color = null;
-                self.selectPathway(pw);
+                changeOfContext = self.selectPathway(pw) ? true : changeOfContext;
             }
         });
 
         self.updateContext();
+
+        if(changeOfContext)
+            self.onContextChange();
     };
 
 
@@ -208,7 +221,7 @@ var ContextArea = function(){
         }
 
         self.updateContext();
-    }
+    };
 
     var assignColor = function(pathway){
 
