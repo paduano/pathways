@@ -70,8 +70,8 @@ function PathwaysGraph() {
     var isComponentHighlighted = function(p){return getHighlightedPathways(p).length > 0};
     var proteinRadius = PathwaysGraphDrawingUtils.proteinRadius;
     var complexSize = PathwaysGraphDrawingUtils.complexSize;
-    var hasUpstream = function(c){return c.previousComponents.filter(function (el) {return !el._visible}).length > 0};
-    var hasDownstream = function(c){return c.nextComponents.filter(function (el) { return  !el._visible}).length > 0};
+    var hasUpstream = function(c){return c.previousComponents.filter(function (el) {return !el._visible && getSelectedPathways(el).length > 0}).length > 0};
+    var hasDownstream = function(c){return c.nextComponents.filter(function (el) { return  !el._visible && getSelectedPathways(el).length > 0}).length > 0};
 
     var forceLayoutChargeFunction = function(component){
         if(component._expanded){

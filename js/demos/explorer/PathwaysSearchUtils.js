@@ -13,6 +13,16 @@ PathwaysSearchUtils.searchPath = function (origin) {
 
     var openList = [origin];
 
+    function inSelectedPathway(c){
+        var selected = false;
+        c.pathways.forEach(function (p) {
+                if(p._selected)
+                    selected = true;
+        });
+        return selected;
+    }
+
+
     while(deep < MAX_DEEP){
 
         var nextOpenList = [];
@@ -20,7 +30,7 @@ PathwaysSearchUtils.searchPath = function (origin) {
         openList.forEach(function (open) {
             open.__checked = true;
             checkedList.push(open);
-            open.nextComponents.forEach(function (next) {
+            open.nextComponents.filter(function (d) {return inSelectedPathway(d)}).forEach(function (next) {
                if(!next.__checked){
                    nextOpenList.push(next);
                    if(next._visible){
