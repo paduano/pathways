@@ -330,7 +330,7 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
                 .attr('width','100%')
                 .attr('height',100)
                 .attr('fill', 'white')
-                .attr('opacity', 0.85);
+                .attr('opacity', 0.95);
 
 
             var labels = gLabel.selectAll(".label").data(componentsToRoot)

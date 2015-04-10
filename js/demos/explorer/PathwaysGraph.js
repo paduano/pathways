@@ -185,6 +185,7 @@ function PathwaysGraph() {
             .on("mouseout", onMouseOutOnComponent)
             .on("mousedown", onMouseDownOnComponent)
             .on("mouseup", onMouseUpOnComponent)
+            .on("contextmenu", onRightClickOnComponent)
             .call(_componentDragBehaviour);
 
         var enterComplexElements = newElements.filter(function(d){return d3.select(this).datum().type == "complex"});
@@ -665,6 +666,17 @@ function PathwaysGraph() {
 
     };
 
+    var onRightClickOnComponent = function(c) {
+        c._visible = false;
+        c._explored = false;
+
+
+        self.updateContext();
+
+        //stop showing browser menu
+        d3.event.preventDefault();
+    };
+
     var onDragStartOnComponent = function(d, i) {
         //_componentsForceLayout.stop(); // stops the force auto positioning before you start dragging
         d.fixed = true;
@@ -713,6 +725,24 @@ function PathwaysGraph() {
 
     function zoomed() {
         _gVisualization.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    }
+
+    function setZoom(sNew) {
+        var s = _zoomBehaviour.scale(),
+            tx = _zoomBehaviour.translate()[0],
+            ty = _zoomBehaviour.translate()[1],
+
+            sReal = sNew / s,
+            dtx = _width / 2 * (1 - sReal),
+            dty = _height / 2 * (1 - sReal),
+            txNew = sReal * tx + dtx,
+            tyNew = sReal * ty + dty;
+
+        _zoomBehaviour.scale(sNew);
+        _zoomBehaviour.translate([txNew, tyNew]);
+
+        _gVisualization.transition().duration(600)
+            .attr('transform', 'translate(' + txNew + ',' + tyNew + ') scale(' + sNew + ')');
     }
 
     var xxx_keepLabelsHidden = false;
@@ -988,7 +1018,24 @@ function PathwaysGraph() {
     };
 
 
+
+
     //## PUBLIC FUNCTIONS
+
+
+    self.zoomIn = function () {
+        var currentScale = _zoomBehaviour.scale();
+        if(currentScale <= _zoomBehaviour.scaleExtent()[1]*1.5)
+            setZoom(_zoomBehaviour.scale()*1.5);
+    };
+
+
+    self.zoomOut = function () {
+        var currentScale = _zoomBehaviour.scale();
+        //if(currentScale >= _zoomBehaviour.scaleExtent()[0] - 0.5)
+            setZoom(_zoomBehaviour.scale()*0.6);
+    };
+
 
     self.updateColors = function () {
 

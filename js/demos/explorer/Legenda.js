@@ -32,7 +32,7 @@ var Legenda = function (container) {
                 }else {
                     animContainer.transition()
                         .style('margin-left','250px')
-                        .style('margin-top','180px');
+                        .style('margin-top','200px');
                     legenda.style('pointer-events', 'none');
 
                 }

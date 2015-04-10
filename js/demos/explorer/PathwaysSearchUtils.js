@@ -9,7 +9,8 @@ PathwaysSearchUtils.searchPath = function (origin) {
         visibleUpstream = [];
 
 
-    var checkedList = [];
+    origin.__checked = true;
+    var checkedList = [origin];
 
     var openList = [origin];
 

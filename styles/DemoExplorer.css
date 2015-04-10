@@ -29,7 +29,7 @@
 .demo-explorer-legenda {
     position: fixed;
     width: 300px;
-    height: 200px;
+    height: 220px;
     bottom: 0;
     right: 0;
 }
@@ -37,7 +37,7 @@
 .demo-explorer-legenda-container {
     position: relative;
     width: 300px;
-    height: 200px;
+    height: 220px;
     background-color: rgba(255,255,255,0.75);
 }
 
@@ -318,3 +318,35 @@
 .path-marker {
     cursor: pointer;
 }
+
+
+.zoom-control-container {
+    position: fixed;
+
+    padding-left: 10px;
+    background-color: rgba(255,255,255,0.75);
+    width: 100px;
+    left:calc(50% - 100px);
+    bottom: 0;
+}
+
+.zoom-control-button {
+    float: left;
+    height: 35px;
+    width: 35px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: all;
+    cursor: pointer;
+    margin-right: 8px;
+    margin-bottom: 10px;
+}
+
+.zoom-control-button-plus {
+    background-image: url("../resources/img/zoom-plus.png");
+}
+
+.zoom-control-button-minus{
+    background-image: url("../resources/img/zoom-minus.png");
+}
+

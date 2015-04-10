@@ -51,8 +51,11 @@ function DemoExplorer (divContainer) {
                 x:0, y:0, width:"100%", height:"100%"}
         );
 
+        var zoomControl = ZoomControl(visualizationArea);
 
         _pathwayGraph = PathwaysGraph();
+
+
         _pathwayGraph.setDataset(
             _parser.proteins,
             _parser.complexes,
@@ -89,6 +92,10 @@ function DemoExplorer (divContainer) {
         searchArea.onFiltersChanged = function() {
             _pathwayGraph.updateFilters(searchArea.filters);
         };
+
+        zoomControl.onZoomIn = _pathwayGraph.zoomIn;
+        zoomControl.onZoomOut = _pathwayGraph.zoomOut;
+
 
         //searchArea.addFilter("cyclin E/A:cdk2:p27/p21");
         searchArea.addFilter("prerc");
