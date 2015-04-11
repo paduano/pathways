@@ -1,3 +1,4 @@
+
 function PathwaysGraph() {
     var self = UISvgView();
 
@@ -320,7 +321,7 @@ function PathwaysGraph() {
 
 
         newLinks.selectAll(".pathway-link-polygon").data(function(link){return link.pathways}).enter()
-            .append("polygon")
+            .append("path")
             .classed("pathway-link-polygon", true)
             .attr({
                 fill: function(pw){return pw.color}
@@ -405,21 +406,26 @@ function PathwaysGraph() {
             .attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
 
         _allLinkElements.selectAll(".pathway-link-polygon").filter(function () {return d3.select(this.parentNode).datum()._justVisible})
-            .attr({points: function(){
+            .attr({d: function(){
                 var source = d3.select(this.parentNode).datum().source;
-                var points = ' ' + [source.x,source.y];
-                for(var i = 0; i < 5; i++)points += ', ' + [source.x,source.y];
-                return points;
+                var o = [source.x,source.y];
+                var points = "M " + o + " L" + o + " C " + o + " " + o + ' ' + o
+                + " C " + o + ' ' + o + ' ' + o
+                + " L " + o + " L " + o + " C " + o + ' ' + o + ' ' + o
+                + " C " + o + ' ' + o + ' ' + o + " z";
+
+                //for(var i = 0; i < 5; i++)points += ' L ' + [source.x,source.y];
+                return points + ' z';
             }})
             .transition()
             .duration(TRANSITION_DURATION)
-            .attr({points: function(pw){ return PathwaysGraphDrawingUtils.link(d3.select(this.parentNode).datum(),pw)}});
+            .attr({d: function(pw){ return PathwaysGraphDrawingUtils.linkArch(d3.select(this.parentNode).datum(),pw)}});
 
 
         _allLinkElements.selectAll(".pathway-link-polygon").filter(function (d) {return !d._justVisible})
             .transition()
             .duration(TRANSITION_DURATION)
-            .attr({points: function(pw){ return PathwaysGraphDrawingUtils.link(d3.select(this.parentNode).datum(),pw)}});
+            .attr({d: function(pw){ return PathwaysGraphDrawingUtils.linkArch(d3.select(this.parentNode).datum(),pw)}});
 
 
         _visibleComponents.concat(_visibleReactions).forEach(function (c) {
@@ -434,7 +440,7 @@ function PathwaysGraph() {
             .attr("transform",function (d) {return "translate(" + [d.x, d.y] + ")";});
 
         _allLinkElements.selectAll(".pathway-link-polygon")
-            .attr({points: function(pw){ return PathwaysGraphDrawingUtils.link(d3.select(this.parentNode).datum(),pw)}});
+            .attr({d: function(pw){ return PathwaysGraphDrawingUtils.linkArch(d3.select(this.parentNode).datum(),pw)}});
 
     };
 
@@ -572,7 +578,12 @@ function PathwaysGraph() {
     var clickTimer;
 
     var onMouseDownOnComponent = function (component) {
-
+        //var event = d3.event;
+        //if(event.shiftKey) {
+        //    if (!_pathDragging) {
+        //        onStartPathExpansion(component);
+        //    }
+        //}
     };
 
     var onMouseUpOnComponent = function (component) {
@@ -699,7 +710,7 @@ function PathwaysGraph() {
             onDragging = false;
         }, 500);
 
-        //Resume PANNING AND ZOOM
+
         enablePanningAndZooming();
     };
 
@@ -717,6 +728,7 @@ function PathwaysGraph() {
     };
 
     var enablePanningAndZooming = function () {
+
         self.call(_zoomBehaviour).on("dblclick.zoom", null);
     };
 
@@ -789,7 +801,8 @@ function PathwaysGraph() {
 
 
     var onStartPathExpansion = function (component) {
-
+        disableDragging();
+        disablePanningAndZooming();
 
         _pathDragging = true;
         _startComponent = component;
@@ -838,6 +851,9 @@ function PathwaysGraph() {
         _pathDragging = false;
         _searchPathLine.remove();
         d3.selectAll('.path-marker').remove();
+
+        enableDragging();
+        enablePanningAndZooming();
     };
 
 
@@ -1060,7 +1076,10 @@ function PathwaysGraph() {
             return d.color;
         });
 
+    };
 
+    self.updateLinks = function () {
+        updateElementsPosition();
     };
 
 

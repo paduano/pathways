@@ -77,6 +77,10 @@ function DemoExplorer (divContainer) {
             _pathwayGraph.updateColors();
         };
 
+        ExplorerSettings.onChangeCurvedLinks = function () {
+            _pathwayGraph.updateLinks();
+        };
+
         _parser.pathways.forEach(function (p) {
             contextArea.addContext(p);
         });
@@ -124,6 +128,39 @@ function DemoExplorer (divContainer) {
                 });
             })
         });
+        //
+        //owlQueue.defer(
+        //   function(nestedCallback) {
+        //            var request = d3.xml("resources/demos/owl/yao/" + "Regulation-of-DNA-replication.owl", "application/xml", function (d) {
+        //                _parser.loadBiopax(d3.select(d));
+        //
+        //                var request = d3.xml("resources/demos/owl/yao/" + "Mitotic-G1-G1-S-phase.owl", "application/xml", function (d1) {
+        //                    _parser.loadBiopax(d3.select(d1));
+        //
+        //                    var request = d3.xml("resources/demos/owl/yao/" + "M-G1-transition.owl", "application/xml", function (d2) {
+        //                        _parser.loadBiopax(d3.select(d2));
+        //
+        //                        nestedCallback(null, null);
+        //                    });
+        //                });
+        //
+        //            });
+        //        });
+
+        //owlQueue.defer(
+        //    function(nestedCallback) {
+        //        var request = d3.xml("resources/demos/owl/yao/" + "Mitotic-G1-G1-S-phase.owl", "application/xml", function (d) {
+        //            _parser.loadBiopax(d3.select(d));
+        //
+        //            var request = d3.xml("resources/demos/owl/yao/" + "Regulation-of-DNA-replication.owl", "application/xml", function (d1) {
+        //                _parser.loadBiopax(d3.select(d1));
+        //
+        //                nestedCallback(null, null);
+        //            });
+        //
+        //        });
+        //    });
+
 
         owlQueue.await(function () {
             callback(null,null);

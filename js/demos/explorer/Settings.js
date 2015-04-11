@@ -6,6 +6,8 @@ var Settings = function (container) {
 
     self.onChangeColor = null;
 
+    self.onChangeCurvedLinks = null;
+
     var paletteDiv;
 
     var colorPalettes = [
@@ -15,6 +17,7 @@ var Settings = function (container) {
     ];
 
     self.colors = colorPalettes[0];
+    self.curvedLinks = false;
 
     var changeColorPalette = function(palette) {
         self.colors = palette.colors;
@@ -26,13 +29,12 @@ var Settings = function (container) {
             .style('background-color', function(d){return d} );
 
         settings.selectAll('.demo-explorer-palette-button')
-            .classed('demo-explorer-palette-button-selected', function (d) {return d == palette;})
-            .classed('demo-explorer-palette-button-deselected', function (d) {return d != palette;})
+            .classed('demo-explorer-settings-button-selected', function (d) {return d == palette;})
+            .classed('demo-explorer-settings-button-deselected', function (d) {return d != palette;});
 
         if(self.onChangeColor)
             self.onChangeColor();
     };
-
 
     var setUpColors = function () {
 
@@ -45,7 +47,7 @@ var Settings = function (container) {
         paletteDiv = div.append('div')
             .classed('demo-explorer-palette', true);
 
-        div.selectAll('demo-explorer-palette-button').data(colorPalettes).enter()
+        div.selectAll('.demo-explorer-palette-button').data(colorPalettes).enter()
             .append('div')
             .classed('demo-explorer-palette-button', true)
             .text(function (d) {return d.name})
@@ -55,6 +57,35 @@ var Settings = function (container) {
 
         div.append('div').style('clear', 'both');
 
+    };
+
+    var setUpCurvedLinks = function () {
+        var div = animContainer.append('div').classed('demo-explorer-settings-area',true);
+        div.append('h3')
+            .classed('demo-explorer-settings-section',true)
+            .text('Curved Links');
+
+        div.selectAll('.demo-explorer-curved-links-button').data([true,false]).enter()
+            .append('div')
+            .classed('demo-explorer-curved-links-button', true)
+            .classed('demo-explorer-settings-button-selected', function (d) {return d == self.curvedLinks})
+            .classed('demo-explorer-settings-button-deselected', function (d) {return d != self.curvedLinks})
+            .text(function (d) {
+                return d? "ON" : "OFF";
+            })
+            .on('click', function (d) {
+                if(self.curvedLinks != d){
+                    self.curvedLinks = d;
+                    if(self.onChangeCurvedLinks)
+                        self.onChangeCurvedLinks();
+                }
+
+                div.selectAll('.demo-explorer-curved-links-button')
+                    .classed('demo-explorer-settings-button-selected', function (d) {return d == self.curvedLinks})
+            });
+
+
+        div.append('div').style('clear', 'both');
     };
 
     var init = function () {
@@ -70,6 +101,7 @@ var Settings = function (container) {
         setUpColors();
         changeColorPalette(colorPalettes[0]);
 
+        setUpCurvedLinks();
 
         var openClose = animContainer.append('div')
             .classed('demo-explorer-settings-button', true)

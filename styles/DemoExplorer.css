@@ -112,8 +112,9 @@
     margin-bottom: 10px;
 }
 
-.demo-explorer-palette-button {
 
+
+.demo-explorer-palette-button {
     font-size: 10px;
     float: left;
 
@@ -136,14 +137,42 @@
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
     cursor:pointer;
+
 }
 
-.demo-explorer-palette-button-deselected {
+
+.demo-explorer-curved-links-button {
+    font-size: 10px;
+    float: left;
+
+    border-width: 1px;
+    border-radius: 4px;
+    text-align: center;
+
+    width: 100px;
+
+    border-color: black;
+    border-style: solid;
+    padding: 4px 9px;
+    padding-top: 6px;
+    padding-right: 4px;
+    padding-bottom: 6px;
+
+    margin-top: 5px;
+    margin-right: 5px;
+
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    cursor:pointer;
+}
+
+.demo-explorer-settings-button-deselected {
     color: black;
     border-color: black;
 }
 
-.demo-explorer-palette-button-selected {
+.demo-explorer-settings-button-selected {
     color : black;
     border-color: #000000;
     background-color: #DDDDDD;
@@ -166,6 +195,7 @@
 .demo-explorer-settings-group {
 
 }
+
 
 /* -----------------------   */
 
