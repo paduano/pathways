@@ -90,7 +90,7 @@ PathwaysGraphDrawingUtils.linkArch = function (link, pathway) {
     var thick = 2,
         shift = link.pathways.indexOf(pathway) * thick * 2.1,
         margin = 5,
-        arrowTip = 10;
+        arrowTip = 12;
 
 
 
@@ -127,54 +127,139 @@ PathwaysGraphDrawingUtils.linkArch = function (link, pathway) {
 
     var newStart = start.addV(parallel.mulS(margin)).addV(perpendicular.mulS(shift));
 
-    var v0,v1,v2,v3,v4,v5, mid1, mid2;
+    var alpha = (40/180)*Math.PI;
 
-    var anchor1pre,anchor1post, anchor2pre, anchor2post;
+    if(!CURVED_LINKS)
+        alpha = 0;
 
-    var radiusLength = length/20;
-    var anchorLength = length/4;
-    var tipShift = radiusLength/10;
-
-    if(!CURVED_LINKS){
-        radiusLength = 0;
-        anchorLength = 0;
-        tipShift = 0;
+    if(length < 200){
+        alpha *= length/200;
     }
 
-    if(!link.double || link.double){
-        //single arrow
-        v0 = newStart;
-        v1 = vec2(newStart).addV(perpendicular.mulS(thick));
-        v2 = v1.addV(parallel.mulS(length-arrowTip)).addV(perpendicular.mulS(tipShift));
-        v3 = vec2(newStart).addV(parallel.mulS(length));
-        v5 = vec2(newStart).subV(perpendicular.mulS(thick));
-        v4 = v5.addV(parallel.mulS(length-arrowTip)).addV(perpendicular.mulS(tipShift));
-        mid1 = v1.addV(parallel.mulS(length/2-arrowTip)).addV(perpendicular.mulS(radiusLength));
-        mid2 = v5.addV(parallel.mulS(length/2-arrowTip)).addV(perpendicular.mulS(radiusLength));
+    var S = newStart,
+        pl = parallel,
+        pp = perpendicular,
+        E = newStart.addV(pl.mulS(length)),
+        C = S.addV(pl.mulS(length/2)).addV(pp.mulS((length/2)*Math.sin(alpha))),
+        S_pr = C.subV(S).normalize(),
+        E_pr = C.subV(E).normalize(),
+        S_pd = S_pr.perpendicular(),
+        E_pd = E_pr.perpendicular();
 
-        anchor1pre = mid1.subV(parallel.mulS(anchorLength));
-        anchor1post = mid1.addV(parallel.mulS(anchorLength));
-        anchor2pre = mid2.addV(parallel.mulS(anchorLength));
-        anchor2post = mid2.subV(parallel.mulS(anchorLength));
-    }else {
-        //double arrow
-        v0 = newStart;
-        v1 = vec2(newStart).addV(perpendicular.mulS(thick)).addV(parallel.mulS(arrowTip));
-        v2 = v1.addV(parallel.mulS(length-(arrowTip*2)));
-        v3 = vec2(newStart).addV(parallel.mulS(length));
-        v5 = vec2(newStart).subV(perpendicular.mulS(thick)).addV(parallel.mulS(arrowTip));
-        v4 = v5.addV(parallel.mulS(length-(arrowTip*2)));
 
+
+    var  S1 = S.addV(S_pr.mulS(arrowTip)),
+        E1 = E.addV(E_pr.mulS(arrowTip))
+        ;
+
+    if(!link.double){
+        S1 = S;
     }
 
-    return  "M " + v0.toArray()
-        + " L" + v1.toArray()
-        + " C " + v1.toArray() + ' ' + anchor1pre.toArray() + ' ' + mid1.toArray()
-        + " C " + anchor1post.toArray() + ' ' + v2.toArray() + ' ' + v2.toArray()
-        + " L " + v3.toArray()
-        + " L " + v4.toArray()
-        + " C " + v4.toArray() + ' ' + anchor2pre.toArray() + ' ' + mid2.toArray()
-        + " C " + anchor2post.toArray() + ' ' + v5.toArray() + ' ' + v5.toArray() + " z";
+    var P1 = S1.addV(S_pd.mulS(thick)),
+        P6 = S1.subV(S_pd.mulS(thick)),
+        P2 = C.addV(pp.mulS(thick)),
+        P5 = C.subV(pp.mulS(thick)),
+        P3 = E1.subV(E_pd.mulS(thick)),
+        P4 = E1.addV(E_pd.mulS(thick))
+    ;
+
+    var H1 = P1.addV(S_pr.mulS(length/3)),
+        H4 = P6.addV(S_pr.mulS(length/3)),
+        H2 = P3.addV(E_pr.mulS(length/3)),
+        H3 = P4.addV(E_pr.mulS(length/3))
+    ;
+
+
+
+
+    var d =
+        " M " + S.toArray() +
+        " L " + P1.toArray() +
+        " C " + H1.toArray() + ' '  + H2.toArray() + ' ' + P3.toArray()  +//anchor1 anchor2 dest
+        " L " + E.toArray() +
+        " L " + P4.toArray() +
+        " C " + H3.toArray() + ' ' + H4.toArray() + ' ' + P6.toArray() +
+        " z ";
+
+
+    //var H2 = P2.addV(pl.mulS(length/4)),
+    //    H1 = P2.subV(pl.mulS(length/4)),
+    //    H3 = P5.subV(pl.mulS(length/4)),
+    //    H4 = P5.addV(pl.mulS(length/4))
+    //;
+    //
+    //var d =
+    //    " M " + S.toArray() +
+    //    " L " + P1.toArray() +
+    //    " C " + P1.toArray() + ' '  + H1.toArray() + ' ' + P2.toArray()  +//anchor1 anchor2 dest
+    //    " C " + H2.toArray() + ' '  + P3.toArray() + ' ' + P3.toArray() +
+    //    " L " + E.toArray() +
+    //    " L " + P4.toArray() +
+    //    " C " + P4.toArray() + ' ' + H4.toArray() + ' ' + P5.toArray() +
+    //    " C " + H3.toArray() + ' ' + P6.toArray() + ' ' + P6.toArray() +
+    //    " z ";
+
+
+    return d;
+
+
+    //var v0,v1,v2,v3,v4,v5, mid1, mid2;
+    //
+    //var anchor1pre,anchor1post, anchor2pre, anchor2post;
+    //
+    //var radiusLength = length/20;
+    //var anchorLength = length/4;
+    //var tipShift = radiusLength/10;
+    //
+    //if(!CURVED_LINKS){
+    //    radiusLength = 0;
+    //    anchorLength = 0;
+    //    tipShift = 0;
+    //}
+    //
+    //if(!link.double){
+    //    //single arrow
+    //    v0 = newStart;
+    //    v1 = vec2(newStart).addV(perpendicular.mulS(thick));
+    //    v2 = v1.addV(parallel.mulS(length-arrowTip)).addV(perpendicular.mulS(tipShift));
+    //    v3 = vec2(newStart).addV(parallel.mulS(length));
+    //    v5 = vec2(newStart).subV(perpendicular.mulS(thick));
+    //    v4 = v5.addV(parallel.mulS(length-arrowTip)).addV(perpendicular.mulS(tipShift));
+    //    mid1 = v1.addV(parallel.mulS(length/2-arrowTip)).addV(perpendicular.mulS(radiusLength));
+    //    mid2 = v5.addV(parallel.mulS(length/2-arrowTip)).addV(perpendicular.mulS(radiusLength));
+    //
+    //    anchor1pre = mid1.subV(parallel.mulS(anchorLength));
+    //    anchor1post = mid1.addV(parallel.mulS(anchorLength));
+    //    anchor2pre = mid2.addV(parallel.mulS(anchorLength));
+    //    anchor2post = mid2.subV(parallel.mulS(anchorLength));
+    //}else {
+    //    //double arrow
+    //    v0 = newStart;
+    //    v1 = vec2(newStart).addV(perpendicular.mulS(thick)).addV(parallel.mulS(arrowTip)).addV(perpendicular.mulS(tipShift));
+    //    v2 = v1.addV(parallel.mulS(length-(arrowTip*2))).addV(perpendicular.mulS(tipShift));
+    //    v3 = vec2(newStart).addV(parallel.mulS(length)).addV(perpendicular.mulS(tipShift));
+    //    v5 = vec2(newStart).subV(perpendicular.mulS(thick)).addV(parallel.mulS(arrowTip));
+    //    v4 = v5.addV(parallel.mulS(length-(arrowTip*2))).addV(perpendicular.mulS(tipShift));
+    //
+    //    mid1 = v1.addV(parallel.mulS(length/2-arrowTip)).addV(perpendicular.mulS(radiusLength));
+    //    mid2 = v5.addV(parallel.mulS(length/2-arrowTip)).addV(perpendicular.mulS(radiusLength));
+    //
+    //    anchor1pre = mid1.subV(parallel.mulS(anchorLength));
+    //    anchor1post = mid1.addV(parallel.mulS(anchorLength));
+    //    anchor2pre = mid2.addV(parallel.mulS(anchorLength));
+    //    anchor2post = mid2.subV(parallel.mulS(anchorLength));
+    //
+    //}
+    //
+    //return  "M " + v0.toArray()
+    //    + " L" + v1.toArray()
+    //    + " C " + v1.toArray() + ' ' + anchor1pre.toArray() + ' ' + mid1.toArray()
+    //    + " C " + anchor1post.toArray() + ' ' + v2.toArray() + ' ' + v2.toArray()
+    //    + " L " + v3.toArray()
+    //    + " L " + v4.toArray()
+    //    + " C " + v4.toArray() + ' ' + anchor2pre.toArray() + ' ' + mid2.toArray()
+    //    + " C " + anchor2post.toArray() + ' ' + v5.toArray() + ' ' + v5.toArray() + " z";
 
 };
 
