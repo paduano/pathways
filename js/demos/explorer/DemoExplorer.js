@@ -114,15 +114,23 @@ function DemoExplorer (divContainer) {
         var owlQueue = queue();
 
         [
+
+            //"cAMP-PKA.owl",
+            //"immune.txt"
+            //
             "Mitotic-G1-G1-S-phase.owl",
             "S-phase.owl",
             "Regulation-of-DNA-replication.owl",
             "Mitotic-G2-G2-M-phases.owl",
             "M-phase.owl",
             "M-G1-transition.owl"
+
+            //"glycolisis.owl",
+            //"hs-degradation.owl"
         ].forEach(function (owl) {
             owlQueue.defer(function(nestedCallback) {
                 var request = d3.xml("resources/demos/owl/yao/" + owl, "application/xml", function (d) {
+                //var request = d3.xml("resources/demos/owl/crosstalk/" + owl, "application/xml", function (d) {
                     _parser.loadBiopax(d3.select(d));
                     nestedCallback(null, null);
                 });

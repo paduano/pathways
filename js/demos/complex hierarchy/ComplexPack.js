@@ -1,3 +1,5 @@
+var OpenedComplexes = [];
+
 var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
     config = config || {};
     config = {
@@ -5,6 +7,8 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
         coloringMode : config.coloringMode || "deep",
         color : config.color || "orange"
     };
+
+
 
     var useRect = config.useRect == undefined? true : true;
 
@@ -41,6 +45,20 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
 
     //element currently over
     var overedElement = null;
+
+
+    self.highlightElement = function (element) {
+
+        g.selectAll(".complex-pack-element").filter(function (d) {
+            return d.name == element.name;
+        }).attr('fill', Colors.overedElement);
+    };
+
+    self.restoreFill = function (element) {
+        g.selectAll(".complex-pack-element").filter(function (d) {
+            return d.name == element.name;
+        }).attr('fill', fillForComponent);
+    };
 
 
     var getRadiusFromComponent = function(c){
@@ -192,10 +210,12 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
 
             var all = node
                 .enter().append("g")
-                .attr("class", function(d) { return d.children ? "node" : "leaf node"; });
+                .attr("class", function(d) { return d.children ? "node" : "leaf node"; })
+                .classed("complex-pack-element", true);
 
             all.filter(function (n) {return n.type == "complex";})
                 .append("rect")
+
                 .classed("complex-pack-component-rect", function(d){return d === mainComplex})
                 .attr("width", widthForRect)
                 .attr("height", heightForRect)
@@ -492,6 +512,12 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
         overedElement.attr("fill", Colors.deselected.complex);
 
         updateLabels();
+
+        OpenedComplexes.filter(function (c) {
+            return c != self;
+        }).forEach(function (el) {
+            el.highlightElement(d);
+        });
     };
 
 
@@ -504,6 +530,12 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
         overedElement = null;
 
         updateLabels();
+
+        OpenedComplexes.filter(function (c) {
+            return c != self;
+        }).forEach(function (el) {
+            el.restoreFill(d);
+        });
     };
 
 
@@ -541,6 +573,18 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
         }
         onCloseComplex(originalMainComplex);
         gLabel.remove();
+
+
+        if(overedElement){
+            OpenedComplexes.filter(function (c) {
+                return c != self;
+            }).forEach(function (el) {
+                el.restoreFill(overedElement.datum());
+            });
+        }
+
+        OpenedComplexes = _.without(OpenedComplexes,self);
+
         d3.event.stopPropagation()
     };
 
@@ -572,6 +616,7 @@ var ComplexPack = function(selection, structureSvg, onCloseComplex, config) {
     var init = function(){
         setUp();
         update()
+        OpenedComplexes.push(self);
     }();
 
 

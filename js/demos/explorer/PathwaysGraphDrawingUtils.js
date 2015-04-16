@@ -129,6 +129,8 @@ PathwaysGraphDrawingUtils.linkArch = function (link, pathway) {
 
     var alpha = (40/180)*Math.PI;
 
+    var handleLength = Math.sin(alpha)*(length/2)-arrowTip;
+
     if(!CURVED_LINKS)
         alpha = 0;
 
@@ -164,10 +166,10 @@ PathwaysGraphDrawingUtils.linkArch = function (link, pathway) {
         P4 = E1.addV(E_pd.mulS(thick))
     ;
 
-    var H1 = P1.addV(S_pr.mulS(length/3)),
-        H4 = P6.addV(S_pr.mulS(length/3)),
-        H2 = P3.addV(E_pr.mulS(length/3)),
-        H3 = P4.addV(E_pr.mulS(length/3))
+    var H1 = P1.addV(S_pr.mulS(handleLength)),
+        H4 = P6.addV(S_pr.mulS(handleLength)),
+        H2 = P3.addV(E_pr.mulS(handleLength)),
+        H3 = P4.addV(E_pr.mulS(handleLength))
     ;
 
 

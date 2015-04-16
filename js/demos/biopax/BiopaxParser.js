@@ -34,15 +34,28 @@ function BiopaxParser(biopaxXml){
         }
     };
 
-    var parseSmallMolecule = function(node){
+    var parseSmallMolecule = function(node, components){
         var smallMolecule = {
             "id" : d3.select(node).attr("rdf:ID"),
             "name" : d3.select(node).select("displayName").text(),
-            "type" : "smallMolecule"
+            "type" : "protein"//"smallMolecule"
         };
 
-        self.smallMolecules.push(smallMolecule);
-        return smallMolecule;
+        //self.smallMolecules.push(smallMolecule);
+
+        //XXXX
+        var existing = checkForExistingComponent(self.proteins, smallMolecule);
+        if(existing) {
+            //the id might change
+            existing.id = smallMolecule.id;
+            components.proteins.push(existing);
+            return existing;
+        } else {
+            self.proteins.push(smallMolecule);
+            components.proteins.push(smallMolecule);
+            return smallMolecule;
+        }
+
     };
 
     var parseComplex = function(node, components){
@@ -375,7 +388,7 @@ function BiopaxParser(biopaxXml){
             component.pathways = component.pathways || [];
             components.pathways.forEach(function(pathway){
                if(pathway.allComponents.indexOf(component) > -1){
-                   component.pathways.push(pathway);
+                   component.pathways = _.union(component.pathways, [pathway]);
                }
             });
         });
@@ -385,7 +398,7 @@ function BiopaxParser(biopaxXml){
             reaction.pathways = reaction.pathways || [];
             components.pathways.forEach(function(pathway){
                 if(pathway.allReactions.indexOf(reaction) > -1){
-                    reaction.pathways.push(pathway);
+                    reaction.pathways = _.union(reaction.pathways, [pathway]);
                 }
             });
         });

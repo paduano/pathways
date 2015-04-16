@@ -879,7 +879,7 @@ function PathwaysGraph() {
                         });
                         self.updateContext();
                         exit = true
-                    }  else if(previous.length < 5) {
+                    }  else if(previous.length < 7) {
                        expandPath(e, end, elements.concat(e));
                    }
                    exit = true;
@@ -1012,8 +1012,9 @@ function PathwaysGraph() {
                         //match searching criteria
                         for(var i = 0; i < _nameFilters.length; i++){
                             var filter = _nameFilters[i];
-                            if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){
+                            //if(component.name.toLowerCase().indexOf(filter.toLowerCase()) > -1){
                             //if(component.name.toLowerCase().indexOf(filter.toLowerCase()) == 0){
+                            if(component.name.toLowerCase() == filter.toLowerCase()){
                                 setComponentVisibility(component, true); //XXX
                                 return true;
                             }
